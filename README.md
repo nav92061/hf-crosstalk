@@ -34,12 +34,12 @@ under any agent harness or as ordinary scripts.
 
 | Skill | Purpose | Guardrail enforced in code |
 |---|---|---|
-| [`geo-bulk-de`](skills/geo-bulk-de) | GEO series download, metadata parsing, two-group DE | Raises on duplicate sample IDs, groups < 2, all-NA genes |
-| [`hpa-secretome`](skills/hpa-secretome) | Protein Atlas annotation, secretion tiering | Raises unless response is a TSV with >10,000 rows (catches error pages) |
-| [`cellchat-lr`](skills/cellchat-lr) | Parse CellChatDB, expand receptor complexes | Raises if the interaction table has <1,000 rows |
-| [`tcga-pancan`](skills/tcga-pancan) | Memory-bounded PanCanAtlas streaming | Raises if no rows matched or a sample lacks a tumour-type assignment |
-| [`crosstalk-score`](skills/crosstalk-score) | Two-factor compatibility scoring | **`require_expression_floor()` raises**; null matches on expression decile |
-| [`depmap-lineage`](skills/depmap-lineage) | DepMap resolution, dependency by lineage | Raises if a download is HTML; lineage mapping must be passed, never inferred |
+| [`geo-bulk-de`](hf_crosstalk/skills/geo-bulk-de) | GEO series download, metadata parsing, two-group DE | Raises on duplicate sample IDs, groups < 2, all-NA genes |
+| [`hpa-secretome`](hf_crosstalk/skills/hpa-secretome) | Protein Atlas annotation, secretion tiering | Raises unless response is a TSV with >10,000 rows (catches error pages) |
+| [`cellchat-lr`](hf_crosstalk/skills/cellchat-lr) | Parse CellChatDB, expand receptor complexes | Raises if the interaction table has <1,000 rows |
+| [`tcga-pancan`](hf_crosstalk/skills/tcga-pancan) | Memory-bounded PanCanAtlas streaming | Raises if no rows matched or a sample lacks a tumour-type assignment |
+| [`crosstalk-score`](hf_crosstalk/skills/crosstalk-score) | Two-factor compatibility scoring | **`require_expression_floor()` raises**; null matches on expression decile |
+| [`depmap-lineage`](hf_crosstalk/skills/depmap-lineage) | DepMap resolution, dependency by lineage | Raises if a download is HTML; lineage mapping must be passed, never inferred |
 
 Guardrails are **assertions that raise**, not advice in prose — so they hold
 whichever model, or no model, is driving.
@@ -47,15 +47,26 @@ whichever model, or no model, is driving.
 ## Quick start
 
 ```bash
-pip install -r requirements.txt
-python tests/test_guardrails.py     # verifies the floor validator actually rejects
+pip install -e .                 # or: pip install git+https://github.com/USER/hf-crosstalk.git
+python tests/test_guardrails.py  # verifies the floor validator actually rejects
+```
+
+The skills are also usable without installing anything — every `kernel.py` is a
+standalone file:
+
+```bash
+python -c "
+import importlib.util as u
+s = u.spec_from_file_location('k', 'hf_crosstalk/skills/crosstalk-score/kernel.py')
+m = u.module_from_spec(s); s.loader.exec_module(m)
+print([f for f in dir(m) if not f.startswith('_')])"
 ```
 
 Scoring, standalone:
 
 ```python
-import sys; sys.path.insert(0, "skills/crosstalk-score")
-import kernel as ck, pandas as pd
+import sys; import pandas as pd
+from hf_crosstalk import crosstalk_score as ck
 
 expr  = pd.read_csv("results/tables/tcga_expr_by_tumor_type.csv", index_col=0)
 inter = pd.read_csv("results/tables/cellchatdb_receptor_subunits.csv")
@@ -72,7 +83,8 @@ print(res["score"].head())
 ## Repository layout
 
 ```
-skills/            six skills (SKILL.md + kernel.py)
+hf_crosstalk/      importable package
+  skills/          six skills (SKILL.md + kernel.py)
 results/tables/    29 CSVs — DE tables, network, ranking, validation
 results/figures/   5 publication figures
 results/summaries/ JSON provenance for each pipeline stage

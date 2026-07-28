@@ -21,11 +21,12 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install numpy pandas scipy statsmodels
+          pip install -e .
       - name: Run guardrail tests
         run: python tests/test_guardrails.py
       - name: Verify no kernel imports a platform API
         run: |
-          if grep -rn --include=kernel.py -E '(^|[^A-Za-z_.])host\.[a-z]' skills/; then
+          if grep -rn --include=kernel.py -E '(^|[^A-Za-z_.])host\.[a-z]' hf_crosstalk/skills/; then
             echo "ERROR: a kernel.py references a platform API; skills must stay portable"
             exit 1
           fi

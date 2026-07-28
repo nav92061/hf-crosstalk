@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hf-crosstalk"
+version = "1.0.0"
+description = "Reusable skills for ligand-receptor compatibility screening: GEO differential expression, HPA secretome, CellChatDB, TCGA pan-cancer streaming, crosstalk scoring with enforced expression-floor and specificity-null validators, DepMap lineage testing"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+keywords = ["bioinformatics", "transcriptomics", "ligand-receptor",
+            "TCGA", "DepMap", "GEO", "differential-expression"]
+classifiers = [
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+dependencies = [
+  "numpy>=1.24",
+  "pandas>=2.0",
+  "scipy>=1.10",
+  "statsmodels>=0.14",
+  "requests>=2.28",
+]
+
+[project.optional-dependencies]
+rda = ["rdata>=0.9", "pyreadr>=0.5"]
+plots = ["matplotlib>=3.7"]
+
+[tool.setuptools]
+packages = ["hf_crosstalk"]
+
+[tool.setuptools.package-data]
+hf_crosstalk = ["skills/*/SKILL.md", "skills/*/kernel.py"]

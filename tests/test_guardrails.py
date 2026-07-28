@@ -11,8 +11,8 @@ import numpy as np
 import pandas as pd
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, os.path.join(ROOT, "skills", "crosstalk-score"))
-import kernel as ck  # noqa: E402
+sys.path.insert(0, ROOT)
+from hf_crosstalk import crosstalk_score as ck  # noqa: E402
 
 FAILURES = []
 

@@ -13,3 +13,6 @@ OmicsExpression*.csv
 *_RAW.tar
 *.gz
 !results/**/*.gz
+build/
+dist/
+*.egg-info/
