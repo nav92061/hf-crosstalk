@@ -1,0 +1,32 @@
+n,check,expected,observed,verdict,bearing
+1,HF signature replicates in an independent cohort,concordance >> 50%,"88.1% same direction; rho=0.541 (all 18,061 shared genes), 0.759 (5,717 sig in both)",PASS,Signature is real and reproducible
+2,Label-permutation negative control (HF DE),~0 significant genes,0 significant genes,PASS,DE pipeline is not producing spurious hits
+3,Canonical cardiac marker direction,"NPPA/NPPB up, MYH6/ATP2A2 down","NPPA +3.91, NPPB +3.97, MYH6 -0.61, ATP2A2 -0.44",PASS,Biological sanity of the contrast
+4,Hypergeometric overlap enrichment,enrichment >> 1x,p=2.1e-35 but only 1.07x enrichment (near-saturated),UNINFORMATIVE,Test is saturated; concordance and effect-size correlation are the informative metrics
+5,Absolute expression floor (0.005 x GAPDH = 345.7),some receptors rejected,"28 of 188 interactions dropped, incl. all 3 PENK-opioid axes",ENFORCED,Opioid axis is not viable on receptor expression grounds
+6,"Matched-random receptor null, floor applied",rho ~ 0,rho_mean=0.107; 1.7% of draws exceed rho 0.5,PASS,Ranking IS receptor-specific once the floor is applied
+7,"Matched-random receptor null, NO floor",rho ~ 0,rho_mean=0.363; 21.5% exceed rho 0.5,FAIL,KEY: the confound is caused by scoring untranscribed receptors
+8,Unmatched (naive) random receptor pool,rho ~ 0,rho_mean=0.323,FAIL,The null pool must be expression-matched or specificity is misjudged
+9,Leave-one-ligand-out stability,rho ~ 1,"min rho 0.907 (WNT9A), median 0.999",PASS,No single ligand drives the ranking
+10,Leave-one-pathway-out stability,rho ~ 1,"min rho 0.842 (WNT), median 0.999",PASS,WNT is the largest contributor but not solely determinative
+11,Complex rule sensitivity (min vs geometric mean),rho ~ 1,rho 0.908,PASS,Conclusions do not depend on the aggregation rule
+12,Availability weighting sensitivity,rho ~ 1,rho 0.922,PASS,Weighting scheme is not load-bearing
+13,Double-centering confound adjustment,—,rho 0.318 vs primary; ranking reorders (ACC to rank 1),FLAG,Ranking is correction-sensitive; mid-table positions must not be over-read
+14,Receiver capacity vs microenvironment state,—,1 of 29 Thorsson features FDR<0.05 (B-cell receptor score rho=0.57),LARGELY NULL,The 'exploit / microenvironment' half of the hypothesis is unsupported
+15,DepMap positive controls (common essentials),gene effect << -0.5,"RPL3 -2.53, PLK1 -2.69, POLR2B -2.42, EEF2 -2.35",PASS,DepMap parsing and joins are correct
+16,DepMap non-essential negative controls,gene effect ~ 0,"MYT1 -0.02, HBB +0.16",PASS,Scale is calibrated as expected
+17,Receptor dependency correlated with compatibility,—,0 of 81 receptors significant at FDR<0.05 (3 nominal),NULL RESULT,"Nominated receptors are candidate conduits, not drug targets"
+18,HF-axis receptors as dependencies anywhere,—,NPR1 -0.163; all WNT9A receptors between -0.163 and +0.146; none crosses -0.5,NULL RESULT,Loss of function does not impair proliferation in vitro
+19,"Ligand cardiac specificity (GTEx, 52 tissues)",—,"2 of 42 cardiac-enriched and abundant (NPPA, NPPB); GDF6 enriched but <1 TPM",LARGELY FAIL,The failing heart is a distinctive source only for natriuretic peptides
+20,Receptor tumor-enrichment vs matched normal,—,11 of 78 enriched under both methods; 25 comparable/constitutive; 15 depleted,LARGELY FAIL,Most nominated receptors are constitutively expressed in normal tissue
+21,NPR1 in tumor vs adjacent normal (unit-matched),—,"DEPLETED in all 15 testable types, median log2FC -1.91, all FDR<0.05; fails floor in 26/30 types",FAIL,DECISIVE: the only distinctively cardiac axis has the least tumor-enriched receptor
+22,Cross-method agreement (GTEx rank vs unit-matched),positive correlation,"rho=0.545, p=8.9e-94, n=1,200 pairs",PASS,Validates the rank proxy without equating units
+23,Axes surviving BOTH specificity checks (strict),—,ZERO of 160 floor-passing interactions,FAIL,DECISIVE: no axis has both a distinctively cardiac ligand and a tumor-enriched receptor
+24,Cell-line panel confound check,receptor independent of library size,"FZD7 vs housekeeping rho=0.131, p=0.447; arms equal in housekeeping (p=1.000); 48.7x separation",PASS,Proposed experiment is interpretable
+25,Citation verification (random sample re-fetched),titles and years match,"14 of 14 sampled PMIDs verified on BOTH title (similarity 1.00) and year, after correcting a malformed date comparison (publication_date is a nested dict, not a string); 107 citations, 21 with direction=contradicts, 8 tagged topic=counter_evidence",PASS,Literature base is real and includes counter-evidence
+26,Post-hoc audit: PENK-opioid axis count,all PENK-opioid axes below floor,"FOUR axes (OPRD1, OPRK1, OPRL1, OPRM1) — paper initially said three; corrected",CORRECTED,"Whole OPIOID pathway is non-viable, not just three of four"
+27,Post-hoc audit: types beating the specificity null,—,"4 of 30 (UCS, KIRC, BRCA, PAAD) — paper and Fig 2 initially said 6; corrected. OV ranks 2nd but p=0.060",CORRECTED,Rank order and receptor-specificity are distinct; OV does not pass
+28,Post-hoc audit: GAPDH median value,—,"69,134 across the 30 per-tumour-type medians (paper and SKILL.md initially said ~64,000); floor 345.7 unchanged",CORRECTED,"Floor value itself was always computed, not typed"
+29,Post-hoc audit: TIMER2 grantability,—,"compbio.cn IS grantable and was granted; TIMER2 is a Shiny app with no bulk endpoint (/data/, /estimation.php -> 404)",CORRECTED,"Substitution stands, but for an accurate reason; earlier 'not grantable' claim was untested"
+30,Post-hoc audit: documented scale-check output (geo-bulk-de),doc matches a real run,doc said 'False 1.00 22.39 0 0.0066'; actual run gives 'False 1.82 21.03 0 0.0066'; corrected,CORRECTED,"Qualitative conclusion (data are log2-scale, not counts) unaffected"
+31,Post-hoc audit: pre-existing personal skills,—,"Catalog holds 37 skills: 30 anthropic, 7 personal — one ('humanizer') pre-existed this work; none of the 6 analysis skills did",CORRECTED,'Only Anthropic built-ins' was overstated; the substantive gap claim held

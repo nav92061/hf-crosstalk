@@ -1,0 +1,32 @@
+name: guardrail-tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy pandas scipy statsmodels
+      - name: Run guardrail tests
+        run: python tests/test_guardrails.py
+      - name: Verify no kernel imports a platform API
+        run: |
+          if grep -rn --include=kernel.py -E '(^|[^A-Za-z_.])host\.[a-z]' skills/; then
+            echo "ERROR: a kernel.py references a platform API; skills must stay portable"
+            exit 1
+          fi
+          echo "OK: all kernels are platform-independent"

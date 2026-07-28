@@ -1,0 +1,32 @@
+depmap_lineage,tcga_types,n_tcga_types,n_crispr_lines,mean_compatibility_score,confidence,included_in_correlation,note
+Lung,LUAD|LUSC,2,126,0.08824003141644605,high,True,direct organ match; both NSCLC histologies
+CNS/Brain,GBM|LGG,2,90,-0.01874504590607242,high,True,direct organ match
+Head and Neck,HNSC,1,77,-0.0878138963040753,high,True,direct organ match
+Skin,SKCM,1,74,-0.2389336331320066,high,True,DepMap Skin is predominantly melanoma
+Esophagus/Stomach,ESCA|STAD,2,69,0.026473097415808496,high,True,DepMap merges the two TCGA sites
+Bowel,COAD|READ,2,63,-0.26017322518625774,high,True,colorectal; DepMap does not split colon/rectum
+Ovary/Fallopian Tube,OV,1,59,0.43228294079272717,high,True,direct organ match
+Breast,BRCA,1,53,0.2006964213885417,high,True,direct organ match
+Pancreas,PAAD,1,47,0.24355963076697454,high,True,direct organ match
+Biliary Tract,CHOL,1,35,-0.1813423556385014,high,True,direct organ match
+Bladder/Urinary Tract,BLCA,1,34,-0.29822171344409215,high,True,direct organ match
+Kidney,KIRC|KIRP|KICH,3,34,0.10540638925219281,high,True,DepMap merges the three RCC subtypes
+Uterus,UCEC|UCS,2,34,0.43132008234898966,high,True,DepMap merges endometrial carcinoma and carcinosarcoma
+Liver,LIHC,1,24,-0.4571608508937865,high,True,direct organ match
+Pleura,MESO,1,21,0.14973119397068546,high,True,direct organ match
+Cervix,CESC,1,18,-0.3361476326297187,high,True,direct organ match
+Eye,UVM,1,15,-0.4300570443391679,medium,True,DepMap Eye includes retinoblastoma as well as uveal melanoma
+Thyroid,THCA,1,11,0.28499790675554715,medium,True,DepMap Thyroid is enriched for anaplastic/poorly differentiated lines; TCGA THCA is mostly papillary
+Prostate,PRAD,1,10,0.27157685908915014,high,True,"direct organ match, few lines"
+Testis,TGCT,1,5,0.221783616536851,high,True,"direct organ match, few lines"
+Soft Tissue,SARC,1,45,0.029014350177715014,medium,True,histology mismatch: DepMap Soft Tissue includes rhabdomyosarcoma/synovial sarcoma; TCGA SARC is mostly leiomyosarcoma and dedifferentiated liposarcoma
+Peripheral Nervous System,PCPG,1,44,-0.16528961297138384,low,True,"both neural-crest PNS tumours, but DepMap PNS is overwhelmingly neuroblastoma while TCGA PCPG is pheochromocytoma/paraganglioma"
+Lymphoid,,0,93,,none,False,UNMAPPED: TCGA DLBC excluded upstream (haematological)
+Myeloid,,0,42,,none,False,UNMAPPED: TCGA LAML excluded upstream (haematological)
+Bone,,0,46,,none,False,UNMAPPED: no TCGA osteosarcoma/Ewing cohort; SARC is soft-tissue sarcoma
+Adrenal Gland,,0,1,,none,False,"UNMAPPED: only 1 CRISPR-screened line, below min_lines=5 (so TCGA ACC is unreachable)"
+Ampulla of Vater,,0,4,,none,False,"UNMAPPED: 4 lines, below min_lines; no TCGA counterpart cohort"
+Vulva/Vagina,,0,2,,none,False,"UNMAPPED: 2 lines, below min_lines; no TCGA counterpart cohort"
+Fibroblast,,0,1,,none,False,UNMAPPED: non-malignant
+Other,,0,1,,none,False,UNMAPPED: unclassified
+,ACC,1,0,-0.4891252280598652,none,False,UNMAPPED TCGA type: no DepMap lineage with >=5 CRISPR lines

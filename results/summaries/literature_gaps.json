@@ -1,0 +1,113 @@
+{
+ "purpose": "Claims the writing track should NOT make, because retrieved and verified literature does not support them. Each entry names the claim, why it fails, and what may be said instead. Compiled from 107 verified PubMed records (literature_citations.csv); PMIDs cited here all appear in that file.",
+ "unsupported_claims": [
+  {
+   "claim": "Heart failure causes cancer / HF is a causal driver of tumourigenesis in humans.",
+   "why_unsupported": "Causality has only been shown in mouse models. The largest human cohort with adjudicated cancer outcomes and 19.9-year median follow-up found no association (adjusted HR 1.05, 95% CI 0.86-1.29; PMID 29622155), and a two-year diagnostic lag attenuated a national cohort's HR from 1.64 to 1.09 (PMID 32863081).",
+   "say_instead": "HF is associated with increased cancer incidence in most but not all observational cohorts, and mouse models demonstrate that a failing heart can promote tumour growth; whether this operates in humans is unresolved."
+  },
+  {
+   "claim": "The magnitude of excess cancer risk in HF is ~1.2- to 1.8-fold.",
+   "why_unsupported": "These are crude or minimally lagged estimates that largely reflect surveillance intensity. The only study reporting a lagged estimate found HR 1.09 (PMID 32863081).",
+   "say_instead": "Reported hazard ratios range from 1.05 (null, adjudicated) to 1.76, and the excess shrinks substantially when cancers diagnosed soon after HF are excluded."
+  },
+  {
+   "claim": "Cancer risk in HF is independent of shared risk factors.",
+   "why_unsupported": "The Framingham risk score, built only from conventional CV risk factors, predicted both incident cancer (sHR 2.32) and incident HF (sHR 10.08) with UK Biobank replication (PMID 41014601); hsCRP and IL-1/IL-6/TNF-alpha predict both (PMID 38429011).",
+   "say_instead": "Shared risk factors and low-grade inflammation predict both diseases, and observational designs cannot separate a shared substrate from a causal HF-to-cancer effect."
+  },
+  {
+   "claim": "HF-secreted factors act on tumours through an endocrine route.",
+   "why_unsupported": "Not demonstrated for any named ligand in humans. For CCN2, cell-specific knockout showed cardiomyocyte-derived CCN2 is dispensable and that CCN2 acts autocrine on fibroblasts despite being secreted (PMID 30040954).",
+   "say_instead": "Heterotopic heart transplantation in mice implies a blood-borne signal (PMID 29459363), but the identity of the endocrine mediator(s) in humans is unknown."
+  },
+  {
+   "claim": "Periostin is the mediator of HF-driven tumour promotion.",
+   "why_unsupported": "Postn-knockout mice still showed cardiac-remodelling-dependent tumour promotion; integrin beta-1 loss in cancer cells, not periostin loss, abolished it (PMID 38139195).",
+   "say_instead": "Periostin is sufficient to promote cancer cell proliferation in HF serum (PMID 32475164) but is not necessary for the in vivo phenotype; the operative signal is better described as a set of integrin-binding ligands."
+  },
+  {
+   "claim": "Elevated plasma proenkephalin in HF reflects cardiac PENK secretion.",
+   "why_unsupported": "eGFR was the strongest independent predictor of PENK and PENK clustered with renal markers in 2,180 patients with validation in 1,703 (PMID 31091993).",
+   "say_instead": "Plasma PENK is elevated and prognostic in HF but is substantially a cardiorenal readout; cardiac origin is not established."
+  },
+  {
+   "claim": "Opioid receptor expression in tumours predicts worse cancer outcome / a PENK-OPRK1 axis promotes tumour growth.",
+   "why_unsupported": "In 8,780 samples across twelve tumour types, tumour opioid receptor expression showed NO association with disease-free interval or overall survival after adjustment (PMID 35359418). KOR agonism was anti-angiogenic and KOR-knockout mice grew larger tumours (PMID 24225480). Two randomised trials of opioid-sparing anaesthesia found no recurrence benefit (PMIDs 31645288, 34192298).",
+   "say_instead": "OPRK1 and OPRD1 transcripts are enriched in tumour versus normal tissue pan-cancer, but expression does not track outcome and kappa-opioid pharmacology points toward tumour suppression; any nominated PENK-opioid axis is a transcript-level hypothesis requiring functional validation.",
+   "additional_warning": "The two most-cited papers for delta-opioid-receptor-driven hepatocellular progression (PMIDs 23903826, 26549838) are RETRACTED and must not be cited."
+  },
+  {
+   "claim": "FZD2 is expressed and functional in ovarian or endometrial cancer.",
+   "why_unsupported": "Targeted searches ('FZD2 endometrial carcinoma expression', 'frizzled-2 ovarian endometrial cancer Wnt', 'FZD2[Title] AND cancer') returned no study measuring FZD2 in gynaecologic tumours as a primary endpoint. Supporting evidence is indirect via WNT5A (PMIDs 24924122, 31932454, 33723319).",
+   "say_instead": "FZD2 is functionally validated in hepatocellular, breast, gastric and other cancers; in ovarian cancer the evidence is indirect, resting on WNT5A upregulation and WNT5A-driven FZD2/FZD5 induction in cell lines. State the gap explicitly."
+  },
+  {
+   "claim": "GDF15 elevated in HF could act directly on tumour cells.",
+   "why_unsupported": "Its canonical receptor GFRAL is restricted to the area postrema and nucleus tractus solitarius of the brainstem (PMID 28953886); the established cancer role is host cachexia (PMID 32661391).",
+   "say_instead": "GDF15 is a well-established HF-elevated circulating protein whose receptor is not expressed on peripheral tumours - a useful negative control for a receptor-compatibility design."
+  },
+  {
+   "claim": "Higher SFRP ligand levels in HF would promote Wnt-driven tumour growth.",
+   "why_unsupported": "SFRPs are Wnt ANTAGONISTS, silenced by promoter hypermethylation across cancers, and SFRP overexpression inhibits cancer cell growth (PMIDs 24316024, 18283316). The predicted sign is reversed.",
+   "say_instead": "SFRP family members are secreted Wnt antagonists; a compatibility score must model antagonism explicitly or exclude them."
+  },
+  {
+   "claim": "SERPINA3 acts on a tumour cell receptor.",
+   "why_unsupported": "SERPINA3 has no defined single-pass receptor; it is a protease inhibitor and nuclear-binding secretory serpin with cancer- and compartment-specific effects, tumour-suppressive in lung (PMID 37417362) and tumour-promoting in TNBC (PMID 33569740).",
+   "say_instead": "SERPINA3 cannot be scored in a ligand-receptor compatibility framework; if it appears in the HF-upregulated list it must be reported outside the scored axes."
+  },
+  {
+   "claim": "COMP is upregulated in heart failure.",
+   "why_unsupported": "COMP expression was DECREASED in dilated cardiomyopathy patient hearts versus donors, and COMP-knockout mice spontaneously developed DCM (PMID 23917519).",
+   "say_instead": "If a transcript analysis nominates COMP as HF-upregulated, that contradicts published human myocardial direction and must be flagged as discordant."
+  },
+  {
+   "claim": "Cardiac transcript levels of a secreted ligand indicate circulating protein levels.",
+   "why_unsupported": "Plasma galectin-3 did not correlate with myocardial galectin-3 or LV fibrosis in biopsied patients (PMID 28288987); the dominant circulating BNP species is weakly-active proBNP (PMID 30120963).",
+   "say_instead": "Transcript-level nomination identifies candidate ligands; protein abundance, processing and secretion are separate and sometimes dissociated questions."
+  },
+  {
+   "claim": "Ligand-receptor co-expression demonstrates signalling between the heart and a tumour.",
+   "why_unsupported": "Expression-based inference is explicitly inferential; over 100 tools with differing assumptions and unresolved pitfalls exist (PMID 40536815), and in UK Biobank cardiac proteomics only ~4% of 820 protein-disease associations survived cis-Mendelian randomisation (PMID 39572695).",
+   "say_instead": "Co-expression generates ranked hypotheses about which tumour lineages could in principle respond to a given HF-elevated ligand."
+  },
+  {
+   "claim": "HF treatment reduces cancer incidence / cancer screening in HF patients improves outcomes.",
+   "why_unsupported": "No interventional evidence retrieved. Conversely, HF pharmacotherapy is a candidate confounder: high-dose loop diuretics associated with higher cancer incidence and mortality within a HF cohort (PMID 35492831), and spironolactone carries a tumorigenicity warning (PMID 35138351).",
+   "say_instead": "No trial has tested whether treating HF alters cancer incidence; the only randomised anti-inflammatory cancer-incidence signal is canakinumab in atherosclerosis (PMID 28855077)."
+  },
+  {
+   "claim": "The HF-cancer relationship is unidirectional.",
+   "why_unsupported": "In the same experimental system, tumour-bearing mice under pressure overload had less hypertrophy and fibrosis and better contractile function via M1-to-M2 cardiac macrophage polarisation (PMID 37508517; also 37759510).",
+   "say_instead": "Heart-tumour interaction is bidirectional and not uniformly deleterious in either direction."
+  },
+  {
+   "claim": "Differences in cancer-type susceptibility are explained by ligand-receptor compatibility.",
+   "why_unsupported": "Only one study reports cancer-type-differential response to a cardiac signal (extracellular vesicles: lung/colon > melanoma/breast; PMID 38487879), and it did not attribute this to receptor repertoire. Lagged epidemiology finds excess confined to lung, hepatobiliary/pancreatic and haematologic cancers (PMID 32863081), which is not obviously an integrin- or opioid-receptor pattern.",
+   "say_instead": "Cancer-type differences are observed both experimentally and epidemiologically; receptor repertoire is one candidate explanation among several (tissue vascularity, immune context, baseline proliferative index)."
+  }
+ ],
+ "things_that_could_not_be_established_from_retrieved_literature": [
+  "Human plasma or myocardial SERPINA3 quantification in heart failure patients (searches returned no primary study).",
+  "Human plasma periostin concentrations in heart failure patients (myocardial tissue evidence only).",
+  "FZD2 expression measured in ovarian or endometrial tumours as a primary endpoint.",
+  "Any human study demonstrating engagement of a heart-failure-derived ligand with its receptor on a tumour.",
+  "Mendelian randomisation evidence specifically testing HF as a causal exposure for cancer (searches returned MR studies of the reverse direction and of other traits).",
+  "Plasma CXCL12 elevation in heart failure as distinct from inflammatory cardiomyopathy."
+ ],
+ "retracted_do_not_cite": [
+  {
+   "pmid": "23903826",
+   "note": "Tang 2013, Int J Oncol, delta opioid receptor upregulation in liver cancer - Retracted Publication."
+  },
+  {
+   "pmid": "26549838",
+   "note": "Tang 2015, Mol Med Rep, delta opioid receptor knockdown in liver cancer - Retracted Publication."
+  },
+  {
+   "pmid": "28601389",
+   "note": "Che 2017, Life Sci, periostin silencing and tumour microenvironment - RETRACTED (notice PMID 36990904)."
+  }
+ ]
+}

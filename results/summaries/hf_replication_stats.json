@@ -1,0 +1,130 @@
+{
+  "replication_stats": {
+    "n_genes_a": 21910,
+    "n_genes_b": 20781,
+    "n_shared_genes": 18061,
+    "n_sig_a": 8052,
+    "n_sig_b": 11949,
+    "n_replicated": 5717,
+    "n_replicated_same_sign": 5036,
+    "expected_overlap": 5327.132938375506,
+    "hypergeom_p": 2.1469474686533803e-35,
+    "directional_concordance": 0.8808815812489068,
+    "spearman_rho": 0.5408253634325355,
+    "spearman_p": 0.0,
+    "pearson_r_sig": 0.7409982422327237,
+    "fdr_threshold": 0.05
+  },
+  "replication_diagnostics": {
+    "frac_sig_shared_discovery": 0.4458224904490338,
+    "frac_sig_shared_validation": 0.6615912740158352,
+    "overlap_fold_enrichment": 1.0731851572195574,
+    "note": "hypergeometric overlap test is near-saturated: 44.6% of shared genes are significant in discovery and 66.2% in validation, so the overlap is only 1.07x the null expectation despite p=2.1e-35. Directional concordance and log2FC Spearman rho are the informative replication metrics here.",
+    "concordance_by_discovery_effect_size": {
+      "all_sig_both": {
+        "n": 5717,
+        "concordance": 0.8809
+      },
+      "abs_log2FC_disc_gt_0.5": {
+        "n": 2124,
+        "concordance": 0.9388
+      },
+      "abs_log2FC_disc_gt_1.0": {
+        "n": 337,
+        "concordance": 0.9525
+      },
+      "abs_log2FC_disc_gt_1.5": {
+        "n": 101,
+        "concordance": 0.9505
+      }
+    },
+    "discovery_top500_by_p": {
+      "directional_concordance": 0.91,
+      "frac_also_fdr05_in_validation": 0.83
+    },
+    "strict_tier_abs_log2FC_gt1_both": {
+      "up": 115,
+      "down": 56
+    }
+  },
+  "permutation_negative_control": {
+    "description": "discovery group labels permuted (seed 42), same pipeline, then compared to real validation DE",
+    "n_sig_fdr05_discovery_permuted": 0,
+    "frac_p_below_0.05": 0.018621633957097216,
+    "n_replicated_same_sign": 0,
+    "spearman_rho_vs_validation": -0.1343760448217414,
+    "hypergeom_p": 1.0
+  },
+  "cohort_samples": {
+    "GSE116250": {
+      "role": "discovery",
+      "platform": "LV RNA-seq, submitter RPKM",
+      "groups_available": {
+        "DCM": 37,
+        "non_failing": 14,
+        "ICM": 13
+      },
+      "primary_contrast_used": {
+        "failing": 50,
+        "non_failing": 14
+      },
+      "secondary_contrasts": {
+        "DCM_vs_NF": {
+          "DCM": 37,
+          "non_failing": 14
+        },
+        "ICM_vs_NF": {
+          "ICM": 13,
+          "non_failing": 14
+        }
+      },
+      "n_samples_total": 64
+    },
+    "GSE141910": {
+      "role": "validation",
+      "platform": "LV RNA-seq (MAGNet), per-sample log2-scale normalized values",
+      "groups_available": {
+        "non_failing": 166,
+        "DCM": 166,
+        "HCM": 28,
+        "PPCM": 6
+      },
+      "primary_contrast_used": {
+        "failing_DCM_plus_HCM": 194,
+        "non_failing_donor": 166
+      },
+      "excluded": {
+        "PPCM": 6
+      },
+      "n_samples_total": 366
+    }
+  },
+  "gene_id_harmonization": {
+    "discovery_ids": "Ensembl gene IDs (GSE116250 'Gene' column), version suffix stripped",
+    "validation_ids": "Ensembl gene IDs (row index of per-sample CSVs), version suffix stripped",
+    "n_tested_discovery": 21910,
+    "n_tested_validation": 20781,
+    "n_intersection": 18061,
+    "n_discovery_only": 3849,
+    "n_validation_only": 2720,
+    "n_versioned_in_either": 0
+  },
+  "qc": {
+    "GSE116250_sentinel_genes_dropped": 65,
+    "GSE116250_sentinel_value": 999999999.0,
+    "GSE116250_genes_after_expression_filter": 21910,
+    "GSE141910_genes_tested": 20781,
+    "eBayes_d0_discovery": 3.0407726680892004,
+    "eBayes_d0_validation": 4.81815740620799,
+    "canonical_marker_check_discovery": {
+      "NPPA": 3.9074,
+      "NPPB": 3.9686,
+      "MYH6": -0.6122,
+      "ATP2A2": -0.4395
+    }
+  },
+  "signature_counts": {
+    "n_up_replicated": 3084,
+    "n_down_replicated": 1952
+  }
+}

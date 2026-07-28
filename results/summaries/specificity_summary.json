@@ -1,0 +1,119 @@
+{
+ "unit_mismatch_limitation": "TCGA tumour values are RSEM normalized_count from the EBPlusPlus PanCanAtlas matrix; GTEx normal values are median TPM (GTEx v8, GENCODE v26). These are different units on different scales and were NEVER subtracted, divided or placed on a common axis. Every tumour-vs-normal comparison here is rank-based: each gene was converted to a within-dataset percentile among the SAME 1379 genes shared by both matrices, separately for each TCGA type and each GTEx tissue; the reported delta is a difference of percentile positions, not a fold change. A gene can shift percentile because of true expression change OR because the composition of the surrounding transcriptome differs between a tumour and a whole normal organ. Directions are therefore ordinal claims only.",
+ "method_receptor_direction": "For each (receptor, TCGA type) the delta of percentiles was placed against the distribution of the same delta for all 1379 background genes in that tumour/normal pair. enriched = delta in the top decile of that background and positive; depleted = bottom decile and negative; otherwise comparable. This controls for global percentile drift between the two platforms.",
+ "gtex_is_healthy_heart_caveat": "GTEx heart is NON-FAILING donor heart. The ligand panel is by construction HF-UPREGULATED, so a low healthy-LV value does NOT show the failing heart cannot release that ligand. What the ligand test does establish is whether the heart is a CONSTITUTIVELY DISTINCTIVE tissue source relative to 52 other tissues. PENK and GDF15 are curated as elevated in human HF at protein level yet sit at ranks 36 and 48 of 52 tissues in healthy heart - their HF elevation is real but the heart is not their dominant baseline source, and other organs (GDF15: kidney cortex; PENK: brain) plausibly contribute circulating protein.",
+ "n_receptors_compared": 81,
+ "n_tumor_types": 30,
+ "n_receptor_type_comparisons": 2430,
+ "n_background_genes_shared": 1379,
+ "receptor_comparisons_enriched": 385,
+ "receptor_comparisons_comparable": 1902,
+ "receptor_comparisons_depleted": 143,
+ "n_receptors_enriched_in_at_least_one_type": 64,
+ "n_receptors_never_enriched": 17,
+ "receptors_never_enriched": [
+  "ACKR1",
+  "ACVR1",
+  "ACVR2A",
+  "AGTR1",
+  "ERBB2",
+  "FZD4",
+  "IL17RB",
+  "IL6ST",
+  "ITGB1",
+  "ITGB5",
+  "NCL",
+  "NPR1",
+  "PARD3",
+  "PDGFRB",
+  "SDC4",
+  "TGFBR2",
+  "TNFRSF1A"
+ ],
+ "focus_receptor_verdicts": {
+  "NPR1": {
+   "enriched": 0,
+   "comparable": 18,
+   "depleted": 12
+  },
+  "FZD1": {
+   "enriched": 7,
+   "comparable": 23,
+   "depleted": 0
+  },
+  "FZD2": {
+   "enriched": 3,
+   "comparable": 27,
+   "depleted": 0
+  },
+  "FZD3": {
+   "enriched": 7,
+   "comparable": 23,
+   "depleted": 0
+  },
+  "FZD4": {
+   "enriched": 0,
+   "comparable": 29,
+   "depleted": 1
+  },
+  "FZD5": {
+   "enriched": 7,
+   "comparable": 23,
+   "depleted": 0
+  },
+  "FZD6": {
+   "enriched": 3,
+   "comparable": 27,
+   "depleted": 0
+  },
+  "FZD7": {
+   "enriched": 3,
+   "comparable": 26,
+   "depleted": 1
+  },
+  "FZD8": {
+   "enriched": 2,
+   "comparable": 28,
+   "depleted": 0
+  },
+  "FZD9": {
+   "enriched": 4,
+   "comparable": 23,
+   "depleted": 3
+  },
+  "FZD10": {
+   "enriched": 7,
+   "comparable": 20,
+   "depleted": 3
+  },
+  "LRP5": {
+   "enriched": 1,
+   "comparable": 29,
+   "depleted": 0
+  },
+  "LRP6": {
+   "enriched": 4,
+   "comparable": 26,
+   "depleted": 0
+  }
+ },
+ "npr1_verdict": "NPR1 is enriched in 0 of 30 tumour types and DEPLETED in 12, including BRCA (-35.3 pctile pts), LUSC (-38.1), LUAD (-29.4), UCEC (-28.4), COAD (-28.4) and UCS (-24.5). In the three top-ranked compatibility types NPR1 is comparable in OV (+3.8) and KIRC (-13.5) and depleted in UCS (-24.5). NPR1 receptor capacity in these tumours is inherited from the normal tissue of origin, not gained.",
+ "n_ligands_tested": 51,
+ "n_ligands_cardiac_enriched": 2,
+ "ligands_cardiac_enriched": [
+  "NPPB",
+  "NPPA"
+ ],
+ "n_ligands_cardiac_expressed_not_enriched": 22,
+ "n_ligands_not_cardiac": 27,
+ "ligand_classification_rule": "cardiac-enriched requires LV median >=5 TPM, LV rank <=3 of 52 tissues, and LV/median-across-tissues >=5. An absolute floor of 5 TPM in the higher of the two chambers is applied first; GDF6 passed a ratio test on atrial appendage at 2.46 TPM and was reclassified not-cardiac on that floor. Two GTEx cell-line entries (cultured fibroblasts, EBV lymphocytes) were excluded, leaving 52 tissues.",
+ "axes_surviving_both_checks": [],
+ "axes_note": "No axis passes both checks. NPPA->NPR1 and NPPB->NPR1 pass the ligand cardiac-specificity check decisively (rank 2 of 52, LV/median ratio 12.3 and 87.8) but fail the receptor check outright - NPR1 is never tumour-enriched. WNT9A->FZD/LRP subunits show receptor enrichment in several types (FZD10 in 6, FZD3 in 6, FZD5 in 6 good/fair-quality types) but WNT9A itself is not cardiac-enriched: healthy LV 2.02 TPM, rank 29 of 52, LV/median ratio 0.73, highest in sigmoid colon.",
+ "mapping_caveats": "30 TCGA types mapped to GTEx tissues: 17 good, 7 fair, 6 poor. Poor: UCS (biphasic carcinosarcoma, no matched normal exists), MESO (no pleura in GTEx), HNSC (no oral/laryngeal mucosa; esophageal squamous mucosa surrogate), CHOL (no bile duct; hepatocyte-dominated Liver), SARC (histologically heterogeneous), UVM (no uveal tract). Fair mappings carry cell-composition mismatch: GTEx Uterus is myometrium-dominated while UCEC is endometrial; GTEx Ovary is stroma-rich while HGSOC is likely fallopian-tube derived; GTEx Pancreas is acinar while PAAD is ductal. UCS - the top-ranked compatibility type - has the weakest possible normal counterpart, so its receptor directions are the least trustworthy in the table.",
+ "artifact_files": [
+  "receptor_tumor_vs_normal.csv",
+  "tumor_normal_tissue_map.csv",
+  "ligand_tissue_specificity.csv",
+  "specificity_summary.json"
+ ]
+}

@@ -1,0 +1,88 @@
+{
+ "depmap_release_resolved": "DepMap 24Q4 Public (figshare article 27993248, DOI 10.25452/figshare.plus.27993248.v1, published 2024-12-10)",
+ "resolution_method": "figshare API /v2/articles/search then /v2/articles/{id}; depmap.org bot interstitial avoided. ndownloader redirects to s3-eu-west-1.amazonaws.com (network grant required).",
+ "file_urls": {
+  "CRISPRGeneEffect.csv": "https://ndownloader.figshare.com/files/51064667",
+  "OmicsExpressionProteinCodingGenesTPMLogp1.csv": "https://ndownloader.figshare.com/files/51065489",
+  "Model.csv": "https://ndownloader.figshare.com/files/51065297"
+ },
+ "file_sizes_bytes": {
+  "CRISPRGeneEffect.csv": 428678699,
+  "OmicsExpressionProteinCodingGenesTPMLogp1.csv": 506628654,
+  "Model.csv": 645696
+ },
+ "n_cell_lines_gene_effect": 1178,
+ "n_cell_lines_expression": 1673,
+ "n_models_annotated": 2105,
+ "n_genes_gene_effect_file": 17916,
+ "n_genes_expression_file": 19193,
+ "positive_control_gene_effects": {
+  "RPL3": -2.533,
+  "POLR2B": -2.418,
+  "POLR2D": -1.943,
+  "PLK1": -2.693,
+  "RPL7": -1.582,
+  "EEF2": -2.35,
+  "NONESSENTIAL_MYT1": -0.022,
+  "NONESSENTIAL_HBB": 0.156
+ },
+ "positive_control_note": "POLR2A is absent from the 24Q4 CRISPRGeneEffect matrix; POLR2B and POLR2D substituted and reported.",
+ "n_receptors_tested": 81,
+ "n_lineages_correlated": 22,
+ "min_lines_per_lineage": 5,
+ "n_significant_after_fdr": 0,
+ "n_nominal_p_lt_0.05": 3,
+ "strongest_nominal": [
+  {
+   "gene": "CD4",
+   "spearman_rho": -0.4861660079051384,
+   "p_value": 0.021783087892448566,
+   "fdr": 0.7841149618137859
+  },
+  {
+   "gene": "ACVR1B",
+   "spearman_rho": -0.4624505928853756,
+   "p_value": 0.030231878253170995,
+   "fdr": 0.7841149618137859
+  },
+  {
+   "gene": "FZD3",
+   "spearman_rho": -0.4342179559570865,
+   "p_value": 0.04346507477769573,
+   "fdr": 0.7841149618137859
+  }
+ ],
+ "receptors_essential_any_lineage": [
+  "EGFR",
+  "ERBB2",
+  "FGFR1",
+  "IGF1R",
+  "ITGAV",
+  "ITGB1",
+  "ITGB5",
+  "NCL"
+ ],
+ "wnt_receptor_gene_effect_pan_mean": {
+  "FZD1": 0.042,
+  "FZD10": 0.054,
+  "FZD2": -0.071,
+  "FZD3": -0.019,
+  "FZD4": 0.121,
+  "FZD5": -0.049,
+  "FZD6": 0.146,
+  "FZD7": 0.082,
+  "FZD8": -0.042,
+  "FZD9": -0.057,
+  "LRP5": -0.163,
+  "LRP6": 0.008
+ },
+ "NPR1_gene_effect_pan_mean": -0.163,
+ "axis_operationalized": "WNT9A -> FZD7 (+LRP5/LRP6) in DepMap Uterus",
+ "panel_fold_difference_TPM": 48.7,
+ "panel_delta_log2tpm1": 3.7,
+ "panel_housekeeping_mannwhitney_p": 1.0,
+ "receptor_vs_housekeeping_pool_rho": 0.131,
+ "receptor_vs_housekeeping_pool_p": 0.447,
+ "expression_vs_dependency_statement": "None of the 81 floor-passing receptor subunits shows a compatibility-correlated dependency (0 significant at FDR<0.05; 3 nominal). No WNT receptor is a dependency in any lineage (pan-lineage mean gene effect from LRP5 -0.163 to FZD6 +0.146; most negative single lineage cell FZD5 -0.317 in Pancreas), and NPR1 (receptor for the two highest-availability ligands NPPA/NPPB) has pan-lineage mean -0.163. The receptors that ARE dependencies (NCL, ITGAV, EGFR, ITGB5, ITGB1, ERBB2, FGFR1, IGF1R) are pan-essential or adhesion/RTK genes whose essentiality is lineage-driven and unrelated to HF ligand availability. Therefore the nominated axes are candidate signalling conduits, NOT drug targets: receptor expression licenses a cell to receive a secreted signal, but loss-of-function does not impair proliferation in vitro, so these receptors should be tested by ligand stimulation / pathway-reporter readout, not by viability knockout screens.",
+ "lineage_mapping_caveats": "22 of 30 DepMap lineages mapped; 29 of 30 TCGA types covered. ACC (adrenocortical, double-centered rank 1) has only 1 CRISPR-screened DepMap adrenal line, below min_lines=5, so the top double-centered type is untestable. Lymphoid/Myeloid unmapped (LAML/DLBC already excluded upstream); Bone has no TCGA cohort. Low-confidence: PNS<->PCPG (neuroblastoma vs pheochromocytoma). Medium: Soft Tissue<->SARC (histology mismatch), Thyroid<->THCA (anaplastic lines vs papillary tumors), Eye<->UVM (retinoblastoma contamination). UCS and UCEC share one DepMap Uterus lineage, so the top-ranked type cannot be resolved from UCEC in DepMap."
+}

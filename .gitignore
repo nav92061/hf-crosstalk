@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.DS_Store
+.venv/
+env/
+# large re-fetchable source downloads — never commit these
+data/
+*.tar
+*.rda
+CRISPRGeneEffect.csv
+OmicsExpression*.csv
+*_RAW.tar
+*.gz
+!results/**/*.gz

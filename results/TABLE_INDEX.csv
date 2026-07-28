@@ -1,0 +1,23 @@
+table,filename,description,version_id,size_bytes
+Table 1,hf_de_GSE116250.csv,"Differential expression, failing vs non-failing LV (GSE116250 discovery, RPKM, limma-trend equivalent)",6a2d301f-a560-4e83-839b-0dcd8780457c,4493888
+Table 2,hf_de_GSE141910.csv,"Differential expression, cardiomyopathy vs non-failing donor LV (GSE141910 validation, MAGNet)",cac6c07c-31a8-4d92-982a-01d80655fb53,2732134
+Table 3,hf_signature_replicated.csv,Genes significant (FDR<0.05) with concordant sign in both cohorts,76685c52-1489-4bd0-9e51-60c282afbf19,745811
+Table 4,hpa_secretome_annotation.csv,Genome-wide HPA secretion annotation with structural-ECM flag,efb93594-4a96-4a02-8bab-e3030adece36,2500884
+Table 5,cellchatdb_receptor_subunits.csv,CellChatDB interactions with receptor complexes expanded to subunits,4aabe49f-60f3-4179-a333-ba2cc7c548a0,431480
+Table 6,tcga_expr_by_tumor_type.csv,"Median expression per gene per tumor type, 9,538 primary solid tumors (RSEM normalized_count)",07e2a94c-6093-4cfb-b343-56f042647e20,367491
+Table 7,crosstalk_network.csv,Candidate HF-ligand to tumor-receptor network with availability weights and floor status,8086ab6e-ce8d-466a-804e-31b39df5e0e1,33048
+Table 8,floor_audit.csv,Absolute-expression floor audit for all 188 candidate interactions,89e852c0-5d58-44de-b35f-4d373df62ef1,8197
+Table 9,pancancer_susceptibility_ranking.csv,"Pan-cancer compatibility ranking with bootstrap CIs, null p-values and double-centered variant",c8e165e9-4061-43cb-b270-af809942d9d6,6356
+Table 10,twofactor_decomposition.csv,"Ligand availability vs receiver capacity per tumor type, with TME covariates",23bff2cf-a7f4-42d8-b520-ffcf9b279745,4045
+Table 11,capacity_vs_tme.csv,Receiver capacity correlated against 29 Thorsson microenvironment features,3415c637-9e99-47f6-b516-b8ee19b4d47d,2254
+Table 12,control_results.csv,All specificity and stability controls with expected vs observed values and verdicts,e8cc0708-e181-4061-ab6c-c8e8a8ae69be,864
+Table 13,depmap_lineage_dependency.csv,Per-lineage CRISPR gene effect for floor-passing receptors and controls (DepMap 24Q4),0a24803c-68f5-4d2d-8351-e357fafc61d9,194785
+Table 14,depmap_compatibility_correlation.csv,Receptor dependency vs compatibility correlation with BH-FDR,62c0bf9b-fbb2-47f6-bae8-e1d7a8a5133d,9444
+Table 15,depmap_lineage_map.csv,Disclosed DepMap-lineage to TCGA-type mapping with per-row confidence,3ec6a071-a0cd-42f3-b5ee-d0881ca8524d,2987
+Table 16,cell_line_panel.csv,"WNT9A-FZD7 uterine cell-line panel, two strata",ac70e34c-41ec-4258-ba2a-eaaf0a536204,4138
+Table 17,receptor_tumor_vs_normal.csv,Receptor tumor-vs-normal comparison by GTEx rank and unit-matched adjacent normal,b9491a67-fb87-4df3-8b62-59f5799a7295,641607
+Table 18,ligand_tissue_specificity.csv,Cardiac specificity of HF-upregulated secreted ligands across 52 GTEx tissues,c4b0258c-f1c3-4a0f-b9cf-60e9e4c32a5b,7565
+Table 19,axis_survival.csv,Which ligand-receptor axes survive both specificity checks,2d0e9667-c354-4b56-9f15-3e381150aba2,9874
+Table 20,tumor_normal_tissue_map.csv,TCGA-type to GTEx-tissue mapping with quality flags,05e1e593-9c79-445c-a48a-7d1f7912667a,2154
+Table 21,literature_citations.csv,"Verified PubMed citations with evidence type, strength and direction",940dda9f-ce28-4f2a-a1b6-bcc9d5cc26a8,44488
+Table 22,ligand_evidence.csv,Per-ligand human HF evidence and receptor cancer evidence,8f8d6101-f192-48d8-80ba-10e96f46e295,14441

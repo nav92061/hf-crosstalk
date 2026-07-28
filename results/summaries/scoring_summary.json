@@ -1,0 +1,138 @@
+{
+ "floor": {
+  "reference": "GAPDH",
+  "fraction": 0.005,
+  "absolute_value": 345.673,
+  "unit": "RSEM normalized_count (EBPlusPlus)",
+  "n_interactions_dropped": 28,
+  "dropped_interactions": [
+   "AGT_MAS1",
+   "PENK_OPRD1",
+   "UCN_CRHR2",
+   "CCL24_CCR3",
+   "CCL5_CCR3",
+   "PENK_OPRM1",
+   "CCL5_CCR4",
+   "FLT3L_FLT3",
+   "UCN_CRHR1",
+   "IL12B_IL12RB1_IL12RB2",
+   "IL33_IL1RL1_IL1RAP",
+   "PENK_OPRK1",
+   "CCL21_ACKR4",
+   "TAC4_TACR1",
+   "MDK_ALK",
+   "PTN_ALK",
+   "TGFB2_ACVR1C_TGFBR2",
+   "TGFB3_ACVR1C_TGFBR2",
+   "INHB_ACVR1C_ACVR2B",
+   "INHBABB_ACVR1C_ACVR2A",
+   "CXCL16_CXCR6",
+   "CXCL9_CXCR3",
+   "CCL21_CCR7",
+   "PENK_OPRL1",
+   "CCL3_ACKR2",
+   "CCL4_ACKR2",
+   "CCL5_ACKR2",
+   "CCL24_ACKR2"
+  ]
+ },
+ "interactions": {
+  "candidate": 188,
+  "scored_after_floor": 160,
+  "n_ligands": 51,
+  "n_pathways": 38
+ },
+ "specificity_null": {
+  "n_iter": 300,
+  "seed": 20260727,
+  "primary": {
+   "rho_mean": 0.10686688913607713,
+   "rho_p95": 0.4263181312569522,
+   "frac_above_0.5": 0.016666666666666666
+  },
+  "no_floor": {
+   "rho_mean": 0.3632436040044494,
+   "frac_above_0.5": 0.215
+  },
+  "unmatched_pool": {
+   "rho_mean": 0.3233904338153504
+  },
+  "double_centered": {
+   "rho_mean": 0.033828698553948836
+  }
+ },
+ "top5_primary": [
+  {
+   "rank": 1,
+   "tumor_type": "UCS",
+   "score": 0.678524317682128,
+   "ci_low": 0.3997248977539157,
+   "ci_high": 0.9141854603560469,
+   "null_p_primary": 0.0033222591362126247
+  },
+  {
+   "rank": 2,
+   "tumor_type": "OV",
+   "score": 0.43228294079272717,
+   "ci_low": 0.22979605634426034,
+   "ci_high": 0.6180277938694204,
+   "null_p_primary": 0.059800664451827246
+  },
+  {
+   "rank": 3,
+   "tumor_type": "KIRC",
+   "score": 0.37658562308283733,
+   "ci_low": 0.21586393566874815,
+   "ci_high": 0.5158437008267801,
+   "null_p_primary": 0.013289036544850499
+  },
+  {
+   "rank": 4,
+   "tumor_type": "THCA",
+   "score": 0.28499790675554715,
+   "ci_low": 0.11945015208168865,
+   "ci_high": 0.4338185027433904,
+   "null_p_primary": 0.09634551495016612
+  },
+  {
+   "rank": 5,
+   "tumor_type": "PRAD",
+   "score": 0.27157685908915014,
+   "ci_low": 0.11316362663943216,
+   "ci_high": 0.39380242644758284,
+   "null_p_primary": 0.08305647840531562
+  }
+ ],
+ "top5_double_centered": {
+  "ACC": 0.902,
+  "OV": 0.78,
+  "UCEC": 0.7295,
+  "PRAD": 0.7255,
+  "PCPG": 0.6331
+ },
+ "tme": {
+  "n_features_tested": 29,
+  "n_fdr_sig": 1,
+  "only_significant": [
+   {
+    "tme_feature": "Bcell_receptors_score",
+    "rho": 0.5715239154616241,
+    "fdr": 0.028131919098861227
+   }
+  ]
+ },
+ "availability_top": {
+  "NPPA": 3.054,
+  "NPPB": 3.029,
+  "PENK": 2.847,
+  "WNT9A": 2.323,
+  "CCL5": 1.591,
+  "CXCL9": 1.337,
+  "GDF10": 1.115,
+  "POSTN": 1.049,
+  "CX3CL1": 0.979,
+  "CCL21": 0.912,
+  "MDK": 0.885,
+  "GDF15": 0.878
+ }
+}

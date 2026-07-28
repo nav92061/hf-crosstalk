@@ -1,0 +1,12 @@
+control,expected,observed,metric,verdict
+Matched-random receptor sets (floor-filtered),low (~0),0.107,mean Spearman rho,pass
+Matched-random receptor sets (NO floor),low (~0),0.363,mean Spearman rho,FLAG - confound present without floor
+Unmatched (naive) random receptor sets,low (~0),0.323,mean Spearman rho,FLAG - expression matching required
+"Matched-random, double-centered",low (~0),0.034,mean Spearman rho,pass
+Leave-one-ligand-out,high (~1),0.907,min rho,pass
+Leave-one-pathway-out,high (~1),0.842,min rho,pass
+min vs geometric-mean complex rule,high (~1),0.908,rho,pass
+availability-weighted vs unweighted,high (~1),0.922,rho,pass
+floor-filtered vs unfiltered ranking,—,0.966,rho,info
+primary vs double-centered ranking,—,0.318,rho,info - ranking is correction-sensitive
+Capacity vs TME features (29 tested),—,1/29 FDR<0.05,n significant,largely null

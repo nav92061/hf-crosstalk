@@ -1,0 +1,31 @@
+tumor_type,gtex_tissue,mapping_quality,mapping_note,quality_flag
+ACC,Adrenal_Gland,good,Adrenocortical carcinoma vs whole adrenal gland (cortex+medulla mixed in GTEx),good
+BLCA,Bladder,good,GTEx Bladder n is small (21 donors),good
+BRCA,Breast_Mammary_Tissue,good,,good
+CESC,Cervix_Ectocervix,fair,GTEx cervix n very small (~5-9 donors); ecto/endo split,fair
+CHOL,Liver,poor,"Cholangiocarcinoma arises from bile-duct epithelium; GTEx has no bile duct, Liver is hepatocyte-dominated",poor
+COAD,Colon_Transverse,good,,good
+ESCA,Esophagus_Mucosa,fair,TCGA ESCA mixes squamous and adenocarcinoma; mucosa is squamous,fair
+GBM,Brain_Cortex,good,,good
+HNSC,Esophagus_Mucosa,poor,No oral/laryngeal mucosa in GTEx; esophageal squamous mucosa used as surrogate epithelium,poor
+KICH,Kidney_Cortex,fair,Chromophobe RCC derives from distal nephron/collecting duct,fair
+KIRC,Kidney_Cortex,good,,good
+KIRP,Kidney_Cortex,good,,good
+LGG,Brain_Cortex,good,,good
+LIHC,Liver,good,,good
+LUAD,Lung,good,,good
+LUSC,Lung,good,,good
+MESO,Lung,poor,No pleura/mesothelium in GTEx; Lung used only as an anatomic neighbour,poor
+OV,Ovary,fair,"Most TCGA OV is high-grade serous, now thought largely fallopian-tube derived; GTEx Ovary is stroma-rich",fair
+PAAD,Pancreas,good,GTEx Pancreas is acinar-dominated; PDAC is ductal,good
+PCPG,Adrenal_Gland,fair,Pheochromocytoma is medullary; paraganglioma is extra-adrenal,fair
+PRAD,Prostate,good,,good
+READ,Colon_Sigmoid,good,,good
+SARC,Esophagus_Muscularis,poor,"TCGA SARC is histologically heterogeneous (LMS, DDLPS, UPS); smooth muscle is a partial surrogate only",poor
+SKCM,Skin_Sun_Exposed_Lower_leg,good,GTEx skin is keratinocyte-dominated; melanocytes are a minor fraction,good
+STAD,Stomach,good,,good
+TGCT,Testis,fair,Testis has extreme transcriptome breadth; germ-cell tumour vs whole testis,fair
+THCA,Thyroid,good,,good
+UCEC,Uterus,fair,GTEx Uterus is myometrium-dominated; UCEC arises from endometrium,fair
+UCS,Uterus,poor,Carcinosarcoma is biphasic (carcinomatous+sarcomatous); no matched normal exists,poor
+UVM,Skin_Not_Sun_Exposed_Suprapubic,poor,No uveal tract in GTEx; skin used only as a melanocyte-containing surrogate,poor

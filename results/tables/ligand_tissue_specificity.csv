@@ -1,0 +1,52 @@
+gene,heart_lv_median,heart_atrial_median,heart_max_median,median_across_tissues,ratio,heart_rank_among_tissues,heart_best_rank,n_tissues,top_tissue,top_tissue_median,classification,established_in_human_HF,ligand_availability,abs_floor_note
+NPPB,26.7743,1639.56,1639.56,0.3049,87.824,2,1,52,Heart_Atrial_Appendage,1639.56,cardiac-enriched,yes,3.0289,
+NPPA,35.8109,28754.0,28754.0,2.9037,12.333,2,1,52,Heart_Atrial_Appendage,28754.0,cardiac-enriched,yes,3.0542,
+AGT,76.1076,138.197,138.197,19.0892,3.987,17,11,52,Liver,1007.43,cardiac-expressed-but-not-enriched,not curated,0.1766,
+FGF1,9.5051,9.0241,9.5051,2.7212,3.493,20,20,52,Brain_Spinal_cord_cervical_c-1,225.991,cardiac-expressed-but-not-enriched,not curated,0.2509,
+IGF2,29.1739,29.7408,29.7408,13.1463,2.219,15,14,52,Adipose_Visceral_Omentum,103.166,cardiac-expressed-but-not-enriched,not curated,0.6095,
+PDGFD,7.1186,15.1553,15.1553,6.3495,1.121,25,14,52,Artery_Aorta,132.077,cardiac-expressed-but-not-enriched,not curated,0.2297,
+VEGFB,123.04,191.939,191.939,112.0735,1.098,24,13,52,Adipose_Subcutaneous,337.643,cardiac-expressed-but-not-enriched,not curated,0.1691,
+CTF1,9.6534,12.0586,12.0586,8.9731,1.076,24,19,52,Uterus,42.847,cardiac-expressed-but-not-enriched,not curated,0.5246,
+HBEGF,16.3475,23.7109,23.7109,15.3732,1.063,22,15,52,Adipose_Visceral_Omentum,101.952,cardiac-expressed-but-not-enriched,not curated,0.2873,
+GAS6,137.127,159.996,159.996,137.021,1.001,26,24,52,Artery_Aorta,1650.91,cardiac-expressed-but-not-enriched,not curated,0.1195,
+PROS1,16.7417,41.4488,41.4488,17.0023,0.985,27,9,52,Nerve_Tibial,167.531,cardiac-expressed-but-not-enriched,not curated,0.5985,
+TGFB3,8.8324,21.2575,21.2575,14.8015,0.597,37,17,52,Cervix_Endocervix,77.76,cardiac-expressed-but-not-enriched,not curated,0.2024,
+LGALS9,5.6922,7.3161,7.3161,9.8753,0.576,38,32,52,Spleen,112.988,cardiac-expressed-but-not-enriched,not curated,0.2753,
+IL33,6.6366,29.732,29.732,13.6242,0.487,37,17,52,Artery_Coronary,86.347,cardiac-expressed-but-not-enriched,not curated,,
+GRN,55.9925,84.972,84.972,115.8345,0.483,36,34,52,Esophagus_Mucosa,503.843,cardiac-expressed-but-not-enriched,not curated,0.2905,
+PTN,16.0399,43.6454,43.6454,33.6838,0.476,38,23,52,Pituitary,234.136,cardiac-expressed-but-not-enriched,not curated,0.7548,
+POSTN,3.7969,31.294,31.294,8.7246,0.435,30,12,52,Artery_Aorta,117.159,cardiac-expressed-but-not-enriched,yes,1.0492,
+CX3CL1,8.8692,9.4862,9.4862,20.9346,0.424,40,36,52,Lung,76.911,cardiac-expressed-but-not-enriched,not curated,0.9787,
+TNFSF12,21.5386,36.4719,36.4719,51.7767,0.416,47,32,52,Artery_Aorta,173.141,cardiac-expressed-but-not-enriched,not curated,0.2206,
+BMP4,3.7277,6.4865,6.4865,9.1245,0.409,33,29,52,Vagina,25.898,cardiac-expressed-but-not-enriched,not curated,0.4534,
+CCL21,9.332,4.0469,9.332,23.8323,0.392,31,31,52,Thyroid,766.644,cardiac-expressed-but-not-enriched,not curated,,
+SEMA3B,12.0738,33.0118,33.0118,44.9294,0.269,45,32,52,Nerve_Tibial,621.573,cardiac-expressed-but-not-enriched,not curated,0.2718,
+MDK,2.656,10.1845,10.1845,15.6253,0.17,49,36,52,Ovary,399.498,cardiac-expressed-but-not-enriched,not curated,0.8845,
+CXCL16,2.0051,6.0414,6.0414,16.9643,0.118,51,48,52,Testis,194.261,cardiac-expressed-but-not-enriched,not curated,,
+TNF,0.4325,0.3448,0.4325,0.2537,1.705,18,18,52,Spleen,8.96,not-cardiac,not curated,0.5089,below 5 TPM in both chambers - not a credible secretion source
+WNT9A,2.0217,1.5447,2.0217,2.7545,0.734,29,29,52,Colon_Sigmoid,31.607,not-cardiac,not curated,2.323,below 5 TPM in both chambers - not a credible secretion source
+TAC4,0.2245,0.6928,0.6928,0.333,0.674,38,4,52,Pituitary,6.548,not-cardiac,not curated,,below 5 TPM in both chambers - not a credible secretion source
+UCN,2.8175,2.9049,2.9049,4.2312,0.666,38,36,52,Brain_Cortex,10.396,not-cardiac,not curated,,below 5 TPM in both chambers - not a credible secretion source
+CCL24,0.1078,0.0567,0.1078,0.1867,0.578,31,31,52,Spleen,84.678,not-cardiac,not curated,,below 5 TPM in both chambers - not a credible secretion source
+IL12A,0.4552,0.3914,0.4552,0.7903,0.576,39,39,52,Esophagus_Mucosa,6.58,not-cardiac,not curated,,below 5 TPM in both chambers - not a credible secretion source
+CXCL9,0.3413,0.7922,0.7922,0.6285,0.543,35,24,52,Lung,9.008,not-cardiac,not curated,1.3374,below 5 TPM in both chambers - not a credible secretion source
+IGF1,1.4734,4.8623,4.8623,2.962,0.497,34,22,52,Cervix_Endocervix,46.659,not-cardiac,not curated,0.4779,below 5 TPM in both chambers - not a credible secretion source
+INHBA,0.3791,1.8747,1.8747,0.8538,0.444,38,14,52,Artery_Tibial,21.224,not-cardiac,not curated,0.6342,below 5 TPM in both chambers - not a credible secretion source
+GDF6,0.1845,2.4632,2.4632,0.436,0.423,37,2,52,Uterus,2.575,not-cardiac,not curated,0.6472,below 5 TPM in both chambers - not a credible secretion source
+BMP6,1.623,4.0577,4.0577,4.2118,0.385,49,28,52,Adipose_Subcutaneous,29.738,not-cardiac,not curated,0.2721,below 5 TPM in both chambers - not a credible secretion source
+PENK,0.3862,0.8687,0.8687,1.0933,0.353,36,31,52,Brain_Nucleus_accumbens_basal_ganglia,269.227,not-cardiac,yes,,below 5 TPM in both chambers - not a credible secretion source
+GZMA,0.418,0.9759,0.9759,1.3594,0.307,41,34,52,Spleen,67.32,not-cardiac,not curated,0.58,below 5 TPM in both chambers - not a credible secretion source
+NTF3,0.3816,1.0641,1.0641,1.2468,0.306,38,29,52,Artery_Tibial,24.078,not-cardiac,not curated,0.3758,below 5 TPM in both chambers - not a credible secretion source
+CCL3,0.4177,1.8335,1.8335,1.4997,0.278,48,22,52,Spleen,57.814,not-cardiac,not curated,0.5008,below 5 TPM in both chambers - not a credible secretion source
+FLT3LG,2.0427,3.9116,3.9116,7.8638,0.26,43,33,52,Cervix_Ectocervix,24.992,not-cardiac,not curated,,below 5 TPM in both chambers - not a credible secretion source
+CCL5,1.0315,2.925,2.925,3.9849,0.259,44,31,52,Whole_Blood,221.113,not-cardiac,not curated,1.5915,below 5 TPM in both chambers - not a credible secretion source
+TGFB2,0.7355,1.9112,1.9112,2.9745,0.247,48,38,52,Minor_Salivary_Gland,15.013,not-cardiac,not curated,0.68,below 5 TPM in both chambers - not a credible secretion source
+GDF9,0.1491,0.1719,0.1719,0.6476,0.23,51,50,52,Testis,16.852,not-cardiac,not curated,0.2376,below 5 TPM in both chambers - not a credible secretion source
+IL16,1.0576,2.3026,2.3026,5.1894,0.204,40,35,52,Brain_Cerebellum,65.557,not-cardiac,not curated,0.4296,below 5 TPM in both chambers - not a credible secretion source
+CCL4,0.5976,2.2687,2.2687,3.1674,0.189,46,31,52,Spleen,86.669,not-cardiac,not curated,0.4558,below 5 TPM in both chambers - not a credible secretion source
+IL17B,0.0984,0.5716,0.5716,0.5668,0.174,41,26,52,Nerve_Tibial,48.011,not-cardiac,not curated,0.1853,below 5 TPM in both chambers - not a credible secretion source
+MSTN,0.0881,0.2638,0.2638,0.6574,0.134,51,46,52,Cervix_Ectocervix,3.88,not-cardiac,not curated,0.337,below 5 TPM in both chambers - not a credible secretion source
+WNT10B,0.1644,0.8306,0.8306,1.2918,0.127,49,37,52,Brain_Nucleus_accumbens_basal_ganglia,36.142,not-cardiac,not curated,0.4098,below 5 TPM in both chambers - not a credible secretion source
+GDF15,0.4217,0.7614,0.7614,4.0408,0.104,48,39,52,Kidney_Cortex,120.115,not-cardiac,yes,0.878,below 5 TPM in both chambers - not a credible secretion source
+GDF10,0.3137,3.205,3.205,3.21,0.098,47,27,52,Lung,33.405,not-cardiac,not curated,1.1147,below 5 TPM in both chambers - not a credible secretion source
+NRG1,0.0255,0.4422,0.4422,0.7721,0.033,51,31,52,Cervix_Endocervix,5.053,not-cardiac,not curated,0.8766,below 5 TPM in both chambers - not a credible secretion source
