@@ -23,6 +23,8 @@ from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.units import mm
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.lib import colors
+from reportlab.platypus import Table as RLTable, TableStyle
 from reportlab.platypus import (BaseDocTemplate, Frame, Image, KeepTogether,
                                 NextPageTemplate, PageBreak, PageTemplate,
                                 Paragraph, Spacer)
@@ -71,6 +73,8 @@ def styles():
                              spaceBefore=7, spaceAfter=2.5, alignment=TA_LEFT),
         "h3": ParagraphStyle("h3", fontName="TNR-B", fontSize=9.5, leading=11.5,
                              spaceBefore=5.5, spaceAfter=2, alignment=TA_LEFT),
+        "h4": ParagraphStyle("h4", fontName="TNR-I", fontSize=9.2, leading=11.2,
+                             spaceBefore=4.5, spaceAfter=1.5, alignment=TA_LEFT),
         "p": ParagraphStyle("p", **base),
         "li": ParagraphStyle("li", leftIndent=9, bulletIndent=2, **base),
         "cap": ParagraphStyle("cap", fontName="TNR", fontSize=7.8, leading=9.4,
@@ -96,9 +100,26 @@ def inline(t):
     t = re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", t, flags=re.S)
     t = re.sub(r"(?<!\*)\*([^*\n]+?)\*(?!\*)", r"<i>\1</i>", t)
     t = re.sub(r"`([^`]+?)`", r'<font name="ARI" size="8.2">\1</font>', t)
-    # non-breaking hyphen in compounds reportlab breaks while dropping the hyphen
-    for w in ("fibroblast-derived", "cardiac-plasma"):
-        t = t.replace(w, w.replace("-", "\u2011"))
+    # {^n} / {^n,m} -> superscript citation (AMA style). Times New Roman has real
+    # glyphs only for 1-3, so digits are rendered via <super> rather than U+207x.
+    def _sup(m):
+        s = m.group(1)
+        if s.startswith("-"):          # scientific exponent, not a citation
+            return "<super>\u2212%s</super>" % s[1:]
+        if "," in s:
+            # AMA: consecutive citations collapse to a range, others stay comma-listed
+            ns = [int(x) for x in s.split(",")]
+            out, i = [], 0
+            while i < len(ns):
+                j = i
+                while j + 1 < len(ns) and ns[j + 1] == ns[j] + 1:
+                    j += 1
+                out.append("%d-%d" % (ns[i], ns[j]) if j - i >= 2 else
+                           ",".join(str(n) for n in ns[i:j + 1]))
+                i = j + 1
+            s = ",".join(out)
+        return "<super>%s</super>" % s.replace("-", "\u2013")
+    t = re.sub(r"\{\^(-?[\d,]+)\}", _sup, t)
     return t
 
 
@@ -110,7 +131,9 @@ def md_blocks(text):
         if not s:
             i += 1
             continue
-        if s.startswith("# "):
+        if s.startswith("#### "):
+            out.append(("h4", s[5:]))
+        elif s.startswith("# "):
             out.append(("title", s[2:]))
         elif s.startswith("### "):
             out.append(("h3", s[4:]))
@@ -239,10 +262,31 @@ def build(md_text, out, figdir="results/figures", offsets=None, art2file=None):
             continue
         if k == "title":
             continue
-        sty = S["abs"] if in_abs else S[{"h2": "h2", "h3": "h3", "li": "li"}.get(k, "p")]
+        sty = S["abs"] if in_abs else S[{"h2": "h2", "h3": "h3", "h4": "h4", "li": "li"}.get(k, "p")]
         if k == "table":
-            for row in v:
-                story.append(Paragraph(inline(" | ".join(row)), S["cap"]))
+            # Real ruled table sized to the column frame; cells wrap as paragraphs.
+            ncol = max(len(r) for r in v)
+            cell = ParagraphStyle("cell", parent=S["cap"], fontSize=7.2, leading=8.6,
+                                  alignment=TA_LEFT)
+            hdr = ParagraphStyle("hcell", parent=cell, fontName="TNR-B")
+            data = [[Paragraph(inline(c), hdr if r == 0 else cell)
+                     for c in (row + [""] * (ncol - len(row)))]
+                    for r, row in enumerate(v)]
+            # widen the first column slightly; the rest share the remainder
+            first = COLW * (0.30 if ncol <= 3 else 0.20)
+            rest = (COLW - first) / (ncol - 1) if ncol > 1 else COLW
+            tb = RLTable(data, colWidths=[first] + [rest] * (ncol - 1), repeatRows=1)
+            tb.setStyle(TableStyle([
+                ("GRID", (0, 0), (-1, -1), 0.3, colors.HexColor("#888888")),
+                ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#EEEEEE")),
+                ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                ("LEFTPADDING", (0, 0), (-1, -1), 2.5),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 2.5),
+                ("TOPPADDING", (0, 0), (-1, -1), 2),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 2),
+            ]))
+            story.append(tb)
+            story.append(Spacer(1, 6))
             continue
         if k == "h2" and v.startswith("References"):
             story.append(Paragraph(inline(v), S["h2"]))
