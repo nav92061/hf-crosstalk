@@ -1,6 +1,6 @@
 ---
 name: geo-bulk-de
-description: Download a GEO bulk RNA-seq series (supplementary matrices, per-sample count CSVs, or series matrix metadata), parse disease-group labels out of the series matrix characteristics, and run two-group differential expression with empirical-Bayes moderated t statistics implemented in pure Python (a limma-trend / limma-voom equivalent, not a call into limma). Also computes cross-cohort replication statistics — overlap hypergeometric p, directional concordance, log2FC Spearman rho. Use for GEO series accessions (GSE…), MAGNet/LV heart cohorts, or any bulk RNA-seq case-vs-control contrast where group labels must be derived from GEO metadata rather than hardcoded.
+description: Download a GEO bulk expression series - RNA-seq (supplementary matrices, per-sample count CSVs) or Affymetrix/microarray (probe-level series matrix) - parse disease-group labels out of the series matrix characteristics, collapse probes to genes by maximum mean intensity, and run two-group differential expression with empirical-Bayes moderated t statistics implemented in pure Python (a limma-trend / limma-voom equivalent, not a call into limma). Also computes cross-cohort replication statistics — overlap hypergeometric p, directional concordance, log2FC Spearman rho. Use for GEO series accessions (GSE…), MAGNet/LV heart cohorts, Affymetrix HG-U133A / HuGene-ST series, or any bulk case-vs-control contrast - RNA-seq or array - where group labels must be derived from GEO metadata rather than hardcoded, and for cross-platform replication where a signature must be tested on a technology it was not derived on.
 ---
 
 # geo-bulk-de
@@ -13,13 +13,19 @@ no hardcoded sample labels.
 Three jobs, in order:
 
 1. **Fetch** — build GEO FTP paths from a GSE accession, download supplementary
-   expression matrices (or a `_RAW.tar` of per-sample tables) and the series
-   matrix.
+   expression matrices (or a `_RAW.tar` of per-sample tables), the series
+   matrix, and — for an array series — the platform annotation.
 2. **Label** — parse `!Sample_characteristics_ch1` out of the series matrix into
    a per-sample DataFrame. Group assignment comes from this table; you never
    hand-write which GSM is a case.
 3. **Test** — moderated-t differential expression appropriate to the data scale
-   (raw counts vs RPKM/FPKM/TPM), plus cross-cohort replication statistics.
+   (raw counts vs RPKM/FPKM/TPM vs log2 array intensities), plus cross-cohort
+   replication statistics.
+
+For a microarray series the values live *inside* the series matrix at probe
+level, so there is a step between 2 and 3: collapse probes to genes
+(`collapse_probes_to_genes`) and establish the scale (`detect_log_scale`).
+See "Microarray series" below.
 
 Everything lives in `kernel.py`: pure stdlib + pandas/numpy/scipy/statsmodels,
 functions taking paths/DataFrames and returning DataFrames/dicts. No agent, no
@@ -77,6 +83,7 @@ the fitted-value interpolation differ in detail from limma's `voom()`.
 | raw counts | `"limma_trend_counts"` | log2-CPM, trended prior |
 | RPKM / FPKM / TPM | `"limma_trend"` | `log2(x + 1)`, trended prior |
 | already log-scale | `"limma_trend"` + `already_logged=True` | none |
+| microarray (RMA log2 or linear intensities) | `run_de_microarray` | detected, not assumed |
 
 RPKM/FPKM input is a real limitation, not a preference: gene-length-normalised
 values cannot be given a count-based mean-variance model, library-size
@@ -95,6 +102,23 @@ fetch_geo_supplementary(gse, dest_dir, pattern=None, timeout=300,
                         overwrite=False) -> list[str]     # local paths
 fetch_series_matrix(gse, dest_dir, timeout=300, overwrite=False) -> str
 extract_tar(tar_path, dest_dir, pattern=None) -> list[str]
+```
+
+Microarray (probe-level series matrices):
+
+```python
+list_series_matrix_files(gse, timeout=None) -> list[str]
+fetch_series_matrix(gse, dest_dir, ..., platform=None) -> str   # platform= for multi-GPL series
+series_matrix_platform(path) -> str                # "GPL96", or "GPL1|GPL2" if mixed
+load_series_matrix_expression(path, aggregate=None) -> DataFrame   # features x samples, float64
+fetch_platform_annotation(gpl, dest_dir, timeout=None, overwrite=False) -> str
+parse_platform_annotation(path, id_col="ID", symbol_col="Gene symbol") -> Series
+detect_log_scale(expr, log_max=None, linear_min=None) -> dict
+collapse_probes_to_genes(expr, probe_to_gene, method="max_mean", ambiguous="raise",
+                         multi_gene_sep="///", gene_name="gene") -> (DataFrame, report)
+run_de_microarray(expr, groups, case, control, already_logged=None, ...) -> DataFrame
+label_permutation_control(expr, groups, case, control, seed, n_perm=1, fdr=0.05,
+                          de_fn=None, **de_kwargs) -> list[dict]
 ```
 
 Metadata and loading:
@@ -246,6 +270,121 @@ hypergeometric test saturates (a tiny p-value at ~1x fold enrichment), and
 `directional_concordance` plus `spearman_rho` are the metrics that carry
 information.
 
+## Microarray series
+
+A microarray series matrix is different from an RNA-seq one in three ways that
+each have a bug attached, so each gets an explicit function rather than an
+assumption.
+
+**1. The values are in the series matrix, at probe level.** There is no
+supplementary counts file to fetch: `load_series_matrix_expression` reads the
+table between `!series_matrix_table_begin` / `_end`. Its index is the platform's
+probe id, not a gene. A SuperSeries stub has the markers but no value rows, and
+raises with that diagnosis (GSE57345's GPL9052 sub-series is exactly this).
+Multi-platform series have no `<GSE>_series_matrix.txt.gz` at all — call
+`list_series_matrix_files` and pass `platform=` to `fetch_series_matrix`.
+
+**2. Several probes map to one gene, and some probes map to several genes.**
+`collapse_probes_to_genes(expr, mapping, method="max_mean")` keeps, per gene,
+the single probe with the highest mean intensity across samples. Probes whose
+annotation names more than one gene (GEO writes these as `"MIR4640///DDR1"`)
+**raise by default**. Taking the first symbol silently is not an option the API
+offers — pass `ambiguous="drop"` to exclude them and read the count out of the
+returned report. On GPL96 that is 1,223 of 22,283 probes; on GPL11532, 2,354 of
+33,297. Selection is deterministic (ties broken by probe id), so the result does
+not depend on input row order.
+
+**3. Whether the values are log2 is not stated anywhere reliable.** RMA output
+is log2; MAS5 output is linear; the metadata usually does not say.
+`detect_log_scale` decides from the values and *reports which rule fired*
+(`logged:negative_values` / `logged:max_le_30` / `linear:max_ge_100`), and
+**raises** when the maximum falls in the undecidable band rather than guessing.
+`run_de_microarray` calls it and records the branch in
+`.attrs['log_scale_branch']`, so a published log2FC can always be traced to a
+scale decision. Pass `already_logged=` to override; the branch then reads
+`caller:already_logged=...`.
+
+Do not set `filter_min_value` on an RMA matrix. The default is `None` for a
+reason: RMA is already background-corrected, a threshold of 1.0 on a log2 matrix
+removes nothing, and a threshold near the array noise floor throws away real
+low-expressed genes.
+
+```python
+import kernel as k
+
+sm   = k.fetch_series_matrix("GSE5406", "data/GSE5406")           # single-platform
+gpl  = k.series_matrix_platform(sm)                                # "GPL96"
+ex   = k.load_series_matrix_expression(sm)                         # 22283 probes x 210
+ann  = k.parse_platform_annotation(k.fetch_platform_annotation(gpl, "data"))
+print(k.detect_log_scale(ex))     # -> branch 'logged:max_le_30', max 13.4
+
+expr, report = k.collapse_probes_to_genes(ex, ann, method="max_mean",
+                                          ambiguous="drop")        # -> 12502 genes
+print(report["n_probes_ambiguous"], report["max_probes_per_gene"])  # 1223 13
+
+# labels come out of the metadata; ALWAYS inspect the columns first
+meta = k.parse_series_matrix_metadata(sm)
+print(meta.columns.tolist())      # GSE5406 puts the group in 'characteristic'
+arm = meta["characteristic"].map(my_parser).reindex(expr.columns)
+de  = k.run_de_microarray(expr, arm.replace({"ICM": "failing", "NICM": "failing"}),
+                          case="failing", control="non_failing")
+print(de.attrs["log_scale_branch"])
+```
+
+Multi-platform series, and the label column that is not `characteristics`:
+
+```python
+print(k.list_series_matrix_files("GSE57345"))
+# -> ['GSE57345-GPL11532_series_matrix.txt.gz', 'GSE57345-GPL9052_series_matrix.txt.gz']
+sm = k.fetch_series_matrix("GSE57345", "data/GSE57345", platform="GPL11532")
+```
+
+Older series carry the disease group in `!Sample_description` and have no
+`!Sample_characteristics_ch1` line at all — GSE1869 is one. `description` is
+returned by `parse_series_matrix_metadata` for that reason; check it before
+concluding a series has no usable labels. Where a series carries two independent
+label fields (GSE57345 has `disease_status` and `heart_failure`), cross-check
+them and assert they agree.
+
+## Label-permutation control
+
+`label_permutation_control` re-runs the contrast on a shuffled label vector
+(group sizes preserved) and counts hits at FDR<0.05. A correct pipeline returns
+**zero**; anything else means the variance model, the FDR, or the label
+alignment is wrong, and no unpermuted number from that pipeline can be trusted.
+`seed` is a required positional argument — a control you cannot reproduce is not
+a control.
+
+```python
+rows = k.label_permutation_control(expr, groups, "failing", "non_failing",
+                                   seed=20260727)
+assert rows[0]["n_sig"] == 0, rows
+```
+
+Run it on every cohort before reporting any DE result, not only when something
+looks wrong.
+
+## Cross-platform comparison: what changes
+
+When comparing an array cohort against an RNA-seq signature, three things
+degrade the comparison before any biology enters, and all three should be
+reported:
+
+- **Coverage.** Only part of a signature is measurable on an older array
+  (2,816 of 5,034 symbols on GPL96; 3,737 on GPL11532). Report the measurable
+  fraction; a gene absent from the platform is untestable, not discordant.
+- **Identifier harmonisation.** Ensembl-vs-symbol comparison needs symbols on
+  both sides. Symbols that several rows map to should be dropped, not summed —
+  and the count dropped should be reported.
+- **Effect compression.** Array log2FCs are systematically smaller than RNA-seq
+  log2FCs for the same genes (regression slope ~0.36–0.46 in the HF cohorts).
+  Concordance and Spearman ρ are rank-based and survive this; anything
+  comparing raw effect magnitudes across technologies does not.
+
+Report ρ across all shared genes and ρ among genes significant in both
+**separately**. They are different quantities — in these cohorts 0.35 vs 0.71 —
+and quoting one as the other is a defect, not a rounding difference.
+
 ## Preconditions (enforced — these raise, they are not advice)
 
 `check_de_inputs`, called by every `run_de`, raises `ValueError` when:
@@ -267,6 +406,27 @@ raises on a missing `!Sample_geo_accession` line, ragged characteristics rows, o
 duplicate GSM ids. `replication_stats` raises on missing columns, duplicate gene
 ids, or zero shared genes (the "you forgot to harmonize identifiers" case).
 
+The microarray additions raise as follows:
+
+- `load_series_matrix_expression`: no table markers; a table with no value rows
+  (SuperSeries stub); duplicate feature ids while `aggregate is None`.
+- `parse_platform_annotation`: no platform-table markers; a missing `id_col` /
+  `symbol_col` (the error lists the columns that exist); duplicate probe ids.
+- `detect_log_scale`: no finite values; a maximum in the undecidable band
+  between `log_max` and `linear_min`.
+- `collapse_probes_to_genes`: unknown `method` or `ambiguous`; duplicate probe
+  ids in the mapping; a mapping sharing no probe ids with the matrix (the
+  wrong-platform case); **any ambiguous multi-gene probe under the default
+  `ambiguous="raise"`**; an empty result.
+- `label_permutation_control`: `n_perm < 1`, and `TypeError` if `seed` is
+  omitted.
+
+Postconditions for the additions: `load_series_matrix_expression` and
+`collapse_probes_to_genes` return float64 frames with a unique index and the
+input column order; `collapse_probes_to_genes`' report accounts for every input
+probe (`annotated + unannotated = n_probes_in`); `run_de_microarray` output
+carries `attrs['log_scale_branch']`.
+
 ## Postconditions
 
 - `run_de` output has no duplicate genes, `fdr >= p_value` elementwise, and rows
@@ -287,10 +447,21 @@ counts designs, and under a permuted null the p-value distribution was uniform
 change to `fit_f_dist` or `moderated_t` — a broken prior shows up as either a
 degenerate `d0` (0 or inf) or an anti-conservative null.
 
+The microarray path was validated on GSE5406 (210 samples, GPL96), GSE1869 (37,
+GPL96) and GSE57345 (313, GPL11532): scale detection fired
+`logged:max_le_30` on all three, probe collapsing was row-order invariant, and
+`label_permutation_control` returned 0 significant genes in all six contrasts
+run. NPPA (up) and MYH6 (down) recovered at FDR<0.05 in the two well-powered
+cohorts — a useful smoke test for a failing-heart contrast. Note that NPPB does
+**not** recover on either array platform (single probe, log2FC −0.14 on GPL96 and
++0.30 on GPL11532 against +3.97 in RNA-seq), so do not use NPPB alone as a
+pipeline check on an array cohort.
+
 ## Standalone use (no agent)
 
 `kernel.py` imports only `gzip`, `io`, `os`, `re`, `tarfile`,
-`urllib.request`, `numpy`, `pandas`, `scipy`, `statsmodels`. There are no
+`urllib.request`, `numpy`, `pandas`, `scipy`, `statsmodels` — the microarray
+additions introduce no new dependency. There are no
 references to any agent/platform API, so:
 
 ```bash

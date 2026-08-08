@@ -461,3 +461,203 @@ def write_manifest(path, inputs, params, outputs, notes=""):
     with open(path, "w") as fh:
         json.dump(man, fh, indent=1, default=str)
     return path
+
+
+# ---------------------------------------------------------------------------
+# Source-specificity by induction, and multi-part conjunction verdicts.
+#
+# Added after a screen returned zero surviving axes because source-tissue
+# specificity was scored in HEALTHY tissue. A ligand that is unremarkable at
+# baseline but strongly induced in disease is a plausible disease-source
+# ligand, and a healthy-baseline filter discards it. Correcting that recovered
+# axes that the original criterion had hidden.
+#
+# The correction also showed why a relaxation needs a guard: the recovered hits
+# ran on receptors that 74% of all floor-passing receptors could have matched.
+# induction_specificity() therefore returns the criteria SEPARATELY so the
+# binding constraint is visible, and conjunction_verdict() refuses to call a
+# partial pass a pass.
+# ---------------------------------------------------------------------------
+
+
+def induction_specificity(disease_de, baseline_rank, housekeeping_gene="GAPDH",
+                          min_log2fc=1.0, max_fdr=0.05, min_housekeeping_ratio=0.005,
+                          max_baseline_rank_frac=0.5, log_scale=True):
+    """Score ligands on disease induction rather than healthy-tissue specificity.
+
+    Three criteria, each computed WITHIN a single dataset so no cross-platform
+    absolute comparison is implied (see SKILL.md on unit mismatches):
+
+      A1  replicated induction: log2FC >= min_log2fc and FDR < max_fdr in EVERY
+          cohort supplied. Requiring every cohort is the point; a single-cohort
+          hit is not replication.
+      A2  abundance guard: the ligand reaches min_housekeeping_ratio of the
+          housekeeping gene INSIDE each disease cohort. This is the same
+          housekeeping-relative device as housekeeping_floor(), applied to the
+          source tissue instead of the receiver.
+      A3  baseline non-exclusion: the source tissue ranks within the top
+          max_baseline_rank_frac of tissues at baseline. This is deliberately
+          weaker than "ranks first" -- it is the relaxation. Keep it explicit so
+          a reader can see the hit depended on it.
+
+    Args:
+        disease_de: {cohort_name: DataFrame} with columns gene_symbol, log2FC,
+            fdr, mean_expr. mean_expr is assumed log2 when log_scale is True.
+        baseline_rank: DataFrame with columns gene, best_source_rank, n_tissues.
+            A ligand absent here FAILS A3 -- it is never silently skipped.
+        housekeeping_gene: reference for the A2 ratio.
+        min_log2fc: A1 threshold, applied to the MINIMUM across cohorts.
+        max_fdr: A1 significance threshold in every cohort.
+        min_housekeeping_ratio: A2 threshold as a fraction of housekeeping.
+        max_baseline_rank_frac: A3 threshold as a fraction of n_tissues.
+        log_scale: whether mean_expr needs 2** before ratios are taken.
+
+    Returns:
+        DataFrame, one row per ligand, with per-criterion booleans, the value
+        behind each, pass_all, and binding_constraint naming which criteria
+        failed. Inspect binding_constraint before believing pass_all: if one
+        criterion removes nearly everything, the screen is testing that
+        criterion and not the biology.
+
+    Raises:
+        ValueError: if a cohort lacks the housekeeping gene or required columns.
+    """
+    if not disease_de:
+        raise ValueError("disease_de is empty; supply at least one cohort")
+
+    req = {"gene_symbol", "log2FC", "fdr", "mean_expr"}
+    hk = {}
+    for name, df in disease_de.items():
+        missing = req - set(df.columns)
+        if missing:
+            raise ValueError(f"cohort {name!r} missing columns: {sorted(missing)}")
+        row = df.loc[df["gene_symbol"] == housekeeping_gene, "mean_expr"]
+        if row.empty:
+            raise ValueError(
+                f"housekeeping gene {housekeeping_gene!r} absent from cohort {name!r}; "
+                "the A2 abundance guard cannot be computed without it")
+        hk[name] = (2.0 ** float(row.mean())) if log_scale else float(row.mean())
+
+    genes = sorted(set().union(*[set(df["gene_symbol"].dropna()) for df in disease_de.values()]))
+    brank = baseline_rank.set_index("gene") if "gene" in baseline_rank.columns else baseline_rank
+
+    rows = []
+    for g in genes:
+        fcs, fdrs, ratios, present = [], [], [], True
+        for name, df in disease_de.items():
+            sub = df.loc[df["gene_symbol"] == g]
+            if sub.empty:
+                present = False
+                break
+            fcs.append(float(sub["log2FC"].mean()))
+            fdrs.append(float(sub["fdr"].min()))
+            me = float(sub["mean_expr"].mean())
+            ratios.append(((2.0 ** me) if log_scale else me) / hk[name])
+        if not present:
+            rows.append({"ligand": g, "A1_pass": False, "A2_pass": False, "A3_pass": False,
+                         "min_log2FC": np.nan, "min_ratio_housekeeping": np.nan,
+                         "baseline_rank": np.nan, "pass_all": False,
+                         "binding_constraint": "absent_from_a_cohort"})
+            continue
+
+        a1 = bool(min(fcs) >= min_log2fc and max(fdrs) < max_fdr and min(fcs) > 0)
+        a2 = bool(min(ratios) >= min_housekeeping_ratio)
+
+        if g in brank.index:
+            r = brank.loc[g]
+            rank = float(r["best_source_rank"])
+            ntis = float(r.get("n_tissues", np.nan))
+            a3 = bool(np.isfinite(rank) and np.isfinite(ntis)
+                      and rank <= max_baseline_rank_frac * ntis)
+        else:
+            rank, a3 = np.nan, False   # absent from baseline table => fails A3
+
+        failed = [n for n, ok in (("A1", a1), ("A2", a2), ("A3", a3)) if not ok]
+        rows.append({
+            "ligand": g, "A1_pass": a1, "A2_pass": a2, "A3_pass": a3,
+            "min_log2FC": min(fcs), "min_ratio_housekeeping": min(ratios),
+            "baseline_rank": rank, "pass_all": not failed,
+            "binding_constraint": "+".join(failed) if failed else "none",
+        })
+    return pd.DataFrame(rows).set_index("ligand").sort_values(
+        ["pass_all", "min_log2FC"], ascending=[False, False])
+
+
+def conjunction_verdict(results, require_all=True):
+    """Score several sub-analyses as a conjunction, not a best-of.
+
+    Where one hypothesis implies several independent predictions, testing each
+    and reporting whichever clears significance inflates the false-positive
+    rate by exactly the number of predictions. Requiring simultaneous agreement
+    is the multiplicity control, and it has to be fixed BEFORE the tests run --
+    deciding afterwards which conjuncts counted is the failure this guards.
+
+    Args:
+        results: {name: {"pass": bool, "direction_ok": bool, "detail": str}}.
+            direction_ok defaults to the pass value when absent, but supply it
+            explicitly: a conjunct can be significant in the WRONG direction,
+            which is evidence against, not for.
+        require_all: keep True unless a rule fixed in advance said otherwise.
+
+    Returns:
+        {"verdict": "PASS"|"FAIL", "n_passed", "n_total", "failing_conjuncts",
+         "wrong_direction", "detail"}. A FAIL carries the failing names so the
+        write-up cannot quietly become "n of m passed".
+
+    Raises:
+        ValueError: if results is empty or a conjunct lacks a "pass" key.
+    """
+    if not results:
+        raise ValueError("results is empty; a conjunction needs at least one conjunct")
+
+    passed, failing, wrong_dir = [], [], []
+    for name, r in results.items():
+        if "pass" not in r:
+            raise ValueError(f"conjunct {name!r} has no 'pass' key")
+        ok = bool(r["pass"])
+        dir_ok = bool(r.get("direction_ok", ok))
+        if not dir_ok:
+            wrong_dir.append(name)
+        if ok and dir_ok:
+            passed.append(name)
+        else:
+            failing.append(name)
+
+    verdict = "PASS" if (not failing if require_all else bool(passed)) else "FAIL"
+    return {
+        "verdict": verdict,
+        "n_passed": len(passed),
+        "n_total": len(results),
+        "passing_conjuncts": passed,
+        "failing_conjuncts": failing,
+        "wrong_direction": wrong_dir,
+        "detail": {k: v.get("detail", "") for k, v in results.items()},
+    }
+
+
+def receptor_pass_rate(receptor_table, receptor_col="receptor",
+                       pass_col="recpass", min_types=1):
+    """Base rate at which receptors satisfy the receiver criterion, ligand-free.
+
+    Ask this BEFORE reading an axis count as evidence for a particular ligand.
+    If most receptors in the universe pass with some tumour type regardless of
+    ligand, an axis count is measuring the permissiveness of the receiver test.
+    In the screen this was written for the rate was 74% -- which made a
+    seven-axis result uninformative on its own.
+
+    Returns:
+        {"base_rate", "n_passing", "n_receptors", "distribution",
+         "mean_types_per_receptor"} where base_rate is the fraction passing in
+        at least min_types contexts.
+    """
+    if pass_col not in receptor_table.columns:
+        raise ValueError(f"receptor_table has no {pass_col!r} column")
+    per = receptor_table.groupby(receptor_col)[pass_col].sum()
+    return {
+        "base_rate": float((per >= min_types).mean()),
+        "n_passing": int((per >= min_types).sum()),
+        "n_receptors": int(per.size),
+        "distribution": {int(k): int(v) for k, v in per.value_counts().sort_index().items()},
+        "mean_types_per_receptor": float(per.mean()),
+    }
+

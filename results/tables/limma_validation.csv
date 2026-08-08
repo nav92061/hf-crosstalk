@@ -1,0 +1,84 @@
+cohort,limma_variant,metric,custom_value,limma_value,value,threshold,pass,note
+CRITERION,PRE-FIXED,criterion,NA,NA,NA,NA,NA,VALIDATED requires BOTH (a) Pearson r >= 0.99 between custom and limma log2 fold changes on shared genes AND (b) >= 0.95 Jaccard-style overlap of the FDR<0.05 gene sets. Both must hold in BOTH cohorts. Anything less is NOT VALIDATED and must be reported as a caveat on the 5036-gene signature. Fixed before any computation; not softened after seeing numbers; no post hoc selection of the best-agreeing variant.
+GSE116250,limma-trend on log2(RPKM+1),n_shared_genes,,,21910,,,
+GSE116250,limma-trend on log2(RPKM+1),pearson_r_log2FC,,,1.0,>= 0.99,PASS,criterion (a)
+GSE116250,limma-trend on log2(RPKM+1),spearman_rho_log2FC,,,1.0,,,
+GSE116250,limma-trend on log2(RPKM+1),pearson_r_moderated_t,,,0.99999907,,,
+GSE116250,limma-trend on log2(RPKM+1),spearman_rho_moderated_t,,,0.99999953,,,
+GSE116250,limma-trend on log2(RPKM+1),max_abs_diff_log2FC,,,4.25e-14,,,"log2FC agree to ~1e-14, i.e. floating-point round-off on an identical OLS estimate; no methodological difference in the fold-change estimate"
+GSE116250,limma-trend on log2(RPKM+1),max_abs_diff_moderated_t,,,0.05976,,,
+GSE116250,limma-trend on log2(RPKM+1),median_abs_diff_moderated_t,,,0.00096171,,,
+GSE116250,limma-trend on log2(RPKM+1),sign_concordance_log2FC,,,1.0,,,
+GSE116250,limma-trend on log2(RPKM+1),n_sig_FDR0.05,9230,9230,,,,
+GSE116250,limma-trend on log2(RPKM+1),n_sig_in_both,,,9226,,,
+GSE116250,limma-trend on log2(RPKM+1),n_sig_custom_only,,,4,,,
+GSE116250,limma-trend on log2(RPKM+1),n_sig_limma_only,,,4,,,
+GSE116250,limma-trend on log2(RPKM+1),jaccard_FDR0.05,,,0.99913364,>= 0.95,PASS,criterion (b)
+GSE116250,limma-trend on log2(RPKM+1),prior_df (d0 / fit$df.prior),3.040773,3.037268,,,,custom d0 recovered by re-running the shipped implementation on the rebuilt matrix
+GSE116250,limma-trend on log2(RPKM+1),prior_var median (s0^2 / fit$s2.prior),0.122295,0.119167,,,,gene-specific under trend; median reported
+GSE116250,limma-trend on log2(RPKM+1),prior_var min,0.068559,0.069455,,,,
+GSE116250,limma-trend on log2(RPKM+1),prior_var max,0.149716,0.213151,,,,
+GSE116250,limma-trend on log2(RPKM+1),df_residual,,,62,,,
+GSE141910,limma-trend (trend=TRUE) on deposited log2 values,n_shared_genes,,,20781,,,
+GSE141910,limma-trend (trend=TRUE) on deposited log2 values,pearson_r_log2FC,,,1.0,>= 0.99,PASS,criterion (a)
+GSE141910,limma-trend (trend=TRUE) on deposited log2 values,spearman_rho_log2FC,,,1.0,,,
+GSE141910,limma-trend (trend=TRUE) on deposited log2 values,pearson_r_moderated_t,,,0.99999995,,,
+GSE141910,limma-trend (trend=TRUE) on deposited log2 values,spearman_rho_moderated_t,,,0.99999997,,,
+GSE141910,limma-trend (trend=TRUE) on deposited log2 values,max_abs_diff_log2FC,,,7.56e-14,,,"log2FC agree to ~1e-14, i.e. floating-point round-off on an identical OLS estimate; no methodological difference in the fold-change estimate"
+GSE141910,limma-trend (trend=TRUE) on deposited log2 values,max_abs_diff_moderated_t,,,0.022007,,,
+GSE141910,limma-trend (trend=TRUE) on deposited log2 values,median_abs_diff_moderated_t,,,0.00036897,,,
+GSE141910,limma-trend (trend=TRUE) on deposited log2 values,sign_concordance_log2FC,,,1.0,,,
+GSE141910,limma-trend (trend=TRUE) on deposited log2 values,n_sig_FDR0.05,13613,13614,,,,
+GSE141910,limma-trend (trend=TRUE) on deposited log2 values,n_sig_in_both,,,13612,,,
+GSE141910,limma-trend (trend=TRUE) on deposited log2 values,n_sig_custom_only,,,1,,,
+GSE141910,limma-trend (trend=TRUE) on deposited log2 values,n_sig_limma_only,,,2,,,
+GSE141910,limma-trend (trend=TRUE) on deposited log2 values,jaccard_FDR0.05,,,0.99977965,>= 0.95,PASS,criterion (b)
+GSE141910,limma-trend (trend=TRUE) on deposited log2 values,prior_df (d0 / fit$df.prior),4.818157,4.824529,,,,custom d0 recovered by re-running the shipped implementation on the rebuilt matrix
+GSE141910,limma-trend (trend=TRUE) on deposited log2 values,prior_var median (s0^2 / fit$s2.prior),0.31391,0.313032,,,,gene-specific under trend; median reported
+GSE141910,limma-trend (trend=TRUE) on deposited log2 values,prior_var min,0.172623,0.163693,,,,
+GSE141910,limma-trend (trend=TRUE) on deposited log2 values,prior_var max,1.338967,1.289332,,,,
+GSE141910,limma-trend (trend=TRUE) on deposited log2 values,df_residual,,,358,,,
+GSE141910,limma eBayes trend=FALSE (global prior) on deposited log2 values,n_shared_genes,,,20781,,,
+GSE141910,limma eBayes trend=FALSE (global prior) on deposited log2 values,pearson_r_log2FC,,,1.0,>= 0.99,PASS,criterion (a)
+GSE141910,limma eBayes trend=FALSE (global prior) on deposited log2 values,spearman_rho_log2FC,,,1.0,,,
+GSE141910,limma eBayes trend=FALSE (global prior) on deposited log2 values,pearson_r_moderated_t,,,0.99999666,,,
+GSE141910,limma eBayes trend=FALSE (global prior) on deposited log2 values,spearman_rho_moderated_t,,,0.99999882,,,
+GSE141910,limma eBayes trend=FALSE (global prior) on deposited log2 values,max_abs_diff_log2FC,,,7.56e-14,,,"log2FC agree to ~1e-14, i.e. floating-point round-off on an identical OLS estimate; no methodological difference in the fold-change estimate"
+GSE141910,limma eBayes trend=FALSE (global prior) on deposited log2 values,max_abs_diff_moderated_t,,,0.180366,,,
+GSE141910,limma eBayes trend=FALSE (global prior) on deposited log2 values,median_abs_diff_moderated_t,,,0.00576573,,,
+GSE141910,limma eBayes trend=FALSE (global prior) on deposited log2 values,sign_concordance_log2FC,,,1.0,,,
+GSE141910,limma eBayes trend=FALSE (global prior) on deposited log2 values,n_sig_FDR0.05,13613,13614,,,,
+GSE141910,limma eBayes trend=FALSE (global prior) on deposited log2 values,n_sig_in_both,,,13606,,,
+GSE141910,limma eBayes trend=FALSE (global prior) on deposited log2 values,n_sig_custom_only,,,7,,,
+GSE141910,limma eBayes trend=FALSE (global prior) on deposited log2 values,n_sig_limma_only,,,8,,,
+GSE141910,limma eBayes trend=FALSE (global prior) on deposited log2 values,jaccard_FDR0.05,,,0.99889876,>= 0.95,PASS,criterion (b)
+GSE141910,limma eBayes trend=FALSE (global prior) on deposited log2 values,prior_df (d0 / fit$df.prior),4.818157,2.797965,,,,custom d0 recovered by re-running the shipped implementation on the rebuilt matrix
+GSE141910,limma eBayes trend=FALSE (global prior) on deposited log2 values,prior_var median (s0^2 / fit$s2.prior),0.31391,0.319537,,,,gene-specific under trend; median reported
+GSE141910,limma eBayes trend=FALSE (global prior) on deposited log2 values,prior_var min,0.172623,0.319537,,,,
+GSE141910,limma eBayes trend=FALSE (global prior) on deposited log2 values,prior_var max,1.338967,0.319537,,,,
+GSE141910,limma eBayes trend=FALSE (global prior) on deposited log2 values,df_residual,,,358,,,
+BOTH,limma-trend primary (trend=TRUE both cohorts),replicated_signature_size,5036,5036,,,,same replication rule: FDR<0.05 and concordant sign in both cohorts
+BOTH,limma-trend primary,signature_overlap_with_published_5036,5036,5033,5033,,,
+BOTH,limma-trend primary,signature_limma_only,,3,3,,,
+BOTH,limma-trend primary,signature_published_only,3,,3,,,
+BOTH,limma-trend primary,signature_jaccard_vs_published,,,0.998809,,,
+BOTH,limma trend=FALSE for GSE141910,replicated_signature_size,5036,5033,,,,sensitivity variant
+BOTH,limma trend=FALSE for GSE141910,signature_overlap_with_published_5036,5036,5029,5029,,,
+GSE116250,limma-trend,marker_NPPA_log2FC,3.907396,3.907396,,,,ENSG00000175206
+GSE116250,limma-trend,marker_NPPA_FDR,1.314e-05,1.315e-05,,,,ENSG00000175206
+GSE116250,limma-trend,marker_NPPB_log2FC,3.968589,3.968589,,,,ENSG00000120937
+GSE116250,limma-trend,marker_NPPB_FDR,1.114e-06,1.112e-06,,,,ENSG00000120937
+GSE116250,limma-trend,marker_MYH6_log2FC,-0.612177,-0.612177,,,,ENSG00000197616
+GSE116250,limma-trend,marker_MYH6_FDR,1.997e-07,2.092e-07,,,,ENSG00000197616
+GSE116250,limma-trend,marker_ATP2A2_log2FC,-0.439541,-0.439541,,,,ENSG00000174437
+GSE116250,limma-trend,marker_ATP2A2_FDR,0.000376,0.00038,,,,ENSG00000174437
+GSE141910,limma-trend,marker_NPPA_log2FC,2.200988,2.200988,,,,ENSG00000175206
+GSE141910,limma-trend,marker_NPPA_FDR,2.561e-27,2.559e-27,,,,ENSG00000175206
+GSE141910,limma-trend,marker_NPPB_log2FC,2.089266,2.089266,,,,ENSG00000120937
+GSE141910,limma-trend,marker_NPPB_FDR,3.034e-17,3.026e-17,,,,ENSG00000120937
+GSE141910,limma-trend,marker_MYH6_log2FC,-2.75425,-2.75425,,,,ENSG00000197616
+GSE141910,limma-trend,marker_MYH6_FDR,2.006e-72,2.028e-72,,,,ENSG00000197616
+GSE141910,limma-trend,marker_ATP2A2_log2FC,-0.884309,-0.884309,,,,ENSG00000174437
+GSE141910,limma-trend,marker_ATP2A2_FDR,1.552e-29,1.681e-29,,,,ENSG00000174437
+GSE141910,edgeR TMM + voom,voom_pipeline,NA,NA,NA,NA,BLOCKED,"GEO GSE141910 deposits no count matrix. The only supplementary file is GSE141910_RAW.tar of 366 per-sample CSVs whose values are non-integer, contain no zeros, have a per-sample floor of 1.0 and a max of 22.4, and column sums with CV 0.0066 - i.e. already log2-scale and library-normalised. TMM+voom requires counts, so it cannot be run without fabricating a count matrix, which was not done. The MAGNet GitHub repo tree contains only GeneLengths.txt and phenoData CSVs, no counts."
+VERDICT,ALL,verdict,NA,NA,VALIDATED,criterion (a) AND (b) in both cohorts,PASS,"Criterion (a) min Pearson r = 1.000000 across all three comparisons; criterion (b) min Jaccard = 0.998899. Held in every variant tested, including the less flattering trend=FALSE sensitivity variant. Caveat retained: the voom comparison for GSE141910 is BLOCKED because GEO deposits no counts for that series."

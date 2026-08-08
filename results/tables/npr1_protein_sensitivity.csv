@@ -1,0 +1,27 @@
+analysis,tumor_type,pdc_study_id,blind,verdict,n_pairs,effect,p_value,batch_handling,reason,n_tumor,n_normal,n_single_arm_plexes,n_aliquots_in_single_arm_plexes,n_tumor_in_single_arm_plexes,n_normal_in_single_arm_plexes,n_observed_in_single_arm_plexes,fdr
+2.5.1_unshared_log2_ratio,ccRCC,PDC000127,False,TESTABLE,68,-0.11895,0.017457518590213484,batch_free,passes pre-spec 2.1,92,68,2.0,18.0,18.0,0.0,18.0,0.017457518590213484
+2.5.2_left_censored,ccRCC,PDC000127,False,TESTABLE,84,-0.1908,0.0026871476554996116,batch_free,passes pre-spec 2.1,110,84,2.0,18.0,18.0,0.0,18.0,0.01612288593299767
+2.5.4_unpaired_ignoring_plex,ccRCC,PDC000127,False,TESTABLE,0,-0.11255000000000001,0.034208845831816576,unpaired_plex_ignored,passes pre-spec 2.1,92,68,2.0,18.0,18.0,0.0,18.0,0.034208845831816576
+2.5.1_unshared_log2_ratio,OV,PDC000110,True,TESTABLE,13,-0.7085999999999999,0.013427734375,batch_free,passes pre-spec 2.1,85,23,0.0,0.0,0.0,0.0,0.0,0.017457518590213484
+2.5.2_left_censored,OV,PDC000110,True,TESTABLE,13,-0.6971,0.013427734375,batch_free,passes pre-spec 2.1,85,23,0.0,0.0,0.0,0.0,0.0,0.02685546875
+2.5.4_unpaired_ignoring_plex,OV,PDC000110,True,TESTABLE,0,-0.4675,0.00013777436215644878,unpaired_plex_ignored,passes pre-spec 2.1,85,23,0.0,0.0,0.0,0.0,0.0,0.00020666154323467317
+2.5.1_unshared_log2_ratio,BRCA,PDC000120,True,UNTESTABLE,0,,,none,gene absent from study quantDataMatrix gene index,0,0,17.0,143.0,125.0,18.0,-1.0,
+2.5.2_left_censored,BRCA,PDC000120,True,UNTESTABLE,0,,,none,imputation cannot create testability: primary complete-case verdict was UNTESTABLE; number reported as sensitivity only,0,0,17.0,143.0,125.0,18.0,-1.0,
+2.5.4_unpaired_ignoring_plex,BRCA,PDC000120,True,UNTESTABLE,0,,,unpaired_plex_ignored,gene absent from study quantDataMatrix gene index,0,0,17.0,143.0,125.0,18.0,-1.0,
+2.5.1_unshared_log2_ratio,PAAD,PDC000270,True,UNTESTABLE,0,,,none,tumour non-missing fraction 0.383 (<0.60); normal non-missing fraction 0.333 (<0.60),54,25,1.0,8.0,0.0,8.0,0.0,
+2.5.2_left_censored,PAAD,PDC000270,True,TESTABLE,67,0.34079999999999977,0.07005927127963821,batch_free,imputation cannot create testability: primary complete-case verdict was UNTESTABLE; number reported as sensitivity only,141,75,1.0,8.0,0.0,8.0,0.0,0.10508890691945731
+2.5.4_unpaired_ignoring_plex,PAAD,PDC000270,True,UNTESTABLE,0,,,unpaired_plex_ignored,tumour non-missing fraction 0.383 (<0.60); normal non-missing fraction 0.333 (<0.60),54,25,1.0,8.0,0.0,8.0,0.0,
+2.5.1_unshared_log2_ratio,UCEC,PDC000125,True,UNTESTABLE,0,,,none,tumour non-missing fraction 0.500 (<0.60),50,30,1.0,9.0,0.0,9.0,9.0,
+2.5.2_left_censored,UCEC,PDC000125,True,TESTABLE,30,-0.7566999999999999,0.012047622352838516,batch_free,passes pre-spec 2.1,100,49,1.0,9.0,0.0,9.0,9.0,0.02685546875
+2.5.4_unpaired_ignoring_plex,UCEC,PDC000125,True,TESTABLE,0,-0.8317,1.9339287127423834e-12,unpaired_plex_ignored,passes pre-spec 2.1,68,39,1.0,9.0,0.0,9.0,9.0,5.80178613822715e-12
+2.5.1_unshared_log2_ratio,LUAD,PDC000153,True,UNTESTABLE,0,,,none,tumour non-missing fraction 0.473 (<0.60); normal non-missing fraction 0.495 (<0.60),52,50,0.0,0.0,0.0,0.0,0.0,
+2.5.2_left_censored,LUAD,PDC000153,True,TESTABLE,99,-0.2834,0.9665915880146678,batch_free,imputation cannot create testability: primary complete-case verdict was UNTESTABLE; number reported as sensitivity only,110,101,0.0,0.0,0.0,0.0,0.0,0.9665915880146678
+2.5.4_unpaired_ignoring_plex,LUAD,PDC000153,True,UNTESTABLE,0,,,unpaired_plex_ignored,tumour non-missing fraction 0.473 (<0.60); normal non-missing fraction 0.495 (<0.60),52,50,0.0,0.0,0.0,0.0,0.0,
+2.5.1_unshared_log2_ratio,HNSC,PDC000221,True,UNTESTABLE,0,,,none,tumour non-missing fraction 0.294 (<0.60); normal non-missing fraction 0.386 (<0.60),32,27,1.0,6.0,0.0,6.0,6.0,
+2.5.2_left_censored,HNSC,PDC000221,True,TESTABLE,64,-0.20190000000000008,0.9094854584574152,batch_free,imputation cannot create testability: primary complete-case verdict was UNTESTABLE; number reported as sensitivity only,109,70,1.0,6.0,0.0,6.0,6.0,0.9665915880146678
+2.5.4_unpaired_ignoring_plex,HNSC,PDC000221,True,UNTESTABLE,0,,,unpaired_plex_ignored,tumour non-missing fraction 0.294 (<0.60); normal non-missing fraction 0.386 (<0.60),32,27,1.0,6.0,0.0,6.0,6.0,
+2.5.1_unshared_log2_ratio,GBM,PDC000204,True,UNTESTABLE,0,,,none,gene absent from study quantDataMatrix gene index,0,0,1.0,10.0,10.0,0.0,-1.0,
+2.5.2_left_censored,GBM,PDC000204,True,UNTESTABLE,0,,,none,imputation cannot create testability: primary complete-case verdict was UNTESTABLE; number reported as sensitivity only,0,0,1.0,10.0,10.0,0.0,-1.0,
+2.5.4_unpaired_ignoring_plex,GBM,PDC000204,True,UNTESTABLE,0,,,unpaired_plex_ignored,gene absent from study quantDataMatrix gene index,0,0,1.0,10.0,10.0,0.0,-1.0,
+2.5.3_ccrcc_excluded,with_ccRCC,,False,ABANDONED_UNDERPOWERED,101,-0.6971,,all_batch_free,3 testable types; n_depleted_FDR<0.05=3; n_enriched_FDR<0.05=0; blind types testable=2 of 7 -> 2.6 kill criterion FIRES,245,130,,,,,,
+2.5.3_ccrcc_excluded,excluding_ccRCC,,True,ABANDONED_UNDERPOWERED,33,-0.812825,,all_batch_free,2 testable types; n_depleted_FDR<0.05=2; n_enriched_FDR<0.05=0; blind types testable=2 of 7 -> 2.6 kill criterion FIRES,153,62,,,,,,

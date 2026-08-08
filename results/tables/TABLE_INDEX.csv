@@ -1,0 +1,68 @@
+table,filename,description,version_id,size_bytes
+Table 1,hf_de_GSE116250.csv,"Differential expression, failing vs non-failing LV (GSE116250 discovery, RPKM, limma-trend equivalent)",6a2d301f-a560-4e83-839b-0dcd8780457c,4493888
+Table 2,hf_de_GSE141910.csv,"Differential expression, cardiomyopathy vs non-failing donor LV (GSE141910 validation, MAGNet)",cac6c07c-31a8-4d92-982a-01d80655fb53,2732134
+Table 3,hf_signature_replicated.csv,Genes significant (FDR<0.05) with concordant sign in both cohorts,76685c52-1489-4bd0-9e51-60c282afbf19,745811
+Table 4,hpa_secretome_annotation.csv,Genome-wide HPA secretion annotation with structural-ECM flag,efb93594-4a96-4a02-8bab-e3030adece36,2500884
+Table 5,cellchatdb_receptor_subunits.csv,CellChatDB interactions with receptor complexes expanded to subunits,4aabe49f-60f3-4179-a333-ba2cc7c548a0,431480
+Table 6,tcga_expr_by_tumor_type.csv,"Median expression per gene per tumor type, 9,538 primary solid tumors (RSEM normalized_count)",07e2a94c-6093-4cfb-b343-56f042647e20,367491
+Table 7,crosstalk_network.csv,Candidate HF-ligand to tumor-receptor network with availability weights and floor status,8086ab6e-ce8d-466a-804e-31b39df5e0e1,33048
+Table 8,floor_audit.csv,Absolute-expression floor audit for all 188 candidate interactions,89e852c0-5d58-44de-b35f-4d373df62ef1,8197
+Table 9,pancancer_susceptibility_ranking.csv,"Pan-cancer compatibility ranking with bootstrap CIs, null p-values and double-centered variant",c8e165e9-4061-43cb-b270-af809942d9d6,6356
+Table 10,twofactor_decomposition.csv,"Ligand availability vs receiver capacity per tumor type, with TME covariates",23bff2cf-a7f4-42d8-b520-ffcf9b279745,4045
+Table 11,capacity_vs_tme.csv,Receiver capacity correlated against 29 Thorsson microenvironment features,3415c637-9e99-47f6-b516-b8ee19b4d47d,2254
+Table 12,control_results.csv,All specificity and stability controls with expected vs observed values and verdicts,e8cc0708-e181-4061-ab6c-c8e8a8ae69be,864
+Table 13,depmap_lineage_dependency.csv,Per-lineage CRISPR gene effect for floor-passing receptors and controls (DepMap 24Q4),0a24803c-68f5-4d2d-8351-e357fafc61d9,194785
+Table 14,depmap_compatibility_correlation.csv,Receptor dependency vs compatibility correlation with BH-FDR,62c0bf9b-fbb2-47f6-bae8-e1d7a8a5133d,9444
+Table 15,depmap_lineage_map.csv,Disclosed DepMap-lineage to TCGA-type mapping with per-row confidence,3ec6a071-a0cd-42f3-b5ee-d0881ca8524d,2987
+Table 16,cell_line_panel.csv,"WNT9A-FZD7 uterine cell-line panel, two strata",ac70e34c-41ec-4258-ba2a-eaaf0a536204,4138
+Table 17,receptor_tumor_vs_normal.csv,Receptor tumour-vs-normal by two methods: GTEx background-corrected percentile rank AND unit-matched log2FC against TCGA adjacent normal (25 cols; the 13-col earlier version lacks the unit-matched columns behind §2.7),9c318e4e-e385-4a66-9bb1-3fd332469bc9,2024576
+Table 18,ligand_tissue_specificity.csv,Cardiac specificity of the 42 floor-passing HF-upregulated secreted ligands across 52 GTEx tissues (an earlier 51-row version covers all network ligands including those with no floor-passing interaction),a82f4063-6ea1-4274-98fc-d3544a42f027,25745
+Table 19,axis_survival.csv,Which ligand-receptor axes survive both specificity checks,2d0e9667-c354-4b56-9f15-3e381150aba2,9874
+Table 20,tumor_normal_tissue_map.csv,TCGA tumour type to GTEx tissue mapping with quality flags,05e1e593-9c79-445c-a48a-7d1f7912667a,10290
+Table 21,literature_citations.csv,"Verified PubMed citations with evidence type, strength and direction",940dda9f-ce28-4f2a-a1b6-bcc9d5cc26a8,44488
+Table 22,ligand_evidence.csv,Per-ligand human HF evidence and receptor cancer evidence,8f8d6101-f192-48d8-80ba-10e96f46e295,14441
+Table 23,ligand_specificity_failure_based.csv,Ligand cardiac distinctiveness re-scored by failure induction: criteria A1/A2/A3 per ligand with the binding constraint (§2.9),69dc943e-229a-48d3-ba4b-2f7cefa74355,18132
+Table 24,axis_survival_corrected.csv,Axis survival under the corrected ligand definition; 7 of 146 survive versus 0 originally (§2.9),fbcaf78d-0104-4817-931b-c3b1665c33cd,80122
+Table 25,receptor_base_rate_audit.csv,Ligand-free base rate at which each of the 81 floor-passing receptors passes the receiver criterion; 60 of 81 (74.1%) pass in >=1 type (§2.9),be8dbf3d-c405-436b-b242-63307d4c42ae,9197
+Table 26,ptn_receptor_null.csv,"1,000 expression-decile-matched random receptor sets against PTN's seven; observed 27 pairs vs null median 30, p=0.688 (§2.9)",a5cb65bd-bc49-4bc0-9d71-6f9b8f79a1f0,131064
+Table 27,ptn_receptor_correlation.csv,"Pairwise co-expression among PTN's seven receptors; mean rho -0.091, so they are not one family counted seven times (§2.9)",a0730b02-43e8-4f8c-b49a-266dc836c6bc,3042
+Table 28,ptn_cross_tissue_induction.csv,"PTN and COL1A1 in five non-cardiac fibrosis and organ-failure cohorts, each normalisation kept separate (§2.9)",9e390931-ffea-4a7c-8e6f-1f2a2cd91c9a,4329
+Table 29,ptn_cell_of_origin.csv,Per-cell-type PTN share and per-fibroblast disease tests in two human heart single-nucleus atlases (§2.9),097cd740-0258-42f7-aa58-cab111d76ad4,31329
+Table 30,ptn_literature.csv,"609 verified records from the PTN literature search, classified for the cardiac-plasma-source premise (§2.9)",7aaa38a5-5d5e-4f6c-9509-530d3a4d1a46,619557
+Table 31,npr1_survival.csv,"Cox models for NPR1 per tumour type and pooled; HR 1.0285, p=0.2446 against a pre-specified HR<1 (§2.10)",298ee493-0191-46c9-a6a9-d290b7b33c63,15900
+Table 32,npr1_proliferation.csv,"Within-type NPR1 correlation with the proliferation signature; median rho -0.2032, negative in 13 of 15 (§2.10)",220d879b-6bd8-401e-bd95-ad9dab71986f,12672
+Table 33,npr1_copynumber.csv,NPR1 locus deletion frequency against an arm-1q matched null; 3.10% vs null median 4.09% (§2.10),71fb442f-864c-491f-88e9-5418b4adf676,24576
+T34,hf_de_GSE5406.csv,Cross-platform replication (Section 3.11),a6e80e8a-072b-453a-bc18-bfdae168223e,3268398
+T35,hf_de_GSE1869.csv,Cross-platform replication (Section 3.11),55916310-d0b6-4d0c-9daa-d2d65017cb43,3236859
+T36,hf_de_GSE57345.csv,Cross-platform replication (Section 3.11),29f7038f-eaf6-4afb-bc81-e5699846a1a5,5145222
+T37,hf_permutation_controls.csv,Cross-platform replication (Section 3.11),a7357b18-2e0c-4324-b0f2-0a8550cc1a28,848
+T38,hf_cross_platform_replication.csv,Cross-platform replication (Section 3.11),3facc30a-2191-451c-ab10-a5621ddcf5db,3905
+T39,hf_prespec_criteria_application.csv,Cross-platform replication (Section 3.11),f04b980d-eef4-4326-bdbe-02ca07bf72f1,1019
+T40,hf_canonical_markers_cross_platform.csv,Cross-platform replication (Section 3.11),34a792ba-dfad-4e64-be1a-7fd7483d060a,1116
+T41,hf_marker_probe_level_diagnostics.csv,Cross-platform replication (Section 3.11),5f4bb410-93de-4830-9c5d-7255768efca9,1857
+T42,hf_pairwise_cohort_agreement.csv,Cross-platform replication (Section 3.11),698b56a9-893b-4a7a-975a-3c42d3aa0e71,1490
+T43,hf_gse1869_agreement_all_cohorts.csv,Cross-platform replication (Section 3.11),a52571b4-be6d-4c35-8c16-18b6b75c3114,739
+T44,hf_signature_recovery_by_platform.csv,Cross-platform replication (Section 3.11),fe4b1a1b-cbe2-4111-b5be-df2f6500e25c,706
+T45,hf_probe_collapsing_report.csv,Cross-platform replication (Section 3.11),99030b9f-c813-4ea4-9fe1-20da13e489c7,1270
+T46,hf_gse5406_downsample_power_control.csv,Cross-platform replication (Section 3.11),f60b9ec3-9ac3-49f9-bad9-b273f8f3a429,916
+T47,hf_gse1869_provenance_diagnostic.csv,Cross-platform replication (Section 3.11),d3b83c0a-8aba-4c9f-88f7-d941f8362a7a,698
+T48,cptac_study_selection.csv,Protein-level test in CPTAC proteomics (Section 3.12),bb3bd02f-fd72-49fc-b8f2-2c374be13409,2159
+T49,cptac_aliquot_map.csv,Protein-level test in CPTAC proteomics (Section 3.12),bb724189-63c2-43bd-874d-de26676c4a1e,283109
+T50,cptac_plex_confound.csv,Protein-level test in CPTAC proteomics (Section 3.12),1356e511-b6a4-4492-bb0e-2353ef12bde9,1517
+T51,npr1_protein_tumor_normal.csv,Protein-level test in CPTAC proteomics (Section 3.12),f6a7767e-dfd1-47a5-9d0d-328de513edcf,2894
+T52,npr1_protein_sensitivity.csv,Protein-level test in CPTAC proteomics (Section 3.12),a34b12a8-25d0-4953-a18c-40fe6a656c08,5178
+T53,protein_base_rate.csv,Protein-level test in CPTAC proteomics (Section 3.12),87bc72a7-186f-4389-913d-25e0b0db43de,919
+T54,ptn_panel_protein.csv,Protein-level test in CPTAC proteomics (Section 3.12),bb43b04f-c175-49af-a160-09d0b96c0da2,15781
+T55,ptn_panel_protein_null.csv,Protein-level test in CPTAC proteomics (Section 3.12),22bd6bf7-38b2-4ba4-bbcb-b6e063eb466a,1379
+T56,floor_sensitivity.csv,Reviewer-requested validation and sensitivity analyses,a9ba89da-32e4-4f67-ba49-aef91fddb978,2909
+T57,specificity_definition_sensitivity.csv,Reviewer-requested validation and sensitivity analyses,0384156d-2344-41de-b45c-4cf9173caf38,1918
+T58,permutation_resolution.csv,Reviewer-requested validation and sensitivity analyses,b7945a36-78d0-4a5e-aa5d-3c06d6157126,4492
+T59,null_pool_width.csv,Reviewer-requested validation and sensitivity analyses,72a5a053-dddd-48cc-b058-885cad62be3d,1524
+T60,complex_independence.csv,Reviewer-requested validation and sensitivity analyses,57ba69eb-e700-4efe-9b1c-f12c4df86dad,16238
+T61,etiology_stratified.csv,Reviewer-requested validation and sensitivity analyses,6e80b1c6-5f6d-452e-b155-c9e3be66ceac,16085
+T62,gtex_v8_medians_42ligands.csv,Reviewer-requested validation and sensitivity analyses,a26bc3ec-8904-4a0c-a518-8b54390350cb,118828
+T63,limma_validation.csv,Reviewer-requested validation and sensitivity analyses,cc27d990-936a-461c-9425-d191b7ff0fcd,9507
+T64,limma_de_GSE116250.csv,Reviewer-requested validation and sensitivity analyses,7007433a-df27-43f9-9ca3-3f5b59df934a,4161142
+T65,limma_de_GSE141910.csv,Reviewer-requested validation and sensitivity analyses,28f942e3-4bc2-4225-8270-222e677add9f,6021267
+T66,references_expanded.csv,Reviewer-requested validation and sensitivity analyses,601f326c-e852-493a-9cd1-0cd6b9860d3c,27377
+T67,citation_placements.csv,Reviewer-requested validation and sensitivity analyses,2ead75a5-98be-4552-a454-9dc7040f5784,11932

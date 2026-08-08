@@ -1,0 +1,11 @@
+cohort,tissue,contrast,normalisation_design,gene,log2FC,t,p_value,fdr,n_case,n_ctrl,mean_expr
+GSE150910,lung,IPF vs control (explant+biopsy),voom_like (raw counts),PTN,-0.5555,-4.046,7.346138680503899e-05,0.00024972905986760216,103,103,4.443
+GSE150910,lung,IPF vs control (explant+biopsy),voom_like (raw counts),COL1A1,2.2731,13.88,1.9400281271322373e-31,4.806817231717481e-29,103,103,7.71
+GSE134692,lung,IPF vs Normal (batch-adjusted),"limma_trend (TMM log2CPM, already logged)",PTN,0.6463,3.258,0.0017092111004123817,0.0045521131477206205,46,26,3.134
+GSE134692,lung,IPF vs Normal (batch-adjusted),"limma_trend (TMM log2CPM, already logged)",COL1A1,2.5174,8.361,3.1686468980760628e-12,6.978360129511074e-11,46,26,9.131
+GSE126848,liver,NASH vs healthy,voom_like (raw counts),PTN,-0.3037,-1.282,0.20847300657898615,0.3026294712741716,16,14,1.44
+GSE126848,liver,NASH vs healthy,voom_like (raw counts),COL1A1,1.8475,5.165,1.0760071639640447e-05,8.936387818510911e-05,16,14,6.335
+GSE130970,liver,NAFLD fibrosis stage 3-4 vs stage 0,"voom_like (salmon counts, rounded)",PTN,0.1141,0.721,0.4747649583433861,0.6487808835680415,16,25,0.953
+GSE130970,liver,NAFLD fibrosis stage 3-4 vs stage 0,"voom_like (salmon counts, rounded)",COL1A1,1.1691,4.261,0.00010518855879652074,0.006378510502291567,16,25,4.61
+GSE142025,kidney,Advanced diabetic nephropathy vs control,limma_trend (already log2-scale),PTN,0.8714,5.812,2.097364293559359e-06,2.536320057742718e-05,21,9,9.485
+GSE142025,kidney,Advanced diabetic nephropathy vs control,limma_trend (already log2-scale),COL1A1,2.4809,6.484,3.1268768834338817e-07,6.633611403077509e-06,21,9,13.54

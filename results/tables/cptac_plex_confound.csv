@@ -1,0 +1,9 @@
+tumor_type,pdc_study_id,study_name,n_tumor_aliquots,n_normal_aliquots,n_plexes,n_mixed_plexes,n_single_arm_plexes,n_aliquots_in_single_arm_plexes,chi2,dof,p,n_pairs_within_plex,n_cases_both_arms,frac_pairs_within_plex,tumor_per_plex_min,tumor_per_plex_max,normal_per_plex_min,normal_per_plex_max,modal_composition,modal_composition_n_plexes,confounded
+ccRCC,PDC000127,CPTAC CCRCC Discovery Study - Proteome,110,84,23,21,2,18,15.68609908609909,22,0.8311534552697457,84,84,1.0,4,9,0,4,4T+4N,13,False
+OV,PDC000110,Prospective Ovarian JHU Proteome,85,23,13,13,0,0,1.7677749360613813,12,0.9996875774098418,13,13,1.0,6,8,1,2,6T+2N,7,False
+BRCA,PDC000120,Prospective Breast BI Proteome,125,18,17,0,17,143,142.99999999999997,16,1.8607854241255882e-22,0,18,0.0,0,9,0,9,9T+0N,8,True
+PAAD,PDC000270,CPTAC PDA Discovery Study - Proteome,145,91,25,24,1,8,17.081223407134736,24,0.8451772385603382,83,83,1.0,0,8,2,8,6T+4N,11,False
+UCEC,PDC000125,CPTAC UCEC Discovery Study - Proteome,104,49,17,16,1,9,24.37912087912088,16,0.0815449017577273,30,30,1.0,0,8,1,9,6T+3N,10,False
+LUAD,PDC000153,CPTAC LUAD Discovery Study - Proteome,111,102,25,25,0,0,1.0660660660660652,24,0.999999999999328,100,102,0.9803921568627451,4,5,4,5,4T+4N,12,False
+HNSC,PDC000221,CPTAC HNSCC Discovery Study - Proteome,111,72,20,19,1,6,11.860538663663663,19,0.891499586850965,66,68,0.9705882352941176,0,7,3,6,6T+3N,6,False
+GBM,PDC000204,CPTAC GBM Discovery Study - Proteome,100,10,11,10,1,10,1.0999999999999999,10,0.9997339737595673,0,0,,9,10,0,1,9T+1N,10,False

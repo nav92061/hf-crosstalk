@@ -1,0 +1,50 @@
+claim,verified_value,source
+"5,036 replicated genes",5036,hf_signature_replicated.csv
+"18,061 shared genes",18061,hf_replication_stats.json
+"5,717 sig in both",5717,recomputed from DE tables
+concordance 0.881,0.8809,recomputed
+rho 0.541 all shared,0.5408,recomputed
+rho 0.759 sig-in-both,0.7593,recomputed
+hypergeom p 2.1e-35,2.147e-35,hf_replication_stats.json
+1.07x fold enrichment,1.0732,hf_replication_stats.json
+"8,052 / 11,949 sig per cohort",8052 / 11949,hf_replication_stats.json
+"permutation 0 sig genes, rho -0.134",0 / -0.1344,hf_replication_stats.json
+85% -> 95% concordance by effect size,0.8464 (<0.5) -> 0.9525 (>1.0),recomputed
+NPPA +3.91 NPPB +3.97 MYH6 -0.61 ATP2A2 -0.44,3.9074 / 3.9686 / -0.6122 / -0.4395,hf_replication_stats.json qc
+"3,084 up-replicated",3084,hf_replication_stats.json
+188 interactions / 51 ligands / 38 pathways / 103 subunits,188 / 51 / 38 / 103,crosstalk_network.csv
+"9,538 tumours, 30 types",9538 / 30,tcga_sample_map.csv
+"GAPDH median 69,134",69134.5,tcga_expr_by_tumor_type.csv
+floor 345.7 = 0.005xGAPDH,345.67,recomputed
+28 below floor / 160 pass / 81 receptors,28 / 160 / 81,crosstalk_network.csv
+4 PENK-opioid axes below floor,4 (OPRD1 OPRM1 OPRK1 OPRL1),floor_audit.csv
+"OPRD1 4e-5, OPRM1 5e-4, OPRK1 1.4e-3 of GAPDH",4.48e-5 / 4.97e-4 / 1.37e-3,recomputed
+UCS rank 1 score 0.679 CI 0.400-0.914,0.6785 / 0.3997-0.9142,pancancer_susceptibility_ranking.csv
+UCS rank SD 0.55,0.549,same
+4 of 30 beat null (UCS .0033 KIRC .0133 BRCA .010 PAAD .0332),exact match,same
+OV p=0.060 ranks 2nd,0.0598,same
+"ACC first under double-centring, UCS sixth",ACC / 6,same
+UCS median capacity 604,604.37,twofactor_decomposition.csv
+null rho 0.363 no-floor / 0.107 floor / 0.323 naive / 0.034 dc,exact match,scoring_summary.json
+21.5% / 1.7% of draws above 0.5,0.215 / 0.0167,same
+null p95 0.426,0.4263,same
+300 iterations seed 20260727,300 / 20260727,same
+"LOO-ligand 0.907, LOO-pathway 0.842, geomean 0.908, unweighted 0.922",exact match,control_results.csv
+"floor vs unfiltered 0.966, primary vs dc 0.318",exact match,same
+"NPPA 3.05 / NPPB 3.03 availability, PENK third",3.054 / 3.029 / 3rd,scoring_summary.json
+"81 receptors x 22 lineages, 0 FDR<0.05",81 / 22 / 0,depmap_compatibility_correlation.csv + lineage_map
+"DepMap 24Q4, 1,178 lines, figshare 27993248",exact match,depmap_summary.json
+"FZD7 pan-lineage -0.163 to FZD6 +0.146, none < -0.5","LRP5 -0.1630, FZD6 +0.1464, none",depmap_lineage_dependency.csv
+"48.7-fold FZD7 separation, 4v4 panel",48.72x,cell_line_panel.csv recomputed
+FZD7 gene effect +0.058 to +0.329,0.0583 to 0.3291,same
+housekeeping arms indistinguishable p=1.000,1.0,recomputed
+78 receptors: 11 enriched both / 25 comparable / 15 depleted,exact match,specificity_summary.json 1c6e87c3
+"two methods agree rho 0.545 p 8.9e-94 n=1,200",0.545 / 8.91e-94 / 1200,recomputed
+"NPR1 depleted all 15 types, median -1.91, all FDR<0.05","15/15, -1.9135, max FDR 2.04e-3",recomputed
+"NPPA rank 1 35.8 TPM, NPPB rank 1 26.8 TPM","35.811 / 26.774, best_rank 1",ligand_tissue_specificity a82f4063
+"GDF6 0.18 TPM, WNT9A rank 29 of 52, GDF15 kidney cortex, CCL5 whole blood, MDK ovary",exact match,same
+"TME 1 of 29 FDR<0.05, B-cell rho 0.572 FDR 0.028","1/29, 0.5715, 0.0281",capacity_vs_tme.csv
+"107 citations, 21 contradicts",107 / 21,literature_citations.csv
+UCS only 57 tumours,57,tcga_sample_map.csv
+"GSE116250 n=64, GSE141910 n=360 analysed (194+166)",64 / 194+166=360 of 366 total,hf_replication_stats.json
+5 figure embeds all resolve to correct artifacts,5/5 match captions and FIGURE_INDEX,artifact store

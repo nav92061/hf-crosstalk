@@ -19,6 +19,7 @@ from scipy import stats
 from scipy.special import digamma, polygamma
 from statsmodels.nonparametric.smoothers_lowess import lowess
 
+GEO_FTP_ROOT = "https://ftp.ncbi.nlm.nih.gov/geo"
 GEO_BASE = "https://ftp.ncbi.nlm.nih.gov/geo/series"
 DEFAULT_TIMEOUT = 300
 CPM_PRIOR_COUNT = 0.5
@@ -129,7 +130,8 @@ def fetch_geo_supplementary(gse, dest_dir, pattern=None, timeout=None,
                       overwrite=overwrite) for n in names]
 
 
-def fetch_series_matrix(gse, dest_dir, timeout=None, overwrite=False):
+def fetch_series_matrix(gse, dest_dir, timeout=None, overwrite=False,
+                        platform=None):
     """Download the series matrix file (sample metadata) for a GEO series.
 
     Args:
@@ -137,17 +139,24 @@ def fetch_series_matrix(gse, dest_dir, timeout=None, overwrite=False):
         dest_dir (str): directory to write into (created if absent).
         timeout (int): socket timeout in seconds.
         overwrite (bool): re-download even if present.
+        platform (str | None): for a multi-platform series, the GPL accession
+            whose matrix to fetch, giving `<GSE>-<GPL>_series_matrix.txt.gz`.
+            None (default) fetches the single-platform
+            `<GSE>_series_matrix.txt.gz` - which does not exist for a
+            multi-platform submission; call `list_series_matrix_files` when
+            unsure.
 
     Returns:
-        str: local path to `<GSE>_series_matrix.txt.gz`.
+        str: local path to the downloaded series matrix.
     """
-    if timeout is None:
-        timeout = DEFAULT_TIMEOUT
     if timeout is None:
         timeout = DEFAULT_TIMEOUT
     os.makedirs(dest_dir, exist_ok=True)
     gse = str(gse).strip().upper()
-    name = "%s_series_matrix.txt.gz" % gse
+    if platform is None:
+        name = "%s_series_matrix.txt.gz" % gse
+    else:
+        name = "%s-%s_series_matrix.txt.gz" % (gse, str(platform).strip().upper())
     url = "%s/matrix/%s" % (gse_ftp_dir(gse), name)
     return h_download(url, os.path.join(dest_dir, name), timeout=timeout,
                      overwrite=overwrite)
@@ -210,7 +219,11 @@ def parse_series_matrix_metadata(path):
     Every `!Sample_characteristics_ch1` row is split on the first ":" into a
     key/value pair; the key becomes a column (deduplicated with `_2`, `_3`
     suffixes when the same key appears on several rows). `!Sample_title`,
-    `!Sample_source_name_ch1` and `!Sample_geo_accession` are also returned.
+    `!Sample_source_name_ch1`, `!Sample_description` and
+    `!Sample_geo_accession` are also returned. `description` matters for older
+    series (e.g. GSE1869) that carry the disease group there and have no
+    `!Sample_characteristics_ch1` line at all - check it before concluding a
+    series has no usable labels.
 
     Args:
         path (str): path to the (optionally gzipped) series matrix file.
@@ -235,7 +248,8 @@ def parse_series_matrix_metadata(path):
                 elif key == "Sample_characteristics_ch1":
                     char_rows.append(vals)
                 elif key in ("Sample_title", "Sample_source_name_ch1",
-                             "Sample_organism_ch1", "Sample_library_strategy"):
+                             "Sample_organism_ch1", "Sample_library_strategy",
+                             "Sample_description"):
                     simple[key.replace("Sample_", "").lower()] = vals
             elif line.startswith("!series_matrix_table_begin"):
                 break
@@ -913,3 +927,509 @@ def replicated_signature(de_a, de_b, fdr=0.05, gene_col="gene",
     out["_worst_fdr"] = np.maximum(out["fdr_%s" % sa], out["fdr_%s" % sb])
     out = out.sort_values("_worst_fdr").drop(columns="_worst_fdr")
     return out.reset_index(drop=True)
+
+
+# ---------------------------------------------------------------------------
+# Microarray: series-matrix expression tables, platform annotation, probe
+# collapsing, and log-scale detection
+# ---------------------------------------------------------------------------
+
+MICROARRAY_LOG_MAX = 30.0      # log2 intensities essentially never exceed this
+MICROARRAY_LINEAR_MIN = 100.0  # linear intensities essentially always exceed this
+
+
+def list_series_matrix_files(gse, timeout=None):
+    """List the series-matrix filenames GEO publishes for a series.
+
+    A multi-platform (SuperSeries or multi-array) submission has no single
+    `<GSE>_series_matrix.txt.gz`; it has one file per platform, named
+    `<GSE>-<GPL>_series_matrix.txt.gz`. Call this before `fetch_series_matrix`
+    when you do not already know which is the case.
+
+    Args:
+        gse (str): series accession.
+        timeout (int | None): socket timeout in seconds.
+
+    Returns:
+        list[str]: filenames, sorted.
+
+    Raises:
+        ValueError: if the series has no matrix directory or it lists no files.
+    """
+    if timeout is None:
+        timeout = DEFAULT_TIMEOUT
+    url = "%s/matrix/" % gse_ftp_dir(gse)
+    try:
+        html = h_http_get(url, timeout=timeout).decode("utf-8", "replace")
+    except Exception as exc:                              # noqa: BLE001
+        raise ValueError("cannot list matrix directory for %s: %s" % (gse, exc))
+    names = sorted(set(re.findall(r'href="([^"?/][^"]*_series_matrix\.txt\.gz)"',
+                                  html)))
+    if not names:
+        raise ValueError("no series_matrix files listed at %s" % url)
+    return names
+
+
+def series_matrix_platform(path):
+    """Return the platform accession(s) recorded in a series matrix.
+
+    Args:
+        path (str): path to a (optionally gzipped) series matrix file.
+
+    Returns:
+        str: the single GPL accession, or `"GPL1|GPL2"` if the samples in the
+            file do not all share one platform.
+
+    Raises:
+        ValueError: if no `!Sample_platform_id` line is present.
+    """
+    with h_open_text(path) as fh:
+        for line in fh:
+            if line.startswith("!Sample_platform_id"):
+                _, vals = h_split_meta_line(line)
+                uniq = sorted(set(v for v in vals if v))
+                return uniq[0] if len(uniq) == 1 else "|".join(uniq)
+            if line.startswith("!series_matrix_table_begin"):
+                break
+    raise ValueError("no !Sample_platform_id line found in %s" % path)
+
+
+def load_series_matrix_expression(path, aggregate=None):
+    """Load the value table embedded in a GEO series matrix file.
+
+    The table lies between `!series_matrix_table_begin` and
+    `!series_matrix_table_end`; its first column is the platform's probe /
+    feature id (`ID_REF`) and its remaining columns are GSM accessions. For an
+    Affymetrix or Gene-ST series this is probe-level data, not gene-level -
+    collapse it with `collapse_probes_to_genes` before any cross-platform
+    comparison.
+
+    Args:
+        path (str): path to a (optionally gzipped) series matrix file.
+        aggregate ('sum' | 'max' | 'mean' | 'first' | None): how to collapse
+            duplicate feature ids. None (default) raises on duplicates rather
+            than guessing - probe ids are meant to be unique.
+
+    Returns:
+        pandas.DataFrame: features (index) x samples (GSM columns), float64.
+
+    Raises:
+        ValueError: if no table is present, the table has no value rows, feature
+            ids are duplicated while `aggregate is None`, or the frame fails
+            `h_check_matrix`.
+    """
+    with h_open_text(path) as fh:
+        lines = []
+        state = 0
+        for line in fh:
+            if state == 0:
+                if line.startswith("!series_matrix_table_begin"):
+                    state = 1
+                continue
+            if line.startswith("!series_matrix_table_end"):
+                break
+            lines.append(line)
+    if state == 0:
+        raise ValueError("no !series_matrix_table_begin marker in %s" % path)
+    if len(lines) < 2:
+        raise ValueError("series matrix %s carries no value rows (normal for a "
+                         "SuperSeries stub - fetch the per-platform matrix "
+                         "files instead, see list_series_matrix_files)" % path)
+    df = pd.read_csv(io.StringIO("".join(lines)), sep="\t", low_memory=False)
+    df = df.set_index(df.columns[0])
+    df.index = [str(i).strip().strip('"') for i in df.index]
+    df.index.name = "ID_REF"
+    df.columns = [str(c).strip().strip('"') for c in df.columns]
+    df = df.apply(pd.to_numeric, errors="coerce").astype("float64")
+    df = df.loc[:, ~df.isna().all(axis=0)]
+    idx = pd.Index(df.index)
+    if idx.duplicated().any():
+        dups = sorted(set(idx[idx.duplicated()]))
+        if aggregate is None:
+            raise ValueError("duplicate feature ids in %s (%d, e.g. %s); pass "
+                             "aggregate= to collapse them deliberately"
+                             % (path, len(dups), dups[:5]))
+        df = (df.groupby(level=0).first() if aggregate == "first"
+              else getattr(df.groupby(level=0), aggregate)())
+    h_check_matrix(df)
+    return df.astype("float64")
+
+
+def fetch_platform_annotation(gpl, dest_dir, timeout=None, overwrite=False):
+    """Download a GEO platform annotation (`GPLxxx.annot.gz`).
+
+    Args:
+        gpl (str): platform accession, e.g. "GPL96".
+        dest_dir (str): directory to write into (created if absent).
+        timeout (int | None): socket timeout in seconds.
+        overwrite (bool): re-download even if present.
+
+    Returns:
+        str: local path to `<GPL>.annot.gz`.
+
+    Raises:
+        ValueError: if `gpl` is not a GPL accession. Platforms with no curated
+            annotation file (several sequencing platforms, e.g. GPL9052) raise
+            urllib's HTTPError 404 - there is no probe set to annotate.
+    """
+    if timeout is None:
+        timeout = DEFAULT_TIMEOUT
+    gpl = str(gpl).strip().upper()
+    m = re.fullmatch(r"GPL(\d+)", gpl)
+    if m is None:
+        raise ValueError("not a GPL accession: %r" % (gpl,))
+    digits = m.group(1)
+    stub = "GPL%snnn" % (digits[:-3] if len(digits) > 3 else "")
+    os.makedirs(dest_dir, exist_ok=True)
+    name = "%s.annot.gz" % gpl
+    url = "%s/platforms/%s/%s/annot/%s" % (GEO_FTP_ROOT, stub, gpl, name)
+    return h_download(url, os.path.join(dest_dir, name), timeout=timeout,
+                      overwrite=overwrite)
+
+
+def parse_platform_annotation(path, id_col="ID", symbol_col="Gene symbol"):
+    """Parse the probe -> gene-symbol mapping out of a GEO `.annot.gz` file.
+
+    The mapping is returned verbatim, including GEO's `///`-joined multi-gene
+    entries (e.g. `"MIR4640///DDR1"`). Resolving those is
+    `collapse_probes_to_genes`' job, under an explicit policy - this function
+    never silently picks the first symbol.
+
+    Args:
+        path (str): path to a (optionally gzipped) `GPLxxx.annot.gz`.
+        id_col (str): probe id column in the platform table.
+        symbol_col (str): gene symbol column.
+
+    Returns:
+        pandas.Series: index = probe id, values = raw symbol string. Probes with
+            an empty symbol are dropped.
+
+    Raises:
+        ValueError: if the platform-table markers or requested columns are
+            absent, or probe ids are duplicated.
+    """
+    with h_open_text(path) as fh:
+        lines = []
+        state = 0
+        for line in fh:
+            if state == 0:
+                if line.startswith("!platform_table_begin"):
+                    state = 1
+                continue
+            if line.startswith("!platform_table_end"):
+                break
+            lines.append(line)
+    if state == 0:
+        raise ValueError("no !platform_table_begin marker in %s" % path)
+    df = pd.read_csv(io.StringIO("".join(lines)), sep="\t", low_memory=False,
+                     dtype=str)
+    for c in (id_col, symbol_col):
+        if c not in df.columns:
+            raise ValueError("annotation %s has no column %r (columns: %s)"
+                             % (path, c, list(df.columns)[:12]))
+    s = pd.Series(df[symbol_col].values,
+                  index=[str(i).strip() for i in df[id_col].values])
+    if s.index.duplicated().any():
+        raise ValueError("duplicate probe ids in annotation %s" % path)
+    s = s.fillna("").map(lambda v: str(v).strip())
+    return s[s != ""]
+
+
+def detect_log_scale(expr, log_max=None, linear_min=None):
+    """Decide whether an expression matrix is already on a log scale.
+
+    Detection, not assumption: microarray series matrices ship RMA/GC-RMA log2
+    values, MAS5 linear intensities, or occasionally something else, and the
+    series metadata frequently does not say which. Getting it wrong applies an
+    unwanted monotone transform to every log2FC.
+
+    Rules, in order (the one that fires is reported):
+
+    * any value < 0             -> logged  (`logged:negative_values`)
+    * max <= `log_max` (30)      -> logged  (`logged:max_le_30`)
+    * max >= `linear_min` (100)  -> linear  (`linear:max_ge_100`)
+    * otherwise                  -> raise   (nothing decides it)
+
+    Args:
+        expr (pandas.DataFrame): features x samples.
+        log_max (float | None): upper bound on a plausible log2 maximum.
+        linear_min (float | None): lower bound on a plausible linear maximum.
+
+    Returns:
+        dict: `{'already_logged': bool, 'branch': str, 'max': float,
+            'min': float, 'median': float, 'n_negative': int}`.
+
+    Raises:
+        ValueError: if the matrix has no finite values, or its maximum falls in
+            the undecidable band between `log_max` and `linear_min`. In that
+            case establish the scale from the series' own documentation and pass
+            `already_logged=` explicitly - do not let this function guess.
+    """
+    if log_max is None:
+        log_max = MICROARRAY_LOG_MAX
+    if linear_min is None:
+        linear_min = MICROARRAY_LINEAR_MIN
+    v = np.asarray(expr.values, dtype="float64")
+    finite = v[np.isfinite(v)]
+    if finite.size == 0:
+        raise ValueError("detect_log_scale: matrix has no finite values")
+    vmax = float(finite.max())
+    n_neg = int((finite < 0).sum())
+    info = {"max": vmax, "min": float(finite.min()),
+            "median": float(np.median(finite)), "n_negative": n_neg}
+    if n_neg > 0:
+        info.update(already_logged=True, branch="logged:negative_values")
+    elif vmax <= log_max:
+        info.update(already_logged=True, branch="logged:max_le_%g" % log_max)
+    elif vmax >= linear_min:
+        info.update(already_logged=False, branch="linear:max_ge_%g" % linear_min)
+    else:
+        raise ValueError(
+            "detect_log_scale cannot decide the scale: max=%.4g lies between "
+            "log_max=%.4g and linear_min=%.4g. Establish the scale from the "
+            "series documentation and pass already_logged= explicitly."
+            % (vmax, log_max, linear_min))
+    return info
+
+
+def collapse_probes_to_genes(expr, probe_to_gene, method="max_mean",
+                             ambiguous="raise", multi_gene_sep="///",
+                             gene_name="gene"):
+    """Collapse a probe-level matrix to one row per gene.
+
+    Default `method="max_mean"`: among the probes mapping to a gene, keep the
+    single probe with the highest mean value across samples. On a log2 intensity
+    scale that is the highest-mean-intensity probe - the conventional choice (it
+    favours the probe least dominated by background), and it keeps one real
+    measurement per gene rather than averaging probes of different affinity.
+
+    Ambiguous probes - a probe whose annotation names several genes, e.g. GEO's
+    `"MIR4640///DDR1"` - are **not** resolved by taking the first symbol.
+    `ambiguous="raise"` (default) raises; `ambiguous="drop"` excludes them and
+    reports the count. Silent first-picking is not offered.
+
+    Selection is deterministic: ties on the ranking statistic are broken by
+    probe id, so the result does not depend on input row order.
+
+    Args:
+        expr (pandas.DataFrame): probes x samples, numeric.
+        probe_to_gene (pandas.Series | dict | pandas.DataFrame): probe id ->
+            gene symbol. A DataFrame must have exactly one column.
+        method ('max_mean' | 'mean' | 'median' | 'max_var'): collapsing rule.
+            'max_mean' / 'max_var' select one probe; 'mean' / 'median' average
+            across probes.
+        ambiguous ('raise' | 'drop'): what to do with multi-gene probes.
+        multi_gene_sep (str): separator marking a multi-gene annotation.
+        gene_name (str): name given to the resulting index.
+
+    Returns:
+        (pandas.DataFrame, dict): genes x samples (float64, unique index,
+            input column order preserved) and a report with keys
+            `method, n_probes_in, n_probes_annotated, n_probes_unannotated,
+            n_probes_ambiguous, ambiguous_policy, ambiguous_examples,
+            n_genes_out, n_genes_multiprobe, max_probes_per_gene`.
+
+    Raises:
+        ValueError: on an unknown `method` / `ambiguous`, duplicate probe ids in
+            the mapping, a mapping with no overlap with `expr.index`, an
+            ambiguous mapping under `ambiguous="raise"`, or an empty result.
+    """
+    if method not in ("max_mean", "mean", "median", "max_var"):
+        raise ValueError("unknown collapsing method %r" % (method,))
+    if ambiguous not in ("raise", "drop"):
+        raise ValueError("ambiguous must be 'raise' or 'drop', got %r"
+                         % (ambiguous,))
+    if isinstance(probe_to_gene, pd.DataFrame):
+        if probe_to_gene.shape[1] != 1:
+            raise ValueError("probe_to_gene DataFrame must have one column, "
+                             "got %s" % list(probe_to_gene.columns))
+        probe_to_gene = probe_to_gene.iloc[:, 0]
+    m = pd.Series(probe_to_gene, dtype=object)
+    m.index = [str(i).strip() for i in m.index]
+    if m.index.duplicated().any():
+        raise ValueError("probe_to_gene has duplicate probe ids")
+    X = expr.copy()
+    X.index = [str(i).strip() for i in X.index]
+    X = X.apply(pd.to_numeric, errors="coerce").astype("float64")
+
+    n_in = int(X.shape[0])
+    mapped = m.reindex(X.index)
+    mapped = mapped.map(lambda v: "" if v is None
+                        or (isinstance(v, float) and np.isnan(v))
+                        else str(v).strip())
+    annotated = mapped != ""
+    if int(annotated.sum()) == 0:
+        raise ValueError("probe_to_gene shares no probe ids with the expression "
+                         "matrix - check that the annotation platform matches "
+                         "the series platform")
+    amb_mask = annotated & mapped.map(lambda v: multi_gene_sep in v)
+    n_amb = int(amb_mask.sum())
+    amb_examples = [(p, mapped[p]) for p in list(mapped.index[amb_mask])[:5]]
+    if n_amb and ambiguous == "raise":
+        raise ValueError(
+            "%d of %d annotated probes map to more than one gene (separator "
+            "%r), e.g. %s. Refusing to pick the first symbol silently. Pass "
+            "ambiguous='drop' to exclude them, or supply a one-gene-per-probe "
+            "mapping." % (n_amb, int(annotated.sum()), multi_gene_sep,
+                          amb_examples))
+    keep = (annotated & ~amb_mask).values
+    Xk = X.loc[keep]
+    genes = mapped[keep].values
+
+    if method in ("mean", "median"):
+        out = getattr(Xk.groupby(genes), method)()
+    else:
+        stat = (Xk.mean(axis=1) if method == "max_mean"
+                else Xk.var(axis=1, ddof=1))
+        order = pd.DataFrame({"gene": genes, "stat": stat.values,
+                              "probe": list(Xk.index)}, index=list(Xk.index))
+        order = order.sort_values(["gene", "stat", "probe"],
+                                  ascending=[True, False, True],
+                                  kind="mergesort")
+        chosen = order.groupby("gene", sort=True).head(1)
+        out = Xk.loc[chosen["probe"].values]
+        out.index = chosen["gene"].values
+    out = out[[c for c in expr.columns]]
+    out.index = pd.Index([str(g) for g in out.index], name=gene_name)
+    out = out.astype("float64")
+    if out.shape[0] == 0:
+        raise ValueError("probe collapsing produced an empty matrix")
+    if out.index.duplicated().any():
+        raise ValueError("internal error: collapsed matrix has duplicate genes")
+    per_gene = pd.Series(genes).value_counts()
+    report = {
+        "method": method,
+        "n_probes_in": n_in,
+        "n_probes_annotated": int(annotated.sum()),
+        "n_probes_unannotated": int((~annotated).sum()),
+        "n_probes_ambiguous": n_amb,
+        "ambiguous_policy": ambiguous,
+        "ambiguous_examples": amb_examples,
+        "n_genes_out": int(out.shape[0]),
+        "n_genes_multiprobe": int((per_gene > 1).sum()),
+        "max_probes_per_gene": int(per_gene.max()) if len(per_gene) else 0,
+    }
+    return out, report
+
+
+def run_de_microarray(expr, groups, case, control, already_logged=None,
+                      log_max=None, linear_min=None, filter_min_value=None,
+                      filter_min_fraction=0.2, covariates=None,
+                      min_per_group=2, trend_frac=0.4):
+    """Differential expression on a microarray matrix, with scale detection.
+
+    A thin wrapper over `run_de(design="limma_trend")`. Its only job is to
+    decide - or record - whether the input is already log2, and to report which
+    branch fired so the choice is auditable rather than implicit.
+
+    Args:
+        expr (pandas.DataFrame): genes x samples (collapse probes first).
+        groups (pandas.Series | dict | list): group label per sample.
+        case (str): log2FC numerator label.
+        control (str): denominator label.
+        already_logged (bool | None): None = call `detect_log_scale`; True/False
+            overrides detection and the branch is recorded as
+            `caller:already_logged=...`.
+        log_max, linear_min (float | None): passed to `detect_log_scale`.
+        filter_min_value (float | None): expression filter on the input scale.
+            None (default) = no filtering. An RMA matrix is already
+            background-corrected, and thresholding a log2 matrix at 1.0 would
+            drop essentially nothing while a threshold near the array's noise
+            floor discards real low-expressed genes - so leave this None unless
+            you have a specific reason.
+        filter_min_fraction (float): fraction of the smaller group that must
+            exceed `filter_min_value`.
+        covariates (pandas.DataFrame | None): per-sample numeric covariates.
+        min_per_group (int): precondition on group sizes.
+        trend_frac (float): lowess span for the variance trend.
+
+    Returns:
+        pandas.DataFrame: as `run_de`, with `.attrs['log_scale_branch']` and
+            `.attrs['log_scale_info']` added.
+
+    Raises:
+        ValueError: as `detect_log_scale` and `run_de`.
+    """
+    if already_logged is None:
+        info = detect_log_scale(expr, log_max=log_max, linear_min=linear_min)
+        logged = bool(info["already_logged"])
+        branch = info["branch"]
+    else:
+        logged = bool(already_logged)
+        try:
+            info = detect_log_scale(expr, log_max=log_max,
+                                    linear_min=linear_min)
+        except ValueError as exc:
+            info = {"detection_error": str(exc)}
+        branch = "caller:already_logged=%s" % logged
+    out = run_de(expr, groups, case, control, design="limma_trend",
+                 covariates=covariates, min_per_group=min_per_group,
+                 filter_min_value=filter_min_value,
+                 filter_min_fraction=filter_min_fraction,
+                 trend_frac=trend_frac, already_logged=logged)
+    out.attrs["log_scale_branch"] = branch
+    out.attrs["log_scale_info"] = info
+    return out
+
+
+def label_permutation_control(expr, groups, case, control, seed, n_perm=1,
+                              fdr=0.05, de_fn=None, **de_kwargs):
+    """Re-run a DE contrast on shuffled group labels and count the hits.
+
+    Under a correct pipeline a permuted contrast yields no genes at
+    FDR<`fdr`. A non-zero count means the variance model, the FDR, or the label
+    handling is wrong, and no unpermuted number from the same pipeline can be
+    trusted.
+
+    The shuffle is a permutation of the label vector, so both group sizes are
+    preserved and the only thing destroyed is the association between label and
+    expression.
+
+    Args:
+        expr (pandas.DataFrame): genes x samples.
+        groups (pandas.Series | dict | list): true labels.
+        case (str): case label.
+        control (str): control label.
+        seed (int): RNG seed - required, not defaulted, so a control is always
+            reproducible.
+        n_perm (int): number of permutations.
+        fdr (float): significance threshold.
+        de_fn (callable | None): DE function; default `run_de_microarray`.
+        **de_kwargs: passed through to `de_fn`.
+
+    Returns:
+        list[dict]: one row per permutation with `permutation, seed, n_sig,
+            n_genes_tested, min_fdr, min_p_value, frac_p_below_05, n_case,
+            n_ctrl`.
+
+    Raises:
+        ValueError: if `n_perm < 1`, or from the underlying DE call.
+    """
+    if n_perm < 1:
+        raise ValueError("n_perm must be >= 1, got %r" % (n_perm,))
+    if de_fn is None:
+        de_fn = run_de_microarray
+    g = groups.copy() if isinstance(groups, pd.Series) else pd.Series(groups)
+    g.index = [str(i) for i in g.index]
+    g = g.reindex([str(c) for c in expr.columns])
+    keep = g[g.isin([case, control])].index.tolist()
+    sub = expr[keep]
+    labels = np.asarray(g[keep].values).copy()
+    rng = np.random.default_rng(seed)
+    rows = []
+    for i in range(int(n_perm)):
+        perm = pd.Series(rng.permutation(labels), index=keep)
+        de = de_fn(sub, perm, case, control, **de_kwargs)
+        p = np.asarray(de["p_value"].values, dtype="float64")
+        rows.append({
+            "permutation": i + 1,
+            "seed": int(seed),
+            "n_sig": int((de["fdr"].values < fdr).sum()),
+            "n_genes_tested": int(de.shape[0]),
+            "min_fdr": float(np.nanmin(de["fdr"].values)),
+            "min_p_value": float(np.nanmin(p)),
+            "frac_p_below_05": float(np.mean(p < 0.05)),
+            "n_case": int((perm == case).sum()),
+            "n_ctrl": int((perm == control).sum()),
+        })
+    return rows

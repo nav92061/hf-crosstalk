@@ -141,13 +141,119 @@ def test_published_results_are_self_consistent():
               % (len(set(op["interaction_name"])), bool(op["passed_floor"].any())))
 
 
+def test_conjunction_refuses_partial_pass():
+    """A hypothesis with three predictions needs all three, in direction."""
+    one_of_three = {
+        "survival": {"pass": False, "direction_ok": False},
+        "proliferation": {"pass": True, "direction_ok": True},
+        "copy_number": {"pass": False, "direction_ok": False},
+    }
+    v = ck.conjunction_verdict(one_of_three)
+    check("1 of 3 conjuncts is a FAIL, not a discovery",
+          v["verdict"] == "FAIL" and v["n_passed"] == 1,
+          "verdict=%s n_passed=%s" % (v["verdict"], v["n_passed"]))
+    check("failing conjuncts are named",
+          set(v["failing_conjuncts"]) == {"survival", "copy_number"},
+          "failing=%s" % v["failing_conjuncts"])
+    all_three = {k: {"pass": True, "direction_ok": True}
+                 for k in ("a", "b", "c")}
+    check("all three passing is a PASS",
+          ck.conjunction_verdict(all_three)["verdict"] == "PASS")
+    wrong_dir = {"a": {"pass": True, "direction_ok": False},
+                 "b": {"pass": True, "direction_ok": True}}
+    check("significant in the wrong direction does not count as passed",
+          ck.conjunction_verdict(wrong_dir)["verdict"] == "FAIL")
+    try:
+        ck.conjunction_verdict({})
+        check("empty conjunction raises", False)
+    except ValueError:
+        check("empty conjunction raises ValueError", True)
+
+
+def test_receptor_base_rate_guard():
+    """Before reading an axis count as evidence, ask the ligand-free rate."""
+    tbl = pd.DataFrame({
+        "receptor": ["R1", "R1", "R2", "R2", "R3", "R3"],
+        "recpass": [True, True, True, False, False, False]})
+    out = ck.receptor_pass_rate(tbl, min_types=1)
+    check("base rate counts receptors passing with no ligand involved",
+          abs(out["base_rate"] - 2 / 3) < 1e-9 and out["n_receptors"] == 3,
+          "base_rate=%.3f n=%d" % (out["base_rate"], out["n_receptors"]))
+    check("mean types per receptor is reported",
+          abs(out["mean_types_per_receptor"] - 1.0) < 1e-9)
+    try:
+        ck.receptor_pass_rate(tbl.drop(columns=["recpass"]))
+        check("missing pass column raises", False)
+    except ValueError:
+        check("missing pass column raises ValueError", True)
+
+
+def test_induction_criteria_are_within_dataset():
+    """Source specificity by induction: three criteria, reported separately."""
+    de = pd.DataFrame({
+        "gene_symbol": ["PTN", "QUIET", "GAPDH"],
+        "log2FC": [1.6, 0.2, 0.0],
+        "fdr": [1e-4, 0.5, 0.9],
+        "mean_expr": [np.log2(1600.0), np.log2(3.0), np.log2(69000.0)]})
+    base = pd.DataFrame({"gene": ["PTN", "QUIET"],
+                         "best_source_rank": [23, 2],
+                         "n_tissues": [52, 52]})
+    out = ck.induction_specificity({"c1": de, "c2": de}, base)
+    check("criteria are returned separately so the binding one is visible",
+          all(c in out.columns for c in ("A1_pass", "A2_pass", "A3_pass",
+                                        "pass_all")))
+    check("an induced, abundant, upper-half ligand passes all three",
+          bool(out.loc["PTN", "pass_all"]))
+    check("an unchanged low-abundance ligand fails induction and abundance",
+          not bool(out.loc["QUIET", "A1_pass"])
+          and not bool(out.loc["QUIET", "A2_pass"]))
+    try:
+        ck.induction_specificity({"c1": de.drop(columns=["fdr"])}, base)
+        check("missing required column raises", False)
+    except ValueError:
+        check("missing required column raises ValueError", True)
+    try:
+        ck.induction_specificity({"c1": de[de.gene_symbol != "GAPDH"]}, base)
+        check("missing housekeeping reference raises", False)
+    except ValueError:
+        check("missing housekeeping reference raises ValueError", True)
+
+
+def test_ptn_withdrawal_is_recorded():
+    """The adversarial phase's verdicts must survive in the shipped tables."""
+    tdir = os.path.join(ROOT, "results", "tables")
+    bra = os.path.join(tdir, "receptor_base_rate_audit.csv")
+    if os.path.exists(bra):
+        b = pd.read_csv(bra)
+        rate = float(b["passes_ge1_type"].mean())
+        check("receptor base rate is 74.1%, above the 60% uninformative bar",
+              abs(rate - 0.7407) < 0.001, "rate=%.4f" % rate)
+    nl = os.path.join(tdir, "ptn_receptor_null.csv")
+    if os.path.exists(nl):
+        draws = pd.read_csv(nl)["total_pairs_primary"].values
+        check("PTN's 27 observed pairs do NOT exceed the null 95th percentile",
+              27 <= np.percentile(draws, 95),
+              "obs=27 p95=%.1f" % np.percentile(draws, 95))
+    vs = os.path.join(tdir, "validation_summary.csv")
+    if os.path.exists(vs):
+        v = pd.read_csv(vs)
+        row = v[v["n"] == 50]
+        check("the PTN retention rule is recorded as FAIL",
+              len(row) == 1 and row.iloc[0]["verdict"] == "FAIL",
+              "verdict=%s" % (row.iloc[0]["verdict"] if len(row) else "missing"))
+
+
 if __name__ == "__main__":
     for fn in [test_floor_is_unit_agnostic,
                test_floor_rejects_untranscribed_receptor,
                test_complex_rule_is_obligate_subunit,
                test_mismatched_availability_raises,
                test_double_centering_removes_additive_effects,
-               test_published_results_are_self_consistent]:
+               test_published_results_are_self_consistent,
+               test_conjunction_refuses_partial_pass,
+               test_receptor_base_rate_guard,
+               test_induction_criteria_are_within_dataset,
+               test_ptn_withdrawal_is_recorded]:
         print("\n== %s ==" % fn.__name__)
         fn()
     print("\n%s" % ("-" * 56))

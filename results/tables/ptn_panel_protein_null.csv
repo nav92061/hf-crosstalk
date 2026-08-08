@@ -1,0 +1,15 @@
+n_panel_testable,observed_hits,null_mean,null_p95,empirical_p,exceeds_null_p95,direction,n_draws,seed,tumor_type,pdc_study_id,note
+5,1.0,2.25,4.0,0.9566666666666667,False,enriched,300,20260727,ccRCC,PDC000127,
+5,2.0,1.9466666666666668,4.0,0.66,False,depleted,300,20260727,ccRCC,PDC000127,
+5,1.0,0.4766666666666667,2.0,0.39,False,enriched,300,20260727,OV,PDC000110,
+5,0.0,1.0166666666666666,3.0,1.0,False,depleted,300,20260727,OV,PDC000110,
+0,,,,,,enriched,300,20260727,BRCA,PDC000120,"no genome-wide base rate: study has no within-plex pairs, so the matched null is undefined"
+6,3.0,2.6566666666666667,5.0,0.5533333333333333,False,enriched,300,20260727,PAAD,PDC000270,
+6,2.0,2.1266666666666665,4.0,0.71,False,depleted,300,20260727,PAAD,PDC000270,
+6,4.0,2.2333333333333334,4.0,0.12,False,enriched,300,20260727,UCEC,PDC000125,
+6,1.0,2.6766666666666667,5.0,0.98,False,depleted,300,20260727,UCEC,PDC000125,
+7,3.0,4.0633333333333335,6.0,0.86,False,enriched,300,20260727,LUAD,PDC000153,
+7,2.0,1.8466666666666667,4.0,0.5866666666666667,False,depleted,300,20260727,LUAD,PDC000153,
+6,2.0,3.49,5.050000000000011,0.9533333333333334,False,enriched,300,20260727,HNSC,PDC000221,
+6,1.0,1.42,3.0,0.7666666666666667,False,depleted,300,20260727,HNSC,PDC000221,
+0,,,,,,enriched,300,20260727,GBM,PDC000204,"no genome-wide base rate: study has no within-plex pairs, so the matched null is undefined"

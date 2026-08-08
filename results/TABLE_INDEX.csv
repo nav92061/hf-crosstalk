@@ -15,9 +15,20 @@ Table 13,depmap_lineage_dependency.csv,Per-lineage CRISPR gene effect for floor-
 Table 14,depmap_compatibility_correlation.csv,Receptor dependency vs compatibility correlation with BH-FDR,62c0bf9b-fbb2-47f6-bae8-e1d7a8a5133d,9444
 Table 15,depmap_lineage_map.csv,Disclosed DepMap-lineage to TCGA-type mapping with per-row confidence,3ec6a071-a0cd-42f3-b5ee-d0881ca8524d,2987
 Table 16,cell_line_panel.csv,"WNT9A-FZD7 uterine cell-line panel, two strata",ac70e34c-41ec-4258-ba2a-eaaf0a536204,4138
-Table 17,receptor_tumor_vs_normal.csv,Receptor tumor-vs-normal comparison by GTEx rank and unit-matched adjacent normal,b9491a67-fb87-4df3-8b62-59f5799a7295,641607
-Table 18,ligand_tissue_specificity.csv,Cardiac specificity of HF-upregulated secreted ligands across 52 GTEx tissues,c4b0258c-f1c3-4a0f-b9cf-60e9e4c32a5b,7565
+Table 17,receptor_tumor_vs_normal.csv,Receptor tumour-vs-normal by two methods: GTEx background-corrected percentile rank AND unit-matched log2FC against TCGA adjacent normal (25 cols; the 13-col earlier version lacks the unit-matched columns behind §2.7),9c318e4e-e385-4a66-9bb1-3fd332469bc9,2024576
+Table 18,ligand_tissue_specificity.csv,Cardiac specificity of the 42 floor-passing HF-upregulated secreted ligands across 52 GTEx tissues (an earlier 51-row version covers all network ligands including those with no floor-passing interaction),a82f4063-6ea1-4274-98fc-d3544a42f027,25745
 Table 19,axis_survival.csv,Which ligand-receptor axes survive both specificity checks,2d0e9667-c354-4b56-9f15-3e381150aba2,9874
-Table 20,tumor_normal_tissue_map.csv,TCGA-type to GTEx-tissue mapping with quality flags,05e1e593-9c79-445c-a48a-7d1f7912667a,2154
+Table 20,tumor_normal_tissue_map.csv,TCGA tumour type to GTEx tissue mapping with quality flags,05e1e593-9c79-445c-a48a-7d1f7912667a,10290
 Table 21,literature_citations.csv,"Verified PubMed citations with evidence type, strength and direction",940dda9f-ce28-4f2a-a1b6-bcc9d5cc26a8,44488
 Table 22,ligand_evidence.csv,Per-ligand human HF evidence and receptor cancer evidence,8f8d6101-f192-48d8-80ba-10e96f46e295,14441
+Table 23,ligand_specificity_failure_based.csv,Ligand cardiac distinctiveness re-scored by failure induction: criteria A1/A2/A3 per ligand with the binding constraint (§2.9),69dc943e-229a-48d3-ba4b-2f7cefa74355,18132
+Table 24,axis_survival_corrected.csv,Axis survival under the corrected ligand definition; 7 of 146 survive versus 0 originally (§2.9),fbcaf78d-0104-4817-931b-c3b1665c33cd,80122
+Table 25,receptor_base_rate_audit.csv,Ligand-free base rate at which each of the 81 floor-passing receptors passes the receiver criterion; 60 of 81 (74.1%) pass in >=1 type (§2.9),be8dbf3d-c405-436b-b242-63307d4c42ae,9197
+Table 26,ptn_receptor_null.csv,"1,000 expression-decile-matched random receptor sets against PTN's seven; observed 27 pairs vs null median 30, p=0.688 (§2.9)",a5cb65bd-bc49-4bc0-9d71-6f9b8f79a1f0,131064
+Table 27,ptn_receptor_correlation.csv,"Pairwise co-expression among PTN's seven receptors; mean rho -0.091, so they are not one family counted seven times (§2.9)",a0730b02-43e8-4f8c-b49a-266dc836c6bc,3042
+Table 28,ptn_cross_tissue_induction.csv,"PTN and COL1A1 in five non-cardiac fibrosis and organ-failure cohorts, each normalisation kept separate (§2.9)",9e390931-ffea-4a7c-8e6f-1f2a2cd91c9a,4329
+Table 29,ptn_cell_of_origin.csv,Per-cell-type PTN share and per-fibroblast disease tests in two human heart single-nucleus atlases (§2.9),097cd740-0258-42f7-aa58-cab111d76ad4,31329
+Table 30,ptn_literature.csv,"609 verified records from the PTN literature search, classified for the cardiac-plasma-source premise (§2.9)",7aaa38a5-5d5e-4f6c-9509-530d3a4d1a46,619557
+Table 31,npr1_survival.csv,"Cox models for NPR1 per tumour type and pooled; HR 1.0285, p=0.2446 against a pre-specified HR<1 (§2.10)",298ee493-0191-46c9-a6a9-d290b7b33c63,15900
+Table 32,npr1_proliferation.csv,"Within-type NPR1 correlation with the proliferation signature; median rho -0.2032, negative in 13 of 15 (§2.10)",220d879b-6bd8-401e-bd95-ad9dab71986f,12672
+Table 33,npr1_copynumber.csv,NPR1 locus deletion frequency against an arm-1q matched null; 3.10% vs null median 4.09% (§2.10),71fb442f-864c-491f-88e9-5418b4adf676,24576

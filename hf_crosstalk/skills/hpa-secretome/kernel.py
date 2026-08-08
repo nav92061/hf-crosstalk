@@ -443,3 +443,185 @@ def build_secretome_table(hpa_df):
     flags, log = flag_structural_ecm(cls["gene"].tolist(), hpa_df=hpa_df)
     cls["is_structural_ecm"] = cls["gene"].map(flags).fillna(False).astype(bool)
     return cls, log
+
+# ---------------------------------------------------------------------------
+# GTEx tissue-specificity companion (added after the HF-secretome screen)
+# ---------------------------------------------------------------------------
+
+GTEX_MEDIAN_URL = "https://gtexportal.org/api/v2/expression/medianGeneExpression"
+GTEX_GENE_URL = "https://gtexportal.org/api/v2/reference/gene"
+GTEX_DATASET_ID = "gtex_v8"
+GTEX_GENCODE_VERSION = "v26"
+GTEX_GENOME_BUILD = "GRCh38/hg38"
+GTEX_CELL_LINES = ("Cells_Cultured_fibroblasts", "Cells_EBV-transformed_lymphocytes")
+GTEX_API_GOTCHA = (
+    "GTEx API v2 requires BOTH datasetId=gtex_v8 AND gencode IDs versioned to "
+    "that release (resolve via /reference/gene with gencodeVersion=v26 and "
+    "genomeBuild=GRCh38/hg38). Omitting datasetId, or passing a bare unversioned "
+    "ENSG, returns HTTP 200 with an EMPTY data array and totalNumberOfItems=0 -- "
+    "a silent no-op that looks like 'gene not expressed' rather than an error. "
+    "Always assert a non-zero row count per gene before interpreting."
+)
+RATIO_METRIC_CAVEAT = (
+    "An enrichment ratio of tissue-of-interest TPM divided by the cross-tissue "
+    "MEDIAN rewards genes that are near-zero in most tissues, regardless of where "
+    "their actual maximum sits. A liver-dominant protein can score a high cardiac "
+    "ratio purely because its median across tissues is ~0. Never report a ratio "
+    "without the companion absolute-rank and fold-vs-top-tissue columns."
+)
+
+
+def gtex_resolve_gencode_ids(symbols, batch=50, timeout=120, retries=4):
+    """Map HGNC symbols -> release-matched GTEx gencode IDs (see GTEX_API_GOTCHA)."""
+    import json
+    import time
+    import urllib.parse
+    out = {}
+    syms = [str(s).upper() for s in symbols]
+    for i in range(0, len(syms), batch):
+        chunk = syms[i:i + batch]
+        q = [("geneId", s) for s in chunk] + [
+            ("gencodeVersion", GTEX_GENCODE_VERSION),
+            ("genomeBuild", GTEX_GENOME_BUILD),
+            ("itemsPerPage", "500"),
+        ]
+        url = GTEX_GENE_URL + "?" + urllib.parse.urlencode(q)
+        for attempt in range(retries):
+            try:
+                req = urllib.request.Request(url, headers={"Accept": "application/json"})
+                with urllib.request.urlopen(req, timeout=timeout) as resp:
+                    payload = json.loads(resp.read().decode())
+                for rec in payload.get("data", []):
+                    sym = str(rec.get("geneSymbol", "")).upper()
+                    if sym and sym not in out:
+                        out[sym] = rec.get("gencodeId")
+                break
+            except Exception:
+                if attempt == retries - 1:
+                    raise
+                time.sleep(2 * (attempt + 1))
+    return out
+
+
+def gtex_fetch_tissue_medians(gencode_ids, per_request=25, timeout=180, retries=4):
+    """Fetch median TPM per tissue. Asserts the request was not a silent no-op."""
+    import json
+    import time
+    import urllib.parse
+    ids = [g for g in gencode_ids if g]
+    assert ids, "no gencode IDs supplied -- resolve symbols first"
+    rows = []
+    for i in range(0, len(ids), per_request):
+        chunk = ids[i:i + per_request]
+        q = [("gencodeId", g) for g in chunk] + [
+            ("datasetId", GTEX_DATASET_ID),
+            ("itemsPerPage", "5000"),
+        ]
+        url = GTEX_MEDIAN_URL + "?" + urllib.parse.urlencode(q)
+        for attempt in range(retries):
+            try:
+                req = urllib.request.Request(url, headers={"Accept": "application/json"})
+                with urllib.request.urlopen(req, timeout=timeout) as resp:
+                    payload = json.loads(resp.read().decode())
+                rows.extend(payload.get("data", []))
+                break
+            except Exception:
+                if attempt == retries - 1:
+                    raise
+                time.sleep(3 * (attempt + 1))
+    assert rows, (
+        "GTEx returned zero rows for every gene. " + GTEX_API_GOTCHA
+    )
+    frame = pd.DataFrame(rows)
+    n_genes = frame["geneSymbol"].nunique() if "geneSymbol" in frame.columns else 0
+    assert n_genes > 0, "GTEx response carried no geneSymbol column"
+    return frame
+
+
+def gtex_tissue_matrix(medians_df, drop_cell_lines=True):
+    """Pivot long-form GTEx medians into a gene x tissue TPM matrix."""
+    need = {"geneSymbol", "tissueSiteDetailId", "median"}
+    missing = need - set(medians_df.columns)
+    assert not missing, "medians_df missing columns: %s" % sorted(missing)
+    mat = medians_df.pivot_table(
+        index="geneSymbol", columns="tissueSiteDetailId", values="median", aggfunc="median"
+    )
+    if drop_cell_lines:
+        mat = mat.drop(columns=[c for c in GTEX_CELL_LINES if c in mat.columns])
+    return mat
+
+
+def tissue_specificity(matrix, tissues, min_ratio=3.0, max_rank=5, min_tpm=5.0,
+                       max_fold_below_top=3.0):
+    """Score enrichment for `tissues` with the rank guard RATIO_METRIC_CAVEAT requires.
+
+    Returns one row per gene with the ratio-vs-median metric AND the companion
+    columns that catch its failure mode: absolute rank of the best target tissue,
+    the top tissue overall, and fold difference between top tissue and target.
+    `passes` requires enrichment, a top-`max_rank` placement, AND abundance.
+    `ratio_only_artifact` is True whenever a gene clears the ratio threshold but
+    the target tissue is not the global maximum, or sits >=`max_fold_below_top`
+    below it -- the APOA1/PI16 pattern in RATIO_METRIC_CAVEAT. Inspect those rows
+    by hand; a True here means the ratio is arithmetically real but the
+    tissue-of-origin reading it invites is not.
+    """
+    import numpy as np
+    tissues = [t for t in tissues if t in matrix.columns]
+    assert tissues, "none of the requested tissues are columns in the matrix"
+    out = []
+    for gene in matrix.index:
+        row = matrix.loc[gene].dropna()
+        present = [t for t in tissues if t in row.index]
+        if not present:
+            continue
+        ranked = row.sort_values(ascending=False)
+        best_t = max(present, key=lambda t: float(row[t]))
+        best = float(row[best_t])
+        med = float(row.median())
+        top_t = ranked.index[0]
+        top_v = float(ranked.iloc[0])
+        ratio = best / med if med > 0 else np.inf
+        rank = int(ranked.index.get_loc(best_t)) + 1
+        enriched = (ratio >= min_ratio) and (rank <= max_rank)
+        out.append(dict(
+            gene=gene, best_tissue=best_t, best_tpm=best,
+            median_across_tissues=med, ratio_vs_median=ratio,
+            best_tissue_rank=rank, top_tissue=top_t, top_tissue_tpm=top_v,
+            fold_below_top=(top_v / best) if best > 0 else np.inf,
+            n_tissues=len(row), enriched=enriched, abundant=best >= min_tpm,
+            passes=bool(enriched and best >= min_tpm),
+            ratio_only_artifact=bool(
+                ratio >= min_ratio
+                and (rank > max_rank
+                     or rank > 1
+                     or (top_v / best if best > 0 else np.inf) >= max_fold_below_top)
+            ),
+        ))
+    frame = pd.DataFrame(out)
+    if len(frame):
+        assert frame.best_tissue_rank.min() >= 1, "rank must be 1-based"
+    return frame
+
+
+def base_rate_guard(hit_flags, background_flags):
+    """Fisher test: is the pass rate in the hit set above the background base rate?
+
+    Both args are boolean Series/arrays of the SAME criterion applied to the
+    candidate set and to a matched non-candidate set. A screen whose criterion
+    passes at background rate has found nothing, however plausible the hits look.
+    """
+    from scipy.stats import fisher_exact
+    hit = [bool(x) for x in hit_flags]
+    bg = [bool(x) for x in background_flags]
+    a = sum(hit)
+    b = len(hit) - a
+    c = sum(bg)
+    d = len(bg) - c
+    odds, pval = fisher_exact([[a, b], [c, d]])
+    return dict(
+        hit_pass=a, hit_n=len(hit), hit_rate=(a / len(hit) if hit else float("nan")),
+        bg_pass=c, bg_n=len(bg), bg_rate=(c / len(bg) if bg else float("nan")),
+        odds_ratio=float(odds), p_value=float(pval),
+        enriched_above_base_rate=bool(pval < 0.05 and odds > 1),
+    )
+

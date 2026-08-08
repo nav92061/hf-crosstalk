@@ -1,0 +1,81 @@
+gene,verdict,reason,n_pairs,median_paired_diff,p_value,batch_handling,n_tumor,n_normal,frac_tumor,frac_normal,n_dropped_no_shared_plex,n_aliquots_dropped_single_arm_plex,tumor_type,pdc_study_id,blind,in_matrix,miss_tumor,miss_normal,miss_fisher_p,genomewide_percentile,in_panel,fdr,reason_if_untestable
+SDC1,TESTABLE,passes pre-spec 2.1,84,-0.7337,7.146928970833558e-12,batch_free,110,84,1.0,1.0,0,0,ccRCC,PDC000127,False,True,0.0,0.0,1.0,11.858287261649554,True,1.6676167598611634e-11,
+SDC2,TESTABLE,passes pre-spec 2.1,80,0.002050000000000003,0.7993385621795559,batch_free,105,80,0.9545454545454546,0.9523809523809523,0,0,ccRCC,PDC000127,False,True,0.045454545454545456,0.047619047619047616,1.0,44.89450524653052,True,0.7993385621795559,
+SDC3,UNTESTABLE,gene absent from study quantDataMatrix gene index,0,,,none,0,0,,,0,0,ccRCC,PDC000127,False,False,,,,,True,,gene absent from study quantDataMatrix gene index
+SDC4,TESTABLE,passes pre-spec 2.1,84,-0.9108,2.7755300144835506e-14,batch_free,110,84,1.0,1.0,0,0,ccRCC,PDC000127,False,True,0.0,0.0,1.0,8.653954642897439,True,1.9428710101384854e-13,
+NCL,TESTABLE,passes pre-spec 2.1,84,0.3391,1.0278593352029225e-12,batch_free,110,84,1.0,1.0,0,0,ccRCC,PDC000127,False,True,0.0,0.0,1.0,80.7740042874873,True,3.5975076732102287e-12,
+ITGAV,TESTABLE,passes pre-spec 2.1,84,0.07789999999999997,0.30082384055318145,batch_free,110,84,1.0,1.0,0,0,ccRCC,PDC000127,False,True,0.0,0.0,1.0,54.20286584677874,True,0.35096114731204503,
+PTPRZ1,UNTESTABLE,gene absent from study quantDataMatrix gene index,0,,,none,0,0,,,0,0,ccRCC,PDC000127,False,False,,,,,True,,gene absent from study quantDataMatrix gene index
+NPR2,UNTESTABLE,gene absent from study quantDataMatrix gene index,0,,,none,0,0,,,0,0,ccRCC,PDC000127,False,False,,,,,True,,gene absent from study quantDataMatrix gene index
+NPR3,UNTESTABLE,gene absent from study quantDataMatrix gene index,0,,,none,0,0,,,0,0,ccRCC,PDC000127,False,False,,,,,True,,gene absent from study quantDataMatrix gene index
+PTN,TESTABLE,passes pre-spec 2.1,74,-1.5180500000000001,5.226138236651503e-11,batch_free,81,76,0.7363636363636363,0.9047619047619048,0,0,ccRCC,PDC000127,False,True,0.2636363636363636,0.09523809523809523,0.003123250615451413,2.5724923840685996,False,1.2194322552186842e-10,
+SDC1,TESTABLE,passes pre-spec 2.1,13,0.045200000000000004,0.375732421875,batch_free,85,23,1.0,1.0,0,0,OV,PDC000110,True,True,0.0,0.0,1.0,60.68687885268587,True,0.4222634621346363,
+SDC2,TESTABLE,passes pre-spec 2.1,13,0.3133,0.2734375,batch_free,85,23,1.0,1.0,0,0,OV,PDC000110,True,True,0.0,0.0,1.0,80.94099886778211,True,0.3190104166666667,
+SDC3,UNTESTABLE,gene absent from study quantDataMatrix gene index,0,,,none,0,0,,,0,0,OV,PDC000110,True,False,,,,,True,,gene absent from study quantDataMatrix gene index
+SDC4,TESTABLE,passes pre-spec 2.1,13,0.06209999999999982,0.83935546875,batch_free,85,23,1.0,1.0,0,0,OV,PDC000110,True,True,0.0,0.0,1.0,62.309724493646996,True,0.83935546875,
+NCL,TESTABLE,passes pre-spec 2.1,13,0.9056,0.000732421875,batch_free,85,23,1.0,1.0,0,0,OV,PDC000110,True,True,0.0,0.0,1.0,98.36457416027173,True,0.001025390625,
+ITGAV,TESTABLE,passes pre-spec 2.1,13,0.022399999999999975,0.375732421875,batch_free,85,23,1.0,1.0,0,0,OV,PDC000110,True,True,0.0,0.0,1.0,58.57340545980627,True,0.375732421875,
+PTPRZ1,UNTESTABLE,gene absent from study quantDataMatrix gene index,0,,,none,0,0,,,0,0,OV,PDC000110,True,False,,,,,True,,gene absent from study quantDataMatrix gene index
+NPR2,UNTESTABLE,gene absent from study quantDataMatrix gene index,0,,,none,0,0,,,0,0,OV,PDC000110,True,False,,,,,True,,gene absent from study quantDataMatrix gene index
+NPR3,UNTESTABLE,gene absent from study quantDataMatrix gene index,0,,,none,0,0,,,0,0,OV,PDC000110,True,False,,,,,True,,gene absent from study quantDataMatrix gene index
+PTN,TESTABLE,passes pre-spec 2.1,13,0.01990000000000003,0.83935546875,batch_free,85,23,1.0,1.0,0,0,OV,PDC000110,True,True,0.0,0.0,1.0,58.28406088816203,False,0.83935546875,
+SDC1,UNTESTABLE,"no within-plex pair and no mixed-arm plex: arm is confounded with plex, so no batch-free contrast exists",0,,,batch_corrected,118,18,1.0,1.0,17,136,BRCA,PDC000120,True,True,0.0,0.0,1.0,,True,,"no within-plex pair and no mixed-arm plex: arm is confounded with plex, so no batch-free contrast exists"
+SDC2,UNTESTABLE,"no within-plex pair and no mixed-arm plex: arm is confounded with plex, so no batch-free contrast exists",0,,,batch_corrected,118,18,1.0,1.0,17,136,BRCA,PDC000120,True,True,0.0,0.0,1.0,,True,,"no within-plex pair and no mixed-arm plex: arm is confounded with plex, so no batch-free contrast exists"
+SDC3,UNTESTABLE,gene absent from study quantDataMatrix gene index,0,,,none,0,0,,,0,0,BRCA,PDC000120,True,False,,,,,True,,gene absent from study quantDataMatrix gene index
+SDC4,UNTESTABLE,"no within-plex pair and no mixed-arm plex: arm is confounded with plex, so no batch-free contrast exists",0,,,batch_corrected,118,18,1.0,1.0,17,136,BRCA,PDC000120,True,True,0.0,0.0,1.0,,True,,"no within-plex pair and no mixed-arm plex: arm is confounded with plex, so no batch-free contrast exists"
+NCL,UNTESTABLE,"no within-plex pair and no mixed-arm plex: arm is confounded with plex, so no batch-free contrast exists",0,,,batch_corrected,118,18,1.0,1.0,17,136,BRCA,PDC000120,True,True,0.0,0.0,1.0,,True,,"no within-plex pair and no mixed-arm plex: arm is confounded with plex, so no batch-free contrast exists"
+ITGAV,UNTESTABLE,"no within-plex pair and no mixed-arm plex: arm is confounded with plex, so no batch-free contrast exists",0,,,batch_corrected,118,18,1.0,1.0,17,136,BRCA,PDC000120,True,True,0.0,0.0,1.0,,True,,"no within-plex pair and no mixed-arm plex: arm is confounded with plex, so no batch-free contrast exists"
+PTPRZ1,UNTESTABLE,gene absent from study quantDataMatrix gene index,0,,,none,0,0,,,0,0,BRCA,PDC000120,True,False,,,,,True,,gene absent from study quantDataMatrix gene index
+NPR2,UNTESTABLE,gene absent from study quantDataMatrix gene index,0,,,none,0,0,,,0,0,BRCA,PDC000120,True,False,,,,,True,,gene absent from study quantDataMatrix gene index
+NPR3,UNTESTABLE,gene absent from study quantDataMatrix gene index,0,,,none,0,0,,,0,0,BRCA,PDC000120,True,False,,,,,True,,gene absent from study quantDataMatrix gene index
+PTN,UNTESTABLE,"no within-plex pair and no mixed-arm plex: arm is confounded with plex, so no batch-free contrast exists",0,,,batch_corrected,118,18,1.0,1.0,17,136,BRCA,PDC000120,True,True,0.0,0.0,1.0,,False,,"no within-plex pair and no mixed-arm plex: arm is confounded with plex, so no batch-free contrast exists"
+SDC1,TESTABLE,passes pre-spec 2.1,67,1.0675000000000001,2.7489287628442794e-12,batch_free,141,75,1.0,1.0,0,0,PAAD,PDC000270,True,True,0.0,0.0,1.0,98.78582367096915,True,1.1939304249906837e-11,
+SDC2,TESTABLE,passes pre-spec 2.1,67,-0.1497,0.002349209618198507,batch_free,141,75,1.0,1.0,0,0,PAAD,PDC000270,True,True,0.0,0.0,1.0,32.35615838984905,True,0.016444467327389547,
+SDC3,UNTESTABLE,gene absent from study quantDataMatrix gene index,0,,,none,0,0,,,0,0,PAAD,PDC000270,True,False,,,,,True,,gene absent from study quantDataMatrix gene index
+SDC4,TESTABLE,passes pre-spec 2.1,67,-0.16890000000000002,0.041086784058850224,batch_free,141,75,1.0,1.0,0,0,PAAD,PDC000270,True,True,0.0,0.0,1.0,30.6825639903741,True,0.05752149768239031,
+NCL,TESTABLE,passes pre-spec 2.1,67,-0.0715,0.009883903084741704,batch_free,141,75,1.0,1.0,0,0,PAAD,PDC000270,True,True,0.0,0.0,1.0,40.16626558739882,True,0.011303061619400978,
+ITGAV,TESTABLE,passes pre-spec 2.1,67,0.6084,2.514223475483223e-12,batch_free,141,75,1.0,1.0,0,0,PAAD,PDC000270,True,True,0.0,0.0,1.0,92.08050754758258,True,1.759956432838256e-11,
+PTPRZ1,UNTESTABLE,gene absent from study quantDataMatrix gene index,0,,,none,0,0,,,0,0,PAAD,PDC000270,True,False,,,,,True,,gene absent from study quantDataMatrix gene index
+NPR2,UNTESTABLE,gene absent from study quantDataMatrix gene index,0,,,none,0,0,,,0,0,PAAD,PDC000270,True,False,,,,,True,,gene absent from study quantDataMatrix gene index
+NPR3,TESTABLE,passes pre-spec 2.1,65,1.0208,5.22627636831214e-11,batch_free,136,73,0.9645390070921985,0.9733333333333334,0,0,PAAD,PDC000270,True,True,0.03546099290780142,0.02666666666666667,1.0,98.53423758477358,True,5.22627636831214e-11,
+PTN,TESTABLE,passes pre-spec 2.1,67,0.12980000000000003,0.07201330554714357,batch_free,141,75,1.0,1.0,0,0,PAAD,PDC000270,True,True,0.0,0.0,1.0,63.027783854736384,False,0.08401552313833416,
+SDC1,TESTABLE,passes pre-spec 2.1,30,1.0729,3.725290298461914e-09,batch_free,100,49,1.0,1.0,0,0,UCEC,PDC000125,True,True,0.0,0.0,1.0,98.11207671561283,True,6.51925802230835e-09,
+SDC2,TESTABLE,passes pre-spec 2.1,30,0.1222,0.19092952087521553,batch_free,100,49,1.0,1.0,0,0,UCEC,PDC000125,True,True,0.0,0.0,1.0,58.625511936869444,True,0.26730132922530175,
+SDC3,UNTESTABLE,tumour non-missing fraction 0.520 (<0.60); normal non-missing fraction 0.571 (<0.60),0,,,none,52,28,0.52,0.5714285714285714,0,0,UCEC,PDC000125,True,True,0.48,0.42857142857142855,0.602393732446654,,True,,tumour non-missing fraction 0.520 (<0.60); normal non-missing fraction 0.571 (<0.60)
+SDC4,TESTABLE,passes pre-spec 2.1,30,0.83605,4.6566128730773926e-08,batch_free,100,49,1.0,1.0,0,0,UCEC,PDC000125,True,True,0.0,0.0,1.0,94.63590050943962,True,1.6298145055770874e-07,
+NCL,TESTABLE,passes pre-spec 2.1,30,0.14275,0.011303061619400978,batch_free,100,49,1.0,1.0,0,0,UCEC,PDC000125,True,True,0.0,0.0,1.0,60.72320447507742,True,0.011303061619400978,
+ITGAV,TESTABLE,passes pre-spec 2.1,30,0.28040000000000004,0.001718590036034584,batch_free,100,49,1.0,1.0,0,0,UCEC,PDC000125,True,True,0.0,0.0,1.0,71.74108480671262,True,0.003007532563060522,
+PTPRZ1,UNTESTABLE,gene absent from study quantDataMatrix gene index,0,,,none,0,0,,,0,0,UCEC,PDC000125,True,False,,,,,True,,gene absent from study quantDataMatrix gene index
+NPR2,TESTABLE,passes pre-spec 2.1,24,-0.806,5.960464477539062e-07,batch_free,89,43,0.89,0.8775510204081632,0,0,UCEC,PDC000125,True,True,0.11,0.12244897959183673,0.7908333514813037,8.660473479172909,True,1.1920928955078125e-06,
+NPR3,UNTESTABLE,gene absent from study quantDataMatrix gene index,0,,,none,0,0,,,0,0,UCEC,PDC000125,True,False,,,,,True,,gene absent from study quantDataMatrix gene index
+PTN,TESTABLE,passes pre-spec 2.1,30,-1.97805,1.0244548320770264e-07,batch_free,100,49,1.0,1.0,0,0,UCEC,PDC000125,True,True,0.0,0.0,1.0,0.9989012086704625,False,1.7927959561347961e-07,
+SDC1,TESTABLE,passes pre-spec 2.1,99,0.3457,3.411229785687668e-12,batch_free,110,101,1.0,1.0,2,0,LUAD,PDC000153,True,True,0.0,0.0,1.0,85.68487106579076,True,1.1939304249906837e-11,
+SDC2,TESTABLE,passes pre-spec 2.1,99,-0.17919999999999997,0.011970640309691884,batch_free,110,101,1.0,1.0,2,0,LUAD,PDC000153,True,True,0.0,0.0,1.0,29.973526816354546,True,0.041897241083921594,
+SDC3,UNTESTABLE,gene absent from study quantDataMatrix gene index,0,,,none,0,0,,,0,0,LUAD,PDC000153,True,False,,,,,True,,gene absent from study quantDataMatrix gene index
+SDC4,TESTABLE,passes pre-spec 2.1,99,-0.09129999999999999,0.2537348032498463,batch_free,110,101,1.0,1.0,2,0,LUAD,PDC000153,True,True,0.0,0.0,1.0,38.856750661829594,True,0.2960239371248207,
+NCL,TESTABLE,passes pre-spec 2.1,99,0.492,5.8738900510967945e-18,batch_free,110,101,1.0,1.0,2,0,LUAD,PDC000153,True,True,0.0,0.0,1.0,93.26404549465634,True,4.111723035767756e-17,
+ITGAV,TESTABLE,passes pre-spec 2.1,99,0.3377,1.5773360407212562e-10,batch_free,110,101,1.0,1.0,2,0,LUAD,PDC000153,True,True,0.0,0.0,1.0,85.06716344739681,True,3.789138286201141e-10,
+PTPRZ1,TESTABLE,passes pre-spec 2.1,64,-0.2246,0.1306926645530722,batch_free,71,64,0.6454545454545455,0.6336633663366337,0,0,LUAD,PDC000153,True,True,0.35454545454545455,0.36633663366336633,0.8865731155189356,26.120207863516033,True,0.39207799365921664,
+NPR2,UNTESTABLE,gene absent from study quantDataMatrix gene index,0,,,none,0,0,,,0,0,LUAD,PDC000153,True,False,,,,,True,,gene absent from study quantDataMatrix gene index
+NPR3,TESTABLE,passes pre-spec 2.1,99,-0.8536999999999999,7.44943410293486e-14,batch_free,110,101,1.0,1.0,2,0,LUAD,PDC000153,True,True,0.0,0.0,1.0,5.549563682713991,True,1.489886820586972e-13,
+PTN,TESTABLE,passes pre-spec 2.1,99,-1.1615,7.886808114759145e-15,batch_free,110,101,1.0,1.0,2,0,LUAD,PDC000153,True,True,0.0,0.0,1.0,2.42180605941759,False,5.5207656803314015e-14,
+SDC1,TESTABLE,passes pre-spec 2.1,64,0.12845,0.4222634621346363,batch_free,109,70,1.0,1.0,3,0,HNSC,PDC000221,True,True,0.0,0.0,1.0,63.9054492207928,True,0.4222634621346363,
+SDC2,TESTABLE,passes pre-spec 2.1,61,-0.1769,0.11654626853821899,batch_free,104,67,0.9541284403669725,0.9571428571428572,3,0,HNSC,PDC000221,True,True,0.045871559633027525,0.04285714285714286,1.0,30.885890597217863,True,0.20395596994188323,
+SDC3,UNTESTABLE,gene absent from study quantDataMatrix gene index,0,,,none,0,0,,,0,0,HNSC,PDC000221,True,False,,,,,True,,gene absent from study quantDataMatrix gene index
+SDC4,TESTABLE,passes pre-spec 2.1,64,-0.20950000000000005,0.014649120191901501,batch_free,109,70,1.0,1.0,3,0,HNSC,PDC000221,True,True,0.0,0.0,1.0,27.999163267440643,True,0.02563596033582763,
+NCL,TESTABLE,passes pre-spec 2.1,64,0.22285,4.7612799613321843e-07,batch_free,109,70,1.0,1.0,3,0,HNSC,PDC000221,True,True,0.0,0.0,1.0,75.08628804518357,True,8.332239932331323e-07,
+ITGAV,TESTABLE,passes pre-spec 2.1,64,0.6389,1.6239164083719176e-10,batch_free,109,70,1.0,1.0,3,0,HNSC,PDC000221,True,True,0.0,0.0,1.0,95.84771467419726,True,3.789138286201141e-10,
+PTPRZ1,TESTABLE,passes pre-spec 2.1,64,0.04769999999999999,0.5926495971646389,batch_free,109,70,1.0,1.0,3,0,HNSC,PDC000221,True,True,0.0,0.0,1.0,54.31440225917791,True,0.5926495971646389,
+NPR2,UNTESTABLE,gene absent from study quantDataMatrix gene index,0,,,none,0,0,,,0,0,HNSC,PDC000221,True,False,,,,,True,,gene absent from study quantDataMatrix gene index
+NPR3,UNTESTABLE,gene absent from study quantDataMatrix gene index,0,,,none,0,0,,,0,0,HNSC,PDC000221,True,False,,,,,True,,gene absent from study quantDataMatrix gene index
+PTN,TESTABLE,passes pre-spec 2.1,64,-2.1612,8.614121606027472e-12,batch_free,109,70,1.0,1.0,3,0,HNSC,PDC000221,True,True,0.0,0.0,1.0,0.3451521807342328,False,3.0149425621096154e-11,
+SDC1,TESTABLE,passes pre-spec 2.1,0,1.0306,0.00011050625575852807,batch_corrected,100,10,1.0,1.0,0,10,GBM,PDC000204,True,True,0.0,0.0,1.0,,True,0.0001547087580619393,
+SDC2,TESTABLE,passes pre-spec 2.1,0,0.34158,0.05574356995715053,batch_corrected,100,10,1.0,1.0,0,10,GBM,PDC000204,True,True,0.0,0.0,1.0,,True,0.1300683299000179,
+SDC3,TESTABLE,passes pre-spec 2.1,0,0.15486,0.9039747211325873,batch_corrected,100,10,1.0,1.0,0,10,GBM,PDC000204,True,True,0.0,0.0,1.0,,True,0.9039747211325873,
+SDC4,TESTABLE,passes pre-spec 2.1,0,-0.48077499999999995,0.0013210322371046746,batch_corrected,100,10,1.0,1.0,0,10,GBM,PDC000204,True,True,0.0,0.0,1.0,,True,0.003082408553244241,
+NCL,TESTABLE,passes pre-spec 2.1,0,0.77514,2.409277994177106e-07,batch_corrected,100,10,1.0,1.0,0,10,GBM,PDC000204,True,True,0.0,0.0,1.0,,True,5.621648653079914e-07,
+ITGAV,TESTABLE,passes pre-spec 2.1,0,0.258135,0.006356452935719619,batch_corrected,100,10,1.0,1.0,0,10,GBM,PDC000204,True,True,0.0,0.0,1.0,,True,0.008899034110007467,
+PTPRZ1,TESTABLE,passes pre-spec 2.1,0,-0.083905,0.5387535607199471,batch_corrected,100,10,1.0,1.0,0,10,GBM,PDC000204,True,True,0.0,0.0,1.0,,True,0.5926495971646389,
+NPR2,TESTABLE,passes pre-spec 2.1,0,-0.32449,0.0051461216508172725,batch_corrected,100,10,1.0,1.0,0,10,GBM,PDC000204,True,True,0.0,0.0,1.0,,True,0.0051461216508172725,
+NPR3,UNTESTABLE,gene absent from study quantDataMatrix gene index,0,,,none,0,0,,,0,0,GBM,PDC000204,True,False,,,,,True,,gene absent from study quantDataMatrix gene index
+PTN,TESTABLE,passes pre-spec 2.1,0,0.57704,0.020603383744504572,batch_corrected,100,10,1.0,1.0,0,10,GBM,PDC000204,True,True,0.0,0.0,1.0,,False,0.0288447372423064,

@@ -1,0 +1,13 @@
+n_permutations,seed,pool_width_setting,n_expression_bins,mean_genes_per_bin,n_bins_populated,null_rho_mean,frac_null_rho_above_0_5,n_types_beating_null,types_beating_null,receptor_specific_rho_lt_0_30,pass_set_equals_published,axis_varied
+2000,20260727,CRITERION_PREREGISTERED,,,,,,,Null pool width is STABLE iff rho_mean<0.30 and pass count within +/-1 of 4 for all matched widths (n_bins>=2).,,,criterion
+2000,20260727,n_bins_1_unmatched_naive,1,396.0,1,0.0845,0.023,4,BRCA;KIRC;PAAD;UCS,True,True,bin_width
+2000,20260727,n_bins_2,2,198.0,2,0.1282,0.034,4,BRCA;KIRC;OV;UCS,True,False,bin_width
+2000,20260727,n_bins_3,3,132.0,3,0.1242,0.0265,5,BRCA;KIRC;OV;PAAD;UCS,True,False,bin_width
+2000,20260727,n_bins_5,5,79.2,5,0.1274,0.038,5,BRCA;KIRC;OV;PAAD;UCS,True,False,bin_width
+2000,20260727,n_bins_10_published,10,39.6,10,0.1132,0.0285,4,BRCA;KIRC;PAAD;UCS,True,True,bin_width
+2000,20260727,n_bins_20,20,19.8,20,0.1205,0.0305,4,BRCA;KIRC;PAAD;UCS,True,True,bin_width
+2000,20260727,n_bins_40,40,9.9,40,0.1432,0.047,4,BRCA;KIRC;PAAD;UCS,True,True,bin_width
+2000,20260727,pool_uniform_only_unmatched_naive,1,200.0,1,0.1825,0.0655,2,PAAD;UCS,True,False,pool_composition
+2000,20260727,pool_uniform_only_matched,10,20.0,10,0.2284,0.078,3,KIRC;PAAD;UCS,True,False,pool_composition
+2000,20260727,pool_stratified_only_matched,10,20.0,10,0.0372,0.009,7,BRCA;KIRC;MESO;OV;THCA;UCEC;UCS,True,False,pool_composition
+2000,20260727,pool_union_396_matched_published,10,39.6,10,0.1132,0.0285,4,BRCA;KIRC;PAAD;UCS,True,True,pool_composition

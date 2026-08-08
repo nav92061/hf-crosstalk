@@ -1,6 +1,6 @@
 ---
 name: hpa-secretome
-description: Retrieve genome-wide Human Protein Atlas protein-class and secretome annotations and classify gene symbols into secreted / plasma-detectable / structural-ECM tiers. Use when you need to decide which genes in a differential-expression result encode proteins that could plausibly leave their tissue of origin and travel through blood — e.g. filtering a tissue signature down to a candidate endocrine secretome.
+description: Retrieve genome-wide Human Protein Atlas protein-class and secretome annotations and classify gene symbols into secreted / plasma-detectable / structural-ECM tiers, then score tissue-of-origin specificity against GTEx medians. Use when you need to decide which genes in a differential-expression result encode proteins that could plausibly leave their tissue of origin and travel through blood, or which tissue actually sources a secreted protein - e.g. filtering a tissue signature down to a candidate endocrine secretome. Encodes the GTEx v2 API silent-empty-response trap, the enrichment-ratio artifact that passes liver-dominant proteins as tissue-enriched, and the Fisher base-rate guard a candidate screen needs before its hits are interpreted.
 ---
 
 # hpa-secretome
@@ -140,6 +140,68 @@ signal = ann[(ann.secretion_tier == "core") & ~ann.is_structural_ecm]
 # always report the exclusion log in the methods
 ecm_log[ecm_log.excluded].matched_family.value_counts()
 ```
+
+## Tissue-specificity companion (GTEx)
+
+Deciding whether a secreted protein is *sourced* from a given tissue needs an
+expression axis HPA alone does not provide. These helpers add it, and encode two
+failure modes that cost real debugging time.
+
+### GTEx API silent no-op
+
+`GTEX_API_GOTCHA` at runtime. The v2 median-expression endpoint requires **both**
+`datasetId=gtex_v8` **and** gencode IDs versioned to that release. Omit the
+dataset ID, or pass a bare unversioned `ENSG00000123456`, and the API returns
+**HTTP 200 with an empty `data` array** and `totalNumberOfItems=0`. There is no
+error — the response is indistinguishable from "this gene is not expressed
+anywhere", which is a wrong answer that looks like a real one.
+
+`gtex_resolve_gencode_ids` resolves symbols against `gencodeVersion=v26` /
+`genomeBuild=GRCh38/hg38`, and `gtex_fetch_tissue_medians` asserts a non-zero row
+count rather than returning an empty frame.
+
+### The enrichment-ratio artifact
+
+`RATIO_METRIC_CAVEAT` at runtime. A ratio of `tissue TPM / median across tissues`
+is the conventional enrichment metric, and it has a specific failure mode: it
+rewards genes that are near-zero in **most** tissues regardless of where their
+actual maximum sits. Two real examples from a cardiac-source screen:
+
+- **APOA1** scored a 17-fold "cardiac enrichment" (heart 12.2 TPM vs cross-tissue
+  median 0.71) while liver sits at 5,952 TPM — 490-fold higher than heart.
+- **PI16** scored 8-fold with heart atrial appendage ranking only **4th**, behind
+  ectocervix (179), vagina (140) and tibial nerve (93 TPM).
+
+Both pass a ratio threshold; neither is plausibly cardiac in source. `tissue_specificity`
+therefore returns `best_tissue_rank`, `top_tissue`, `top_tissue_tpm` and
+`fold_below_top` alongside the ratio, requires a top-`max_rank` placement for
+`passes`, and sets `ratio_only_artifact=True` on exactly this pattern. **Never
+report a ratio without the rank companion.**
+
+### Base-rate guard
+
+`base_rate_guard(hit_flags, background_flags)` runs the Fisher test that decides
+whether a screen found anything. Apply the *same* criterion to the candidate set
+and to a matched non-candidate set from the same cohorts. In the screen this
+skill was extended for, 11/295 (3.7%) HF-upregulated secreted proteins passed a
+cardiac-source test versus 4/86 (4.7%) of non-upregulated ones — OR 0.79,
+p=0.75. Eleven named hits with a working positive control, and no enrichment
+whatsoever. Run this guard **before** interpreting a candidate list, not after a
+reviewer asks.
+
+```python
+ids = hpa.gtex_resolve_gencode_ids(candidate_symbols)
+med = hpa.gtex_fetch_tissue_medians(list(ids.values()))
+mat = hpa.gtex_tissue_matrix(med)
+spec = hpa.tissue_specificity(mat, ["Heart_Left_Ventricle", "Heart_Atrial_Appendage"])
+
+spec[spec.ratio_only_artifact]          # inspect before trusting any ratio
+bg = hpa.tissue_specificity(mat_background, [...])
+hpa.base_rate_guard(spec.passes, bg.passes)
+```
+
+Functions: `gtex_resolve_gencode_ids`, `gtex_fetch_tissue_medians`,
+`gtex_tissue_matrix`, `tissue_specificity`, `base_rate_guard`.
 
 ## Preconditions / postconditions
 

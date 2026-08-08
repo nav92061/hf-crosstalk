@@ -1,6 +1,8 @@
-figure,filename,caption,version_id
-Figure 1,fig1_hf_signature.png,"Human heart-failure signature: discovery volcano, cross-cohort replication, and effect-size-dependent concordance",1ba02041-b652-4951-9e79-58109bf32bb2
-Figure 2,fig2_ranking_and_null.png,"Pan-cancer compatibility ranking with bootstrap CIs, and the demonstration that the expression floor is what makes the score receptor-specific",cb98ebdc-5eb4-4ebb-96a8-29f16c277f1e
-Figure 3,fig3_floor_and_decomposition.png,Absolute-expression floor audit and the two-factor decomposition separating ligand availability from receiver capacity,603e44d5-052e-4443-a9fc-5b461f9004e2
-Figure 4,fig4_depmap_validation.png,DepMap validation: no HF-axis receptor is a lineage dependency; the null result across 81 receptors; and the uterine cell-line panel,c0bddb2e-164a-43ea-af27-418687ebed4c
-Figure 5,fig5_specificity_checks.png,"Specificity checks: only NPPA/NPPB are cardiac-enriched, and NPR1 is depleted in tumor vs adjacent normal in every testable type",db45c303-622a-404e-bfcf-fc1738ac16a8
+figure,filename,caption,version_id,note
+Figure 1,fig1_hf_signature.png,"Human heart-failure signature: discovery volcano, cross-cohort replication, and effect-size-dependent concordance",1ba02041-b652-4951-9e79-58109bf32bb2,
+Figure 2,fig3_floor_and_decomposition.png,Absolute-expression floor audit and the two-factor decomposition separating ligand availability from receiver capacity,603e44d5-052e-4443-a9fc-5b461f9004e2,filename retains its original number; document order renumbered in this version
+Figure 3,fig2_ranking_and_null.png,"Pan-cancer compatibility ranking with bootstrap CIs, and the demonstration that the expression floor is what makes the score receptor-specific",cb98ebdc-5eb4-4ebb-96a8-29f16c277f1e,filename retains its original number; document order renumbered in this version
+Figure 4,fig4_depmap_validation.png,DepMap validation: no HF-axis receptor is a lineage dependency; the null result across 81 receptors; and the uterine cell-line panel,c0bddb2e-164a-43ea-af27-418687ebed4c,
+Figure 5,fig5_specificity_checks.png,"Specificity checks: only NPPA/NPPB are cardiac-enriched, and NPR1 is depleted in tumor vs adjacent normal in every testable type",db45c303-622a-404e-bfcf-fc1738ac16a8,
+Figure 6,fig6_corrected_specificity.png,"Cardiac specificity re-scored against failure induction: sequential attrition, binding constraint, induction vs baseline rank, and the seven surviving axes (§2.9).",5190eaa5-f892-4211-ac32-7122e070438b,
+Figure 7,fig7_npr1_exploratory.png,Exploratory NPR1 analysis; the pre-specified three-part conjunction fails 1 of 3 (§2.10).,d5fe59e4-15c8-47ce-93ca-1b6a0a6348de,

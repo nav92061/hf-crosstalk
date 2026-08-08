@@ -79,6 +79,54 @@ receivers** (it is a property of the source), so only capacity can explain
 differences between receivers — worth stating explicitly, because a two-factor
 narrative can otherwise imply both factors vary per receiver when they do not.
 
+### Source specificity by induction, and conjunction scoring
+
+```python
+induction_specificity(disease_de, baseline_rank, housekeeping_gene="GAPDH",
+                      min_log2fc=1.0, max_fdr=0.05, min_housekeeping_ratio=0.005,
+                      max_baseline_rank_frac=0.5, log_scale=True) -> DataFrame
+```
+Scores source-tissue ligands on **disease induction** instead of healthy-tissue
+specificity. Three criteria, each computed within a single dataset so no
+cross-platform absolute comparison is implied: A1 replicated induction in every
+cohort supplied, A2 abundance as a fraction of a housekeeping gene inside the
+source cohorts, A3 the source tissue not excluded at baseline.
+
+Why it exists: a screen scoring cardiac specificity in **healthy** myocardium
+returned zero surviving axes. Re-scoring by failure induction recovered seven.
+A ligand unremarkable at baseline but strongly induced in disease is a plausible
+disease-source ligand, and a healthy-baseline filter discards it.
+
+Read `binding_constraint` before believing `pass_all`. If one criterion removes
+nearly everything (in our run A1 removed 43 of 51), the screen is testing that
+criterion, not the biology. A3 is the deliberate relaxation — keep it visible so
+a reader can see whether a hit depended on it.
+
+A ligand absent from `baseline_rank` **fails A3**; it is never silently skipped.
+
+```python
+conjunction_verdict(results, require_all=True) -> dict
+```
+Scores several sub-analyses as a conjunction rather than a best-of. Where one
+hypothesis implies several independent predictions, testing each and reporting
+whichever clears significance inflates the false-positive rate by the number of
+predictions. Pass `direction_ok` explicitly per conjunct: a result can be
+significant in the **wrong** direction, which is evidence against, not for.
+
+This must be fixed **before** the tests run. In our use, one of three conjuncts
+passed and the other two pointed the opposite way; reporting the single hit
+would have been a false positive.
+
+```python
+receptor_pass_rate(receptor_table, receptor_col="receptor", pass_col="recpass",
+                   min_types=1) -> dict
+```
+Base rate at which receptors satisfy the receiver criterion with **no ligand
+involved**. Ask this before reading an axis count as evidence for a particular
+ligand. We measured 74% — 60 of 81 floor-passing receptors passed with some
+tumour type regardless of ligand, which made a seven-axis result uninformative
+on its own.
+
 ## Preconditions
 
 - `expr` genes x receivers, non-negative, absolute units (not pre-z-scored).
@@ -131,6 +179,24 @@ dec  = ck.decompose(avail, res["capacity"], interactions)
 - Compare the primary and `adjust="double_center"` rankings. If they disagree
   (we observed ρ=0.318), the ranking is correction-sensitive and mid-table
   positions should not be over-read.
+- **A relaxed criterion needs a base-rate guard.** Loosening a filter to recover
+  hits will recover them. Run `receptor_pass_rate()` first and state the number:
+  if most receptors pass ligand-free, an axis count says nothing about the
+  ligand. Our recovered axes ran on receptors 74% of the universe could match,
+  and the recovered set scored *below* the median of expression-matched random
+  receptor sets (27 pairs vs null median 30, p=0.688).
+- **Induction is not a systemic source.** `induction_specificity()` admits
+  ligands on fold-change, which does not establish the source tissue dominates
+  the circulating pool. Converting tissue mRNA to a plasma contribution needs
+  translation efficiency, secretion rate, clearance and volume of distribution —
+  none of which are in expression data. Do not substitute mass-weighted mRNA for
+  a measured concentration.
+- **Check the cell of origin before calling a tissue a source.** Our recovered
+  ligand was 71% fibroblast-derived in single-nucleus data, showed no per-cell
+  induction in disease, and was induced in lung and kidney fibrosis at half the
+  cardiac effect — a generic wound-healing transcript, not an organ-specific
+  signal. Bulk induction that does not reproduce per-cell is a warning, not a
+  finding.
 
 ## Standalone use (no agent)
 
