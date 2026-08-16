@@ -32,7 +32,7 @@ def _superscript(run):
 
 def add_runs(par, text):
     """Emit text with **bold**, *italic*, `code` and {^n} superscripts."""
-    token = re.compile(r"(\*\*.+?\*\*|(?<!\*)\*[^*\n]+?\*(?!\*)|`[^`]+?`|\{\^-?[\d,]+\})", re.S)
+    token = re.compile(r"(\*\*.+?\*\*|(?<!\*)\*[^*\n]+?\*(?!\*)|`[^`]+?`|\{\^(?:-?[\d,]+|[a-z](?:,[a-z])*)\})", re.S)
     for part in token.split(text):
         if not part:
             continue
@@ -42,7 +42,7 @@ def add_runs(par, text):
             r = par.add_run(part[1:-1]); r.font.name = "Courier New"; r.font.size = Pt(BODY_PT - 1)
         elif part.startswith("{^"):
             s = part[2:-1]
-            if not s.startswith("-") and "," in s:      # AMA: collapse consecutive runs
+            if not s.startswith("-") and not s[0].isalpha() and "," in s:  # AMA: collapse consecutive runs
                 ns = [int(x) for x in s.split(",")]
                 out, i = [], 0
                 while i < len(ns):

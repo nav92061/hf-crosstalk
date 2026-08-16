@@ -1,18 +1,18 @@
-# An Agent-Skill Pipeline Finds No Match Between Heart-Failure Signals and Tumor Receptors in 30 Cancer Types
+# A multi-agent skill pipeline finds no tumor-selective heart-failure ligand–receptor axis across 30 tumor types under rank-based source criteria
 
-Nicolas Avelar{^1}, Ruidong Zhang{^2}, Yi Pan{^2}
+Nicolas Avelar{^a,b}, Ruidong Zhang{^b}, Yi Pan{^b}
 
-{^1} North Oconee High School, Bogart, GA, USA
+{^a} North Oconee High School, Bogart, GA, USA
 
-{^2} University of Georgia, Athens, GA, USA
+{^b} School of Computing, University of Georgia, 200 D.W. Brooks Drive, Athens, GA 30602, USA
 
-*Corresponding author:* Nicolas Avelar, North Oconee High School, Bogart, GA, USA. E-mail: navelar773@gmail.com
+*Corresponding author:* Nicolas Avelar, School of Computing, University of Georgia, 200 D.W. Brooks Drive, Athens, GA 30602, USA. E-mail: navelar773@gmail.com
 
 ## Highlights
 
 - Multi-agent pipeline screened heart-failure ligands against 30 tumor types
 
-- No axis paired a cardiac-specific ligand with a tumor-enriched receptor
+- No cardiac-specific ligand had a tumor-enriched receptor under rank-based criteria
 
 - NPR1 is depleted in tumor versus adjacent normal in all 15 testable types
 
@@ -22,30 +22,29 @@ Nicolas Avelar{^1}, Ruidong Zhang{^2}, Yi Pan{^2}
 
 ## Abstract
 
-**Background.** Heart failure may accelerate tumor growth through circulating factors. Testing it across many tumor types is a data-integration
-problem an autonomous agent can now execute end to end, with the risk that its
-methodological errors leave no trace in its output.
+**Background.** Heart failure may accelerate tumor growth through circulating factors.
+Testing this across tumor types is an integration problem increasingly delegated to
+autonomous agents, whose errors leave no trace in their output.
 
-**Methods.** A hierarchical multi-agent system (one orchestrator, 23 isolated sub-agents,
-five waves) executed the screen using six reusable skills carrying 141 guardrail
-checks written as assertions that halt execution rather than as methods-section advice. A heart-failure signature from two RNA-seq cohorts (n=64;
+**Methods.** A multi-agent system (23 sub-agents in five waves) executed the screen using six reusable skills whose methodological
+requirements are assertions that halt execution rather than advice. A heart-failure signature from two RNA-seq cohorts (n=64;
 n=360), re-tested in three microarray cohorts, was intersected with the secretome and a
-ligand-receptor database and scored against receptor expression in 9,538 TCGA primary
-solid tumors across 30 types.
+ligand-receptor database and scored against receptor expression in 9,538 TCGA tumors of 30
+types.
 
-**Results.** No axis had both a distinctively cardiac ligand and a tumor-enriched receptor.
-NPR1, the sole floor-passing receptor for the only two cardiac-enriched ligands NPPA and
-NPPB, was depleted in tumor relative to matched adjacent normal in all 15 testable types
-(median log2FC -1.91, all FDR<0.05). Two guardrails proved load-bearing, both written after the
-pipeline made the corresponding error: without an expression floor, matched random
-receptor sets reproduced the ranking (rho=0.363), which a floor reduced to rho=0.107. Re-scoring cardiac specificity by
-failure induction recovered seven pleiotrophin axes; kill criteria fixed beforehand
-withdrew all seven.
+**Results.** Under rank-based source criteria, no axis had both a cardiac-distinctive
+ligand and a tumor-enriched receptor; the negative is definition-dependent: requiring
+only that the heart exceed the cross-tissue median returns 29 axes.
+NPR1, the only curated receptor for NPPA and NPPB, was depleted against matched
+adjacent normal in all 15 testable types (median log2FC -1.91), as were NPR2 and NPR3. Two guardrails proved load-bearing, each written after the
+pipeline made the error it prevents: without an expression floor, matched random receptor
+sets reproduced the ranking (rho=0.363 versus 0.107 with it). Failure-induction re-scoring recovered seven pleiotrophin
+axes, all withdrawn by pre-specified kill criteria.
 
 **Conclusions.** The negative applies to ligands induced in the failing human ventricle,
-not to secreted mediators generally; circulating elevation and receiver-cell identity
-were not measured. A requirement written as an assertion in a reusable skill cannot be
-silently omitted by the next study.
+not to secreted mediators generally; circulating elevation and receiver-cell identity were
+not measured. A requirement written as an assertion in a reusable skill cannot be silently
+omitted by the next study.
 
 ## Keywords
 
@@ -86,7 +85,7 @@ computational reproducibility; pan-cancer transcriptomics
 
 **NPPA / NPPB** — Natriuretic peptide A- / B-type
 
-**NPR1** — Natriuretic peptide receptor 1
+**NPR1 / NPR2 / NPR3** — Natriuretic peptide receptor 1 / 2 / 3
 
 **PTN** — Pleiotrophin
 
@@ -126,17 +125,17 @@ Each step is implemented as a skill: a directory holding a documentation file an
 
 Retrieval is the geo-bulk-de and tcga-pancan skills. Heart-failure transcriptomes were GSE116250 (discovery; left-ventricular RNA-seq, submitter-supplied RPKM{^13}; 37 dilated cardiomyopathy, 13 ischemic cardiomyopathy, 14 non-failing donors, with the primary contrast pooling the 50 failing hearts against the 14 non-failing) and GSE141910 (validation; MAGNet left ventricle, per-sample log-scale normalized values{^14}; 166 dilated cardiomyopathy, 28 hypertrophic cardiomyopathy and 166 non-failing donors, with 6 peripartum cardiomyopathy samples excluded, giving 194 versus 166). Group labels were parsed from the series-matrix characteristics fields rather than hardcoded, since hardcoding is the mechanism by which a mislabeled cohort becomes a silent result.
 
-Cross-platform replication (Section 3.10) used three further cohorts, all Affymetrix microarray and none used elsewhere: GSE5406 (194 failing, 16 non-failing; GPL96), GSE57345 (177 failing, 136 non-failing; GPL11532) and GSE1869 (31 failing, 6 non-failing; GPL96){^15,16}. Probe-level values were collapsed to genes by maximum mean intensity with a deterministic tie-break. Probes annotated to several genes were dropped rather than assigned to the first listed gene, and log scale was detected from the values rather than assumed.
+Cross-platform replication (Section 3.10) used three further cohorts, all Affymetrix microarray and none used elsewhere: GSE5406 (194 failing, 16 non-failing; GPL96), GSE57345 (177 failing, 136 non-failing; GPL11532) and GSE1869 (31 failing, 6 non-failing; GPL96).{^15,16} Probe-level values were collapsed to genes by maximum mean intensity with a deterministic tie-break. Probes annotated to several genes were dropped rather than assigned to the first listed gene, and log scale was detected from the values rather than assumed.
 
-Protein abundance (Section 3.11) came from eight CPTAC tandem-mass-tag proteome studies in the Proteomic Data Commons{^17,18,19}: ccRCC (PDC000127), ovarian (PDC000110), breast (PDC000120), pancreatic (PDC000270), endometrial (PDC000125), lung adenocarcinoma (PDC000153), head and neck (PDC000221) and glioblastoma (PDC000204). Log ratios were taken against the within-plex reference, with aliquots labeled tumor or adjacent normal from the study biospecimen records and assigned to TMT plexes from the experimental design. The GPL9052 sub-series of GSE57345 is a stub carrying no value rows and 6 samples, and was not analyzed.
+Protein abundance (Section 3.12) came from eight CPTAC tandem-mass-tag proteome studies in the Proteomic Data Commons{^17,18,19}: ccRCC (PDC000127), ovarian (PDC000110), breast (PDC000120), pancreatic (PDC000270), endometrial (PDC000125), lung adenocarcinoma (PDC000153), head and neck (PDC000221) and glioblastoma (PDC000204). Log ratios were taken against the within-plex reference, with aliquots labeled tumor or adjacent normal from the study biospecimen records and assigned to TMT plexes from the experimental design. The GPL9052 sub-series of GSE57345 is a stub carrying no value rows and 6 samples, and was not analyzed.
 
 Tumor transcriptomes came from the GDC PanCanAtlas EBPlusPlusAdjustPANCAN gene-expression matrix. Values are RSEM normalized_count, batch-corrected and upper-quartile scaled; they are neither TPM nor FPKM{^20,21,22,23} a distinction that becomes consequential in Section 3.3. Aliquot barcodes were parsed to sample type and study, and analysis retained primary solid tumors only (sample-type code 01), excluding LAML, DLBC and THYM, giving 9,538 tumors across 30 types. Adjacent normal tissue (sample-type code 11) was streamed from the same matrix: 710 samples mapped to a tumor type, of which 680 fall in the 15 types retaining at least 10 normals.
 
-Supporting resources were the Human Protein Atlas protein-class and secretome annotations{^24,25} (search_download.php, columns g,eg,pc,secl,scml,rnats,blconcms); CellChatDB human (CellChatDB.human.rda){^26}; GTEx v8 median TPM per tissue across 52 tissues{^27}; the Thorsson immune-landscape feature tables, leukocyte fraction, ABSOLUTE purity and TCGA-CDR{^28} clinical endpoints from GDC{^29}; and DepMap 24Q4 Public (figshare article 27993248). Because depmap.org serves a bot-verification interstitial{^30,31,32} the DepMap release is resolved through the figshare API and the payload is asserted not to be HTML, since storing an error page as data yields plausible but meaningless output. Non-cardiac fibrosis cohorts for Section 3.9 were GSE150910 and GSE134692 (lung, idiopathic pulmonary fibrosis), GSE126848 and GSE130970 (liver, NASH/NAFLD) and GSE142025 (kidney, diabetic nephropathy){^33,34,35,36}. Human heart single-nucleus atlases (Reichart dilated and arrhythmogenic cardiomyopathy; Kuppe myocardial infarction) were obtained via CELLxGENE Census{^37,38,39}.
+Supporting resources were the Human Protein Atlas protein-class and secretome annotations{^24,25} (search_download.php, columns g,eg,pc,secl,scml,rnats,blconcms); CellChatDB human (CellChatDB.human.rda){^26}; GTEx v8 median TPM per tissue across 52 tissues{^27}; the Thorsson immune-landscape feature tables, leukocyte fraction, ABSOLUTE purity and TCGA-CDR{^28} clinical endpoints from GDC{^29}; and DepMap 24Q4 Public (figshare article 27993248). Because depmap.org serves a bot-verification interstitial{^30,31,32} the DepMap release is resolved through the figshare API and the payload is asserted not to be HTML, since storing an error page as data yields plausible but meaningless output. Non-cardiac fibrosis cohorts for Section 3.9 were GSE150910 and GSE134692 (lung, idiopathic pulmonary fibrosis), GSE126848 and GSE130970 (liver, NASH/NAFLD) and GSE142025 (kidney, diabetic nephropathy).{^33,34,35,36} Human heart single-nucleus atlases (Reichart dilated and arrhythmogenic cardiomyopathy; Kuppe myocardial infarction) were obtained via CELLxGENE Census.{^37,38,39}
 
 ### 2.2 Differential expression and cross-cohort replication
 
-This section is the geo-bulk-de skill. Each cohort was analyzed separately, on its own scale, with an empirical-Bayes moderated t-test equivalent to limma-trend implemented directly in NumPy and SciPy{^40,41,42}. Genes were retained when expression exceeded 1.0 (RPKM or CPM as appropriate) in at least 20% of the smaller group’s samples, and 65 genes carrying a sentinel value of 999999999.0 were detected and dropped from GSE116250. The prior degrees of freedom fitted to 3.04 in discovery and 4.82 in validation, and the variance trend used a 0.4 lowess fraction. Multiplicity was controlled by Benjamini–Hochberg FDR at 0.05{^43}. Ensembl identifiers were version-stripped before intersecting the cohorts, yielding 18,061 shared genes.
+This section is the geo-bulk-de skill. Each cohort was analyzed separately, on its own scale, with an empirical-Bayes moderated t-test equivalent to limma-trend implemented directly in NumPy and SciPy.{^40,41,42} Genes were retained when expression exceeded 1.0 (RPKM or CPM as appropriate) in at least 20% of the smaller group’s samples, and 65 genes carrying a sentinel value of 999999999.0 were detected and dropped from GSE116250. The prior degrees of freedom fitted to 3.04 in discovery and 4.82 in validation, and the variance trend used a 0.4 lowess fraction. Multiplicity was controlled by Benjamini–Hochberg FDR at 0.05.{^43} Ensembl identifiers were version-stripped before intersecting the cohorts, yielding 18,061 shared genes.
 
 A gene entered the replicated signature when it reached FDR<0.05 in both cohorts with the same direction of effect. Replication was quantified by directional concordance, log fold-change Spearman correlation, and a hypergeometric overlap test. The overlap test is near-saturated here, since 44.6% and 66.2% of shared genes are significant in the two cohorts, so concordance and effect-size correlation are the informative metrics and the hypergeometric p is reported alongside its fold enrichment. As a negative control, the discovery group labels were permuted (seed 42) and the identical pipeline re-run against the real validation result.
 
@@ -218,7 +217,7 @@ The analysis was executed by a hierarchical multi-agent system rather than by a 
 
 One orchestrating agent held the research question and the artifact store, and independent sub-agents were dispatched to tracks that could proceed without each other’s intermediate state. Twenty-three sub-agent frames ran in five waves over 91.4 hours of wall-clock time (Fig. 1). Wave 1 split the four data-acquisition tracks that share no inputs (heart-failure signature, secretome and ligand–receptor mapping, tumor expression axis, literature corpus) together with the dependency screen and normal-tissue comparison. Wave 2 ran five follow-up tests of the negative. Wave 3 ran the two orthogonal-molecule tracks, proteome and platform replication. Wave 4 ran six verification tracks, including two independent audits of the manuscript’s own claims. Wave 5 ran the implementation validation, the sensitivity sweeps and the citation expansion.
 
-Each sub-agent received a task statement and a context summary rather than the orchestrator’s conversation, and returned results as artifacts plus a structured output object. That isolation is the reason the split is worth making, since a sub-agent cannot inherit an assumption the orchestrator formed earlier, and two of the wave-4 audit tracks were dispatched specifically to check claims the orchestrator had already written down.
+Each sub-agent received a task statement and a context summary rather than the orchestrator’s conversation, and returned results as artifacts plus a structured output object. This isolation is the principal justification for partitioning the work, since a sub-agent cannot inherit an assumption the orchestrator formed earlier, and two of the wave-4 audit tracks were dispatched specifically to check claims the orchestrator had already written down.
 
 ![Figure 1](art_9a2d30bd-e8dc-4c0b-995a-bf881ba0d38f)
 
@@ -226,25 +225,7 @@ Each sub-agent received a task statement and a context summary rather than the o
 
 Nineteen of twenty-three tracks reached completion normally. Three terminated in a failed state and one was cancelled after 199 minutes when it exceeded its memory budget on an 8 GiB machine, and was re-dispatched with a streaming implementation. The instructive part is what happened to the work. All four non-completing tracks had already written their results to the artifact store, and every one of those artifacts is cited in this paper. Failure occurred at the reporting boundary rather than in the analysis, because results were persisted as artifacts as they were produced rather than returned only in a final message. A system that returns work only on successful completion would have lost four tracks and roughly 27 hours of compute.
 
-The sub-agent fleet consumed $164 at 2026 API prices, with an input:output token ratio of 106:1, so essentially all of the cost is context rather than generation. Median track duration was 44 minutes. This is the figure that makes the division of Section 4.6 practical rather than rhetorical, since the deterministic modules those agents called cost nothing per invocation, and re-running the entire computational analysis from the six skills requires no model at all.
-
-### 2.12 Statistical analysis conventions
-
-This section collects, in one place, the statistical conventions applied throughout Sections 2 and 3; each is also introduced at the point it is first used.
-
-**Software.** All statistical procedures were implemented directly in NumPy and SciPy, with pandas for data handling, statsmodels where noted, and requests for retrieval{^45,46}; rdata was used for one optional file reader. No procedure calls a language model, an external API for computation, or a platform-specific function (Section 2.10).
-
-**Differential expression.** Each cohort was analyzed on its own scale with an empirical-Bayes moderated t-test equivalent to limma-trend [40-42], validated against canonical limma 3.66.0 with a criterion fixed in advance (Section 2.2). Multiplicity was controlled by Benjamini-Hochberg FDR at 0.05 within each cohort or tumor type{^43}.
-
-**Correlation and replication.** Cross-cohort and cross-platform replication is reported as directional concordance and Spearman/Pearson correlation of log fold change among genes significant in both cohorts, not as a hypergeometric overlap test alone; the latter is reported alongside its fold enrichment because it saturates when a large fraction of genes are significant in both cohorts (Sections 2.2, 3.1, 3.10).
-
-**Resampling and permutation.** Bootstrap confidence intervals (400 resamples) and permutation nulls (300-20,000 draws depending on the test) used fixed random seeds, documented per procedure in Section 2.10 (20260727 for the specificity permutation and bootstrap; 42 for the differential-expression label permutation; 20260728 for the induction-criteria phase; 20260729 for the adversarial receptor null). Permutation p-values are one-sided empirical estimates (fraction of null draws meeting or exceeding the observed statistic) unless stated otherwise, and resolution limits relative to the number of draws are reported explicitly where a p-value approaches 1/N (Section 3.3).
-
-**Survival and genomic association.** Cox proportional-hazards models{^44} were stratified by tumor type with the receptor z-scored within type; copy-number associations were tested against a matched null of 1,000 loci sampled on chromosome arm and segment length (Section 2.8).
-
-**Batch and design checks.** Proteomic contrasts were tested for arm-batch confounding by chi-square test before any effect estimate was interpreted, and a study was excluded from testing rather than analyzed through a confound (Section 3.11).
-
-**Pre-specification and alpha level.** All thresholds used to declare a result significant, an axis surviving, or a test uninformative were fixed before the analysis phase in which they were applied (Sections 2.5-2.8, 3.9), and are reported as fixed even where the observed value fell close to the threshold (e.g., Section 3.9, Track 2). Unless otherwise noted, statistical tests are two-sided at α = 0.05 after multiplicity correction; permutation and bootstrap procedures are described above.
+The sub-agent fleet consumed $164 at 2026 API prices, with an input:output token ratio of 106:1, so essentially all of the cost is context rather than generation. Median track duration was 44 minutes. This is the figure that makes the division of Section 4.7 practical rather than rhetorical, since the deterministic modules those agents called cost nothing per invocation, and re-running the entire computational analysis from the six skills requires no model at all.
 
 ## 3. Results
 
@@ -258,7 +239,7 @@ Two cautions matter. The hypergeometric overlap test returns p=2.1×10{^-3} but 
 
 ![Figure 2](art_32f64f02-cc63-4a6a-865e-9e0c0eb0c07b)
 
-**Figure 2.** Replication of the heart-failure expression signature. (a) Discovery volcano, GSE116250. (b) Cross-cohort effect-size concordance among genes significant in both; red points disagree in direction. (c) Concordance increases with discovery effect size.
+**Figure 2.** Replication of the heart-failure expression signature. (a) Discovery volcano, GSE116250 (50 failing, 14 non-failing left ventricle); empirical-Bayes moderated t, Benjamini-Hochberg FDR. (b) Cross-cohort effect-size concordance among the 5,717 genes significant in both cohorts (Spearman rho=0.759; rho=0.541 across all 18,061 shared genes); red points disagree in direction. (c) Directional concordance rises with discovery effect size, from 85% below |log2FC| 0.5 to 95% above 1.0. Validation cohort GSE141910 (194 cardiomyopathy, 166 non-failing). Label permutation returned 0 significant genes.
 
 Pooling cardiomyopathy etiologies does not mask a secreted signal. Re-deriving differential expression within each etiology separately against the same controls, 12 of the 42 upregulated secreted ligands are induced in one etiology and not the other (POSTN, INHBA, HBEGF, CCL3, NTF3, LGALS9, CCL5, CCL4, BMP4, WNT10B, CX3CL1 and MSTN), but none is cardiac-enriched at GTEx rank 1 and only five are abundant, so none would have passed the criteria NPPA and NPPB passed. Label-permutation controls returned no significant genes in all four stratified contrasts. The ischemic and hypertrophic strata are small, at 13 and 28 samples, so a null there is weak evidence of absence rather than evidence of a null.
 
@@ -266,7 +247,7 @@ Pooling cardiomyopathy etiologies does not mask a secreted signal. Re-deriving d
 
 Of 3,084 replicated HF-upregulated genes, 295 are annotated as secreted by the Human Protein Atlas and 70 are CellChatDB ligands of any annotation class, 50 of them within Secreted Signaling. Restricting to Secreted Signaling, the only annotation class mechanistically plausible at a distance, gave 188 interactions from 51 ligands across 38 pathways, with receptor complexes expanded to 103 constituent subunits. Ligand availability was computed as the mean replicated effect size scaled by secretion tier; the highest were NPPA (3.05), NPPB (3.03), PENK (2.85) and WNT9A (2.32).
 
-### 3.3 The expression floor is the load-bearing methodological choice
+### 3.3 The absolute expression floor as a determinant of the result
 
 TCGA PanCanAtlas values are RSEM normalized counts rather than TPM. The median GAPDH value across the 30 per-tumor-type medians is 69,134, so any floor expressed in transcript-per-million terms is meaningless in this matrix, and a familiar TPM threshold imported from elsewhere would return a number that carried no information. The floor was therefore defined relative to a housekeeping gene: 0.005×GAPDH = 345.7 in these units.
 
@@ -282,11 +263,11 @@ Floor applied, double-centered: ρ = 0.034, with 1.0%.
 
 Unmatched (naive) random pool: ρ = 0.323, with 17.0%.
 
-Two conclusions follow. The global expression axis confound that afflicts co-expression rankings is substantially caused by scoring untranscribed receptors; remove them and the ranking becomes receptor-specific. Separately, the null pool must itself be expression-matched, since a naive pool gives ρ=0.323 and would wrongly condemn a specific score (Fig. 3).
+The global expression-axis confound affecting co-expression rankings is therefore attributable in large part to the scoring of untranscribed receptors; their removal renders the ranking receptor-specific. The null pool must additionally be expression-matched, since an unmatched pool yields ρ=0.323 and would incorrectly reject a receptor-specific score (Fig. 3).
 
 ![Figure 3](art_62ff7487-a8e3-476a-83df-92f5b5f22f80)
 
-**Figure 3.** The expression floor and the two-factor decomposition. (a) Floor audit; 28 interactions (red) never clear the floor in any tumor type. (b) Two-factor decomposition. Availability is a property of the source and is constant across receivers, so only capacity can explain differences between tumor types.
+**Figure 3.** The expression floor and the two-factor decomposition. (a) Floor audit across all 188 candidate interactions; 28 (red) never clear the floor of 0.005xGAPDH (345.67 RSEM normalized counts) in any of the 30 tumor types, including all four PENK-opioid axes at 4x10-5 to 3x10-3 of GAPDH. (b) Two-factor decomposition of the compatibility score into ligand availability and receiver capacity. Availability is a property of the source and is constant across receivers, so only capacity can explain differences between tumor types.
 
 The floor value is not tuned, but neither does it sit on a broad plateau. A pre-registered plateau test asked whether, across a fourfold window from 0.0025 to 0.01 of GAPDH, the null correlation stayed below 0.20, the count of types beating the null stayed within one of four, and pass-set membership changed by at most one member. It fails two of the three. The pass set is identical at 0.0025 and 0.005 (UCS, BRCA, KIRC, PAAD), so the published value is not perched on a knife edge. However, the null correlation falls monotonically across the whole sweep with no flat region (ρ = 0.295, 0.201, 0.113, −0.021, −0.161 and −0.184 at fractions 0.001, 0.0025, 0.005, 0.01, 0.025 and 0.05), and a twofold move to 0.01 changes the pass set to BRCA, KIRC, OV, THCA and UCS, gaining two types and losing one. The defensible reading is that a floor is necessary and any value in this range makes the score receptor-specific, while the identity of the four passing types is sensitive to the exact fraction. Combined with the background-pool result below, the count is better reported as four of 30 with a range of three to seven across defensible choices.
 
@@ -294,7 +275,7 @@ Three hundred permutations resolve the reported p-values. Because the smallest r
 
 The decile-matched null is insensitive to bin width and sensitive to pool composition. Varying the matching from 2 to 40 bins moves the null correlation only between 0.113 and 0.143, always far below the 0.30 threshold at which the score would be judged non-specific, and the passing count stays within one of four. At 40 bins the correlation begins to rise as bins become too thin to draw from, which places the sound operating range at 10 to 20 deciles. Pool composition matters more than width: a stratified background pool gives seven passing types rather than four, which is the upper end of the range quoted above.
 
-### 3.4 Pan-cancer ranking, and how much of it to believe
+### 3.4 Pan-cancer compatibility ranking and its statistical resolution
 
 Scoring the 160 floor-passing interactions ranked uterine carcinosarcoma first (0.679, bootstrap 95% CI 0.400–0.914, rank SD 0.55 over 400 resamples), followed by ovarian serous cystadenocarcinoma (0.432), clear-cell renal carcinoma (0.377), thyroid (0.285), prostate (0.272) and pancreatic adenocarcinoma (0.244). Only 4 of 30 types beat the matched-random null at p<0.05: UCS (p=0.003), KIRC (p=0.013), BRCA (p=0.010) and PAAD (p=0.033). Ovarian carcinoma, ranked second by score, is not among them (p=0.060). Rank order and receptor-specificity are therefore not the same thing, and a high score alone is insufficient grounds to nominate a tumor type.
 
@@ -304,23 +285,23 @@ One control does not pass. Double-centering, which removes additive row and colu
 
 ![Figure 4](art_b2c7e5cf-eb22-48ce-a162-0ceeb6fc09e1)
 
-**Figure 4.** Pan-cancer compatibility ranking against an expression-matched null. (a) Ranking with bootstrap CIs; the 4 blue types beat the matched-random null at p<0.05. (b) The floor is what makes the score receptor-specific.
+**Figure 4.** Pan-cancer compatibility ranking against an expression-matched null. (a) Compatibility score for each of 30 tumor types with 95% bootstrap confidence intervals (400 resamples, seed 20260727); the 4 types shown in blue exceed the expression-decile-matched random null at p<0.05 (UCS 0.003, BRCA 0.010, KIRC 0.013, PAAD 0.033). Ovarian carcinoma ranks second by score but does not pass (p=0.060). Individual positions are not interpretable: the ranking reorders substantially under double-centring (ρ=0.318 against the primary ranking). (b) Mean null correlation under three background constructions, showing that the absolute expression floor rather than the expression matching is what renders the score receptor-specific.
 
 ### 3.5 The exploitation component of the hypothesis is unsupported
 
 Our hypothesis held that susceptibility depends on the ability to receive and then exploit cardiac signals. Availability is constant across tumor types by construction, so only receiver capacity can explain differences. Testing capacity against 29 Thorsson immune-landscape features, substituting for TIMER2, which was unreachable, only one survives FDR correction: B-cell receptor score (ρ=0.571, FDR=0.028). Leukocyte fraction, stromal fraction, TGF-β score, proliferation and wound-healing signatures are all null. Receptor compatibility and microenvironment state are therefore largely independent axes, and we found no evidence for the exploitation component as formulated.
 
-### 3.6 Receptor expression does not correspond to lineage dependency
+### 3.6 Absence of correspondence between receptor expression and lineage dependency
 
 Using DepMap 24Q4 Public (1,178 cell lines, resolved via figshare article 27993248 because depmap.org serves a bot interstitial), we correlated per-lineage CRISPR gene effect against compatibility for 81 floor-passing receptors across 22 mapped lineages. Positive controls confirm correct parsing: as pan-cell-line means, RPL3 −2.53, PLK1 −2.69, POLR2B −2.42 and EEF2 −2.35, with non-essential MYT1 −0.02 and HBB +0.16. Aggregated per lineage instead, the same genes give −2.55, −2.67, −2.40 and −2.37. The two aggregations are reported separately because only the per-lineage values enter the correlation below.
 
-No receptor is significant after FDR correction (0 of 81, 3 nominal). More pointedly, the receptors on the leading axes are not dependencies anywhere. NPR1 has a pan-lineage mean gene effect of −0.163, and every WNT9A receptor subunit lies between LRP5 (−0.163) and FZD6 (+0.146), with no lineage cell crossing −0.5. The eight receptors that are dependencies (NCL, ITGAV, EGFR, ITGB5, ITGB1, ERBB2, FGFR1, IGF1R) are pan-essential or canonical adhesion and RTK genes whose essentiality is lineage-driven and unrelated to HF ligand availability.
+No receptor is significant after FDR correction (0 of 81, 3 nominal; minimum FDR 0.784). Furthermore, the receptors on the highest-ranked axes are not dependencies in any lineage. NPR1 has a pan-lineage mean gene effect of −0.163, and every WNT9A receptor subunit lies between LRP5 (−0.163) and FZD6 (+0.146), with no lineage cell crossing −0.5. The eight receptors that are dependencies (NCL, ITGAV, EGFR, ITGB5, ITGB1, ERBB2, FGFR1, IGF1R) are pan-essential or canonical adhesion and RTK genes whose essentiality is lineage-driven and unrelated to HF ligand availability.
 
 This is a meaningful distinction rather than a disappointment. Receptor expression licenses a cell to receive a signal, but its loss need not impair proliferation in vitro. The nominated axes are candidate signaling conduits rather than drug targets, and should be tested by ligand stimulation with a pathway reporter rather than by viability knockout (Fig. 5).
 
 ![Figure 5](art_19780104-a0e1-43b7-8cf4-58699de2941e)
 
-**Figure 5.** Receptor expression and CRISPR dependency. (a) HF-axis receptors cluster at zero gene effect while essential controls sit near −2.4. (b) No receptor survives FDR. (c) Proposed uterine panel.
+**Figure 5.** Receptor expression does not correspond to CRISPR dependency. (a) Mean Chronos gene effect for the 81 floor-passing HF-axis receptors against essential and non-essential controls across 22 DepMap 24Q4 lineages; HF-axis receptors cluster at zero while essential controls sit near -2.4 (RPL3 -2.53, PLK1 -2.69). (b) Correlation between per-lineage gene effect and compatibility score; no receptor survives Benjamini-Hochberg correction (0 of 81, 3 nominal, minimum FDR 0.784). (c) Proposed uterine cell-line panel for a WNT9A-FZD7 test, with 48.7-fold FZD7 separation between the high and low arms.
 
 ### 3.7 Specificity checks under a healthy-heart ligand filter
 
@@ -338,13 +319,13 @@ The pattern is therefore inverted at both ends. The axis with a distinctive card
 
 ![Figure 6](art_caffe368-443d-42c9-8c25-5ff4d6d020cc)
 
-**Figure 6.** Ligand cardiac specificity and receptor tumor enrichment. (a) Only NPPA and NPPB are cardiac-enriched among 42 HF ligands. (b) NPR1 is depleted in tumor versus adjacent normal in every testable type.
+**Figure 6.** Ligand cardiac specificity and receptor tumor enrichment. (a) Under a rank-based definition (heart rank 1 of 52 GTEx tissues with left-ventricle median at least 5 TPM) only NPPA and NPPB are cardiac-enriched among the 42 HF-upregulated secreted ligands; the criterion is definition-dependent, and a fold-enrichment definition additionally admits AGT (Section 3.7). (b) NPR1, the sole floor-passing receptor for those two ligands, is depleted in tumor relative to unit-matched adjacent normal in all 15 types with at least 10 adjacent normals (median log2FC -1.91, all FDR<0.05, 680 normal samples).
 
-### 3.8 A falsifiable experiment, despite the negative result
+### 3.8 A falsifiable experimental test derived from the negative result
 
 A negative screen should still nominate something testable. The most tractable axis in the data is WNT9A to FZD7, since WNT is the largest pathway contributor and FZD7 has the widest dynamic range of any WNT9A receptor in DepMap Uterus. A 4-versus-4 cell-line panel with 48.7-fold mean separation in FZD7 is specified in the reproduction package, together with the controls that make it interpretable: receptor level is not a library-size artifact (ρ=0.131, p=0.447 against housekeeping mean across all 36 screened lines), and FZD7 knockout does not kill the lines, so a knockdown arm reads as a signaling-competence manipulation rather than a viability effect. WNT9A is not cardiac-enriched, so this tests whether the compatibility score predicts receptor-mediated signaling competence at all. It does not test a heart-specific mechanism, and it is offered as a check on the scoring skill rather than as a rescue of the hypothesis.
 
-### 3.9 Correcting the specificity filter recovers axes, and the recovered axes do not survive
+### 3.9 Correction of the specificity filter and adversarial testing of the recovered axes
 
 Both the corrected specificity criteria and the three kill criteria applied to the recovered axes were fixed before any computation in this phase, with the receptor base rate measured before thresholds were chosen so that they could not be set to flatter the result (Sections 2.7 and 2.8).
 
@@ -360,7 +341,7 @@ That is a methodological finding about the filter rather than a biological findi
 | T2 – Tissue generality | Moderated-t differential expression in 5 non-cardiac fibrosis/organ-failure cohorts; cell-of-origin in 2 single-nucleus cardiac atlases | Fails if significantly induced in ≥2 cohorts at a median ≥50% of the cardiac effect | Significant in 2 of 5 cohorts at 50.5% of the cardiac effect (triggers by 1.0%); direction reverses in the largest lung cohort; PTN is 62-71% fibroblast-derived with no significant per-cell induction in either atlas | **Fail** |
 | T3 – Literature | PubMed and full-text search for circulating PTN measured in a heart-failure cohort against controls | Published evidence against a cardiac plasma source is a kill criterion | No heart-failure cohort measurement exists in 609 verified records; the one study designed to detect cardiac PTN release (coronary-sinus sampling) explicitly rejected it as non-specific to myocardial injury | **Fail** |
 | **Conjunction rule** | All three tracks required to pass | — | 0 of 3 tracks pass | **All 7 axes withdrawn** |
-#### The receptor test is not discriminating (Track 1)
+#### Track 1: receiver discrimination
 
 Before asking whether the PTN receptors are special, we asked how special any receptor is. Of the 81 floor-passing receptors, 60 (74.1%) are enriched versus matched adjacent normal in at least one tumor type with no ligand involved. That figure is rule-dependent: scoring receptor complexes whole rather than per subunit gives 46 of 103 (44.7%) under the obligate-subunit rule and 79 of 103 (76.7%) under a geometric mean, so the base rate should be read as 45 to 77%. The conclusion it was raised to support, that most receptors pass with no ligand involved and that a six or seven axis count is therefore uninformative on its own, holds under every rule and is strongest under the geometric mean. The pre-specified threshold for declaring an axis count uninformative was 60%.
 
@@ -370,7 +351,7 @@ The formal test is worse than merely unremarkable. Substituting the seven PTN re
 
 One check passed. The seven receptors are not a single co-expressed family counted seven times, with mean pairwise Spearman ρ of −0.091 across the 30 tumor types and a maximum of 0.692. The axes are genuinely seven independent receptors, and random draws beat them.
 
-#### PTN is an injury gene rather than a cardiac gene (Track 2)
+#### Track 2: tissue generality
 
 PTN was tested in five non-cardiac organ-failure and fibrosis cohorts, each processed with the same moderated-t pipeline and each cohort’s normalization kept separate. COL1A1 rose in all five (logFC 1.17–2.52), confirming that every cohort captured a fibrotic signal. PTN was significantly induced in two: lung IPF (GSE134692, +0.646, FDR 4.6×10{^-3}) and diabetic nephropathy (GSE142025, +0.871, FDR 2.5×10{^-5}). The median of 0.7589 is 50.5% of the cardiac effect (1.5023) against a kill threshold of 50%. The criterion triggers by 1.0%, and is reported as triggered without adjustment, since revising a pre-specified threshold after observing which side of it a value falls would defeat the purpose of pre-specifying it.
 
@@ -380,11 +361,11 @@ Cell of origin is more decisive than the induction test. In two independent huma
 
 The induction also does not survive the change of resolution. Per-fibroblast PTN does not rise in disease in either atlas (DCM +0.028, FDR 0.87; ACM −0.311, FDR 0.54; MI −0.430, FDR 0.30), nor does tissue-level pseudobulk (DCM +0.041, p = 0.72; MI −0.010, p = 0.68). The same MI fibroblast comparison detects POSTN at +1.77 and COL1A1 at +1.03, so the test had power. The bulk cardiac induction of logFC 1.50 that admitted PTN in the first place does not reproduce as a per-cell induction in either single-nucleus dataset. That discrepancy is unresolved. It may reflect aetiology or compositional differences between the bulk and single-nucleus cohorts, and it undermines the premise independently of any kill criterion.
 
-#### The measurement the premise requires has never been made (Track 3)
+#### Track 3: literature evidence for a circulating source
 
 Across 52 PubMed queries over a 991-record pleiotrophin corpus, together with a full-text scan of 478 cardiac plasma-proteomics papers, 609 records were retrieved and verified, and none measures circulating PTN in a heart-failure cohort against controls. Four measure circulating PTN in some human cardiac context, and two of those four point away from the premise. In the first (Circ Heart Fail 2024{^48}), plasma PTN measured by SomaScan is lower in hypertrophic cardiomyopathy than in three comparator cardiomyopathies, in both training and test sets, and after adjustment for 19 clinical parameters. In the second (Nat Biotechnol 2011{^49}), coronary-sinus sampling during planned myocardial infarction detected PTN release, and the authors explicitly eliminated it as not specific to myocardial injury, because catheterisation alone moved it.
 
-The two supporting records fall outside heart failure: anthracycline cardiomyopathy in childhood cancer survivors{^50} in which only 8 of 28 cases had heart failure, in a population where serum PTN is independently raised by cancer, and coronary collateral grade{^51}.
+The two supporting records fall outside heart failure: anthracycline cardiomyopathy in childhood cancer survivors{^50} in which only 8 of 28 cases had heart failure, in a population where serum PTN is independently raised by cancer, and coronary collateral grade.{^51}
 
 The secreted role of PTN in cancer is by contrast well established. The half of the axis that is supported is the tumor half. The cardiac-plasma half is unmeasured, and where adjacent measurements exist they run in the opposite direction. The one study designed to detect cardiac PTN release into blood found a signal and rejected it as an artifact of the procedure.
 
@@ -396,7 +377,7 @@ The conclusion of the paper is therefore unchanged from Section 3.7, but it is n
 
 ![Figure 7](art_df78cf23-161c-4d79-89c9-984651f1e760)
 
-**Figure 7.** Cardiac specificity re-scored against failure induction. (a) Sequential attrition across the three pre-specified criteria; 3 of 51 ligands clear all three. (b) Which criteria each ligand fails, showing failure induction as the binding constraint. (c) Induction magnitude against baseline heart rank; PTN clears the induction and abundance criteria but sits 23rd of 52 tissues at baseline. (d) The seven surviving axes, all with PTN as ligand, by number of tumor types in which the receptor is enriched versus matched adjacent normal. Ligand criteria are computed within single datasets only; the receptor side is unchanged from Section 3.7. n = 51 ligands, 146 axes.
+**Figure 7.** Cardiac specificity re-scored against failure induction. (a) Sequential attrition across the three pre-specified criteria; 3 of 51 ligands clear all three. The third criterion is A3, requiring the heart to rank in the upper half of the 52 GTEx tissues. (b) Combinations of criteria failed across the same 51 ligands; the 3 ligands failing none are NPPA, NPPB and PTN. (c) Induction magnitude, taken as the minimum log2 fold change across the two cohorts, against baseline cardiac rank; the four ligands clearing both induction and abundance are shown in red, of which MDK is excluded at rank 36 while PTN is retained at rank 23. (d) The surviving pleiotrophin axes scored at complex level under the minimum-subunit rule, by number of tumor types in which the receptor is enriched relative to matched adjacent normal. Ligand criteria are computed within single datasets only; the receptor side is unchanged from Section 3.7. n = 51 ligands, 146 axes.
 
 ### 3.10 Cross-platform replication of the signature
 
@@ -404,7 +385,7 @@ The discovery and validation cohorts of Section 3.1 both ran on GPL16791, so the
 
 The two adequately powered cohorts replicate the signature. GSE5406 gives directional concordance 0.846 and ρ=0.713 among genes significant in both, and GSE57345 gives 0.819 and ρ=0.774. Correlation across all shared genes is lower in both (0.347 and 0.479), as expected, and is reported separately throughout because the two quantities are not interchangeable. GSE1869 falls below both thresholds (0.602, ρ=0.187), which with 6 control samples is uninformative rather than contradictory. One cohort below threshold does not reach the pre-specified kill criterion of two.
 
-Two findings qualify Section 3.1. The shared platform inflated the apparent agreement: across all 10 cohort pairs, the 4 same-technology pairs have median concordance 0.918 and median ρ=0.722 among genes significant in both, against 0.745 and 0.545 for the 6 cross-technology pairs. The original pair sat at 0.881 and 0.759, inside the same-technology range. The concordance figure quoted in Section 3.1 is therefore about 0.17 units optimistic as an estimate of platform-independent agreement, and should be read as a within-technology number.
+Two aspects of the cross-platform comparison qualify the replication reported in Section 3.1. The shared sequencing platform inflated the apparent agreement: across all 10 cohort pairs, the 4 same-technology pairs have median concordance 0.918 and median ρ=0.722 among genes significant in both, against 0.745 and 0.545 for the 6 cross-technology pairs. The original pair sat at 0.881 and 0.759, inside the same-technology range. The concordance figure quoted in Section 3.1 is therefore about 0.17 units optimistic as an estimate of platform-independent agreement, and should be read as a within-technology number.
 
 Second, and specific to this hypothesis, NPPB does not reproduce on either array platform, at −0.142 (FDR 0.90) in GSE5406 and +0.303 (FDR 0.27) in GSE57345, against +3.97 in RNA-seq discovery. This is not a probe-collapsing artifact, because NPPB is measured by a single probe on each platform (206801_at on GPL96, 7912520 on GPL11532), so no collapsing choice arises for it. Cross-platform support for the cardiac-ligand arm therefore rests mainly on NPPA, which behaves correctly in both (+1.856 and +1.733, FDR<10{^-8}), as do MYH6 (−1.579 in GSE57345) and ATP2A2. Because the pre-specified criterion required both natriuretic peptides to rise in at least two of three cohorts and NPPB rises significantly in none, the criterion is not met, and the verdict on platform-independence is inconclusive rather than passed (Fig. 8).
 
@@ -414,7 +395,35 @@ Second, and specific to this hypothesis, NPPB does not reproduce on either array
 
 The consequence for the argument is limited but should be stated. NPPB was one of the two ligands carrying the cardiac-specific arm of the hypothesis, and one of them is not measurable as induced on array platforms. This does not rescue the hypothesis, because the axis failed on the receptor side, where NPR1 is depleted in tumor in all 15 testable types, and NPPA, which shares that receptor, does replicate. It does mean that the ligand evidence rests on one peptide rather than two when platform is varied, and that a plasma measurement would be the way to settle whether NPPB is induced at all.
 
-### 3.11 Protein-level test of the receptor result
+### 3.11 The natriuretic peptide receptor family
+
+Claiming NPR1 as the sole floor-passing receptor for NPPA and NPPB invites the question
+of what the other two natriuretic peptide receptors do, so all three were tested. The
+answer has two parts, one about the database and one about the data.
+
+The database part is a scope limitation. CellChatDB pairs NPR2 with NPPC only and NPR3
+with OSTN only, and neither NPPC nor OSTN is among the ligands induced in the failing
+ventricle. Within the curated interaction set, therefore, NPR1 is the only receptor
+reachable from NPPA or NPPB, and the claim is true as stated. It is true of the database
+rather than of receptor pharmacology: NPR3 binds ANP and BNP as a clearance receptor in
+vivo, and that binding is not recorded in CellChatDB. A curation gap of this kind cannot
+be detected from within the screen, which is a general limitation of interaction-database
+methods rather than a property of this dataset.
+
+The data part removes the objection independently of the curation. Streaming NPR1, NPR2
+and NPR3 from the PanCanAtlas matrix across 6,888 primary tumors and 698 adjacent normals
+in the 15 unit-matched types gives tumor-median expression of 125, 148 and 29 RSEM
+respectively, against a floor of 346; NPR1 and NPR2 clear the floor in 2 types each and
+NPR3 in 1. All three run in the depleted direction: median log2 fold change against
+matched adjacent normal is -1.91 for NPR1, -0.60 for NPR2 and -1.27 for NPR3, with
+significant depletion (Mann-Whitney, BH-FDR < 0.05) in 15, 8 and 13 of 15 types. Across
+45 receptor-by-type comparisons exactly one is significantly enriched, NPR2 in papillary
+renal cell carcinoma (log2FC +0.48, FDR = 0.001), whose only annotated ligand NPPC is not
+induced in the failing heart. Extending the receptor arm to the full family therefore
+does not recover a candidate axis, and the re-streamed NPR1 value reproduces the -1.91
+reported in Section 3.7 from an independent extraction.
+
+### 3.12 Protein-level test of the receptor result
 
 Every measurement above is transcript abundance, so the central negative was tested in a different molecule. CPTAC tandem-mass-tag proteomics provides tumor and adjacent-normal protein abundance for eight of the tumor types ranked here. Criteria were fixed before any type other than ccRCC was examined: a gene is testable in a study only if it appears in that study’s quantified gene index and at least 10 aliquots per arm and 60% of each arm carry a value; the primary test is a paired comparison within TMT plex; NPR1 protein enriched in tumor in at least 3 of the 7 previously unexamined types would refute the negative, depletion in at least 5 would replicate it, and fewer than 4 testable types would abandon the test as underpowered. ccRCC was examined during the design of these controls and is reported as unblinded throughout.
 
@@ -428,18 +437,20 @@ The pleiotrophin receptor panel was tested on the same footing and is withdrawn 
 
 The conclusion is therefore unchanged but its scope is now explicit. The transcript-level negative stands, the protein-level test that could have overturned it is not answerable with current public proteomics at the coverage NPR1 achieves, and the measurement that would decide the question remains a plasma one.
 
-### 3.12 A named mediator from the review literature runs in the opposite direction
+### 3.13 Directional discordance of a mediator nominated in the review literature
 
-A 2024 review of this field{^55} nominates SerpinA3 as the principal secreted mediator linking heart failure to tumor growth, on the basis of the mouse study that established the phenomenon. SERPINA3 is a strong test case for the screen because it is annotated as secreted to blood at core tier, so it should have been available to the pipeline. It is in the replicated signature, but with the opposite sign to the one the hypothesis requires: logFC −2.64 in the discovery cohort (FDR 1.2×10{^-8}) and −2.12 in validation (FDR 7.4×10{^-21}), a replicated decrease in failing human left ventricle. The upregulation filter therefore excluded it, and it is also absent from CellChatDB as a ligand, so it would not have produced an interaction even had the direction agreed.
+A 2024 review of this field by Seuthe et al.{^55} nominates SerpinA3 as the principal secreted mediator linking heart failure to tumor growth, on the basis of the mouse study that established the phenomenon. SERPINA3 is a strong test case for the screen because it is annotated as secreted to blood at core tier, so it should have been available to the pipeline. It is in the replicated signature, but with the opposite sign to the one the hypothesis requires: logFC −2.64 in the discovery cohort (FDR 1.2×10{^-8}) and −2.12 in validation (FDR 7.4×10{^-21}), a replicated decrease in failing human left ventricle. The upregulation filter therefore excluded it, and it is also absent from CellChatDB as a ligand, so it would not have produced an interaction even had the direction agreed.
 
-The discrepancy is most likely a species difference rather than a contradiction of the mouse work, since the induction was demonstrated in murine myocardium and in mouse plasma, whereas these are human explanted ventricles from patients with established end-stage disease, many on mechanical support. It nonetheless bears directly on the scope of the screen. The one mediator the review literature names most confidently is one this design could not have recovered, for two independent reasons, and that is worth stating rather than leaving to a reader who knows the field.
+The discrepancy is most likely a species difference rather than a contradiction of the mouse work, since the induction was demonstrated in murine myocardium and in mouse plasma, whereas these are human explanted ventricles from patients with established end-stage disease, many on mechanical support. It nonetheless bears directly on the scope of the screen. The one mediator the review literature names most confidently is one this design could not have recovered, for two independent reasons, and this is stated explicitly rather than left to inference.
 
 The same review{^55} states that angiotensin II acting through AT1R promotes breast cancer proliferation. That axis is present in this screen and is informative about the specificity question in Section 3.7. AGT is upregulated in both cohorts, though weakly (logFC +0.22 and +0.13, FDR 0.042 and 0.047), and it is the third ligand admitted when cardiac specificity is defined by fold enrichment rather than rank. Its receptor is the reason the axis does not survive: AGTR1 is enriched in no tumor type against matched adjacent normal, and in the validation cohort it is itself strongly reduced in failing myocardium (logFC −1.16, FDR 4.7×10{^-21}). A mechanism can be real in a treated mouse xenograft and still fail a compatibility screen built on human tumor transcript abundance, because the two tests ask different questions. This is the same distinction on which the negative result rests, visible here in a case the literature considers settled.
-### 3.13 The closest human study nominates different ligands, and they fail different gates
+### 3.14 Comparison with the closest human study
 
-A 2025 European Heart Journal report is the closest human work to this screen and reaches
-a partially different answer, so its nominated ligands were run through the gates used
-here rather than discussed in the abstract{^56}. It used single-cell data from ischemic
+A 2025 conference abstract by Caller et al.{^56} is the closest human work to this screen
+and reaches a partially different answer, so its nominated ligands were run through the
+gates used here rather than discussed in prose. Because that report is a meeting abstract
+rather than a full paper, its methods are available only in summary, and the comparison
+below is with the ligands it nominates rather than with its analysis. It used single-cell data from ischemic
 and failing human hearts with NicheNet, implicated cardiac mesenchymal stromal cells as
 the source, nominated POSTN, NGF and PDGF-family ligands, and reported increased
 lung-cancer-cell proliferation in response to conditioned medium.
@@ -473,13 +484,13 @@ transcriptomically supported cardiac-endocrine axis exists.
 
 ## 4. Discussion
 
-### 4.1 Where the hypothesis fails, and why the location matters
+### 4.1 Location of the failure within the two-factor model
 
 The two-factor framing was chosen because it can fail in identifiable places rather than merely returning a null. It failed in two of them, and the location matters more than the verdict. The receiver side is not the constraint: receptor transcripts for HF-upregulated ligands are present, often abundantly, across tumor types, and a compatibility ranking built on them is stable under resampling and under leaving out any single ligand or pathway. The constraint is specificity at both ends of the axis. Only the natriuretic peptides are distinctively and abundantly cardiac among the candidate ligands, and their sole receptor is the one receptor in the panel that is consistently depleted in tumor relative to matched adjacent normal. An axis needs both ends, and no axis has both.
 
 That the stability of the score coexists with the failure of the axes is the substantive point. A compatibility ranking can be internally robust and still carry no specific signal, which is why the ranking is reported with its specificity null rather than on its own.
 
-### 4.2 Three requirements that outlive this dataset, and the form they were written in
+### 4.2 Generalizable methodological requirements and their implementation
 
 Three findings from Sections 3.3 and 3.9 are not about the heart. Each is a property of compatibility scoring in general, and each is now an assertion rather than a recommendation.
 
@@ -489,7 +500,7 @@ The second is that the null used to detect this must itself be matched on expres
 
 The third is a base rate. A screen that relaxes any criterion should report the rate at which the criterion it did not relax is passed, because without that number an axis count cannot be read as evidence about a particular ligand.
 
-The sequence in Section 3.9, comprising a negative result, a filter identified as capable of having caused it, a correction that recovers hits, and a base-rate check that withdraws them, is generic enough that others will repeat it. That is the argument for writing the three requirements where they bind. Stated as prose here, they would be inherited by the next study as text, and a study that omits the floor would produce a result indistinguishable in form from one that honors it. Stated as assertions in the scoring skill, omitting the floor produces an exception naming the offending gene.
+The sequence in Section 3.9, comprising a negative result, a filter identified as capable of having caused it, a correction that recovers hits, and a base-rate check that withdraws them, is generic enough that others will repeat it. This is the rationale for encoding the three requirements at the point of enforcement. Stated as prose here, they would be inherited by the next study as text, and a study that omits the floor would produce a result indistinguishable in form from one that honors it. Stated as assertions in the scoring skill, omitting the floor produces an exception naming the offending gene.
 
 The claim is not that assertions are better than prose. Prose can express nuance that code cannot, and an assertion encodes a threshold rather than the reasoning that justified it, which may be wrong for another data type. The claim is that the two fail differently, and that for requirements of this kind, where the wrong answer resembles a right answer, the failure mode of the assertion is the one to prefer. An untranscribed receptor scored as though it were expressed does not announce itself; a missing exception does.
 
@@ -497,7 +508,7 @@ The claim is not that assertions are better than prose. Prose can express nuance
 
 Two independent observations undercut bulk differential expression as a proxy for tissue output. The recovered ligand localises overwhelmingly to fibroblasts rather than cardiomyocytes, and its cardiac induction does not reproduce per-cell in either single-nucleus atlas, while established fibrotic markers do rise in the same comparison. Bulk differential expression in a tissue whose cellular composition changes with disease can reflect proportion shifts rather than regulation. The ligand-availability term of this screen is computed from bulk for every ligand and inherits that ambiguity generally, not only for the ligand that happened to be examined at single-cell resolution.
 
-### 4.4 What would decide the question
+### 4.4 Measurements required to resolve the question
 
 The measurement the endocrine premise requires has never been made for the recovered ligand: circulating concentration in a heart-failure cohort against controls. The nearest published measurements run against it, including one study that detected the ligand during a planned myocardial infarction and rejected it as not specific to myocardial injury because catheterisation alone moved it. No reanalysis of expression data can substitute. Converting tissue mRNA into a circulating contribution requires translation efficiency, secretion rate, clearance and volume of distribution, none of which are available for these ligands, and that calculation was excluded rather than attempted with fabricated parameters.
 
@@ -505,17 +516,17 @@ The decisive experiments are therefore measurement rather than analysis: plasma 
 
 ### 4.5 Limitations
 
-**Transcript-only.** Every measurement is mRNA. An endocrine mechanism requires circulating protein, and cardiac transcript induction need not produce elevated plasma ligand. Cell-specific knockout of CCN2 showed that a secreted cardiac factor can act autocrine on neighbouring fibroblasts rather than distally{^52}.
+**Transcript-only.** Every measurement is mRNA. An endocrine mechanism requires circulating protein, and cardiac transcript induction need not produce elevated plasma ligand. Cell-specific knockout of CCN2 showed that a secreted cardiac factor can act autocrine on neighbouring fibroblasts rather than distally.{^52}
 
 **Platform dependence of the signature.** The discovery and validation cohorts both ran on GPL16791. Same-technology cohort pairs agree substantially better than cross-technology pairs (median concordance 0.918 against 0.745), so the 0.881 reported in Section 3.1 is a within-technology figure. The signature does reproduce on two independent array platforms, but NPPB does not, so the cardiac-ligand arm rests on NPPA alone once platform is varied (Section 3.10).
 
-**Protein-level coverage, not protein-level agreement.** The proteomic test of NPR1 was abandoned as underpowered rather than passed or failed (Section 3.11). NPR1 is absent from two of eight CPTAC gene indices and below a 60% per-arm coverage floor in three more, and absence of detection in a mass-spectrometry matrix is not evidence of absent protein. The breast study is untestable for a different reason: all its adjacent normals sit in normal-only plexes, so batch is perfectly confounded with the comparison.
+**Protein-level coverage.** The proteomic test of NPR1 was abandoned as underpowered rather than passed or failed (Section 3.12). NPR1 is absent from two of eight CPTAC gene indices and below a 60% per-arm coverage floor in three more, and absence of detection in a mass-spectrometry matrix is not evidence of absent protein. The breast study is untestable for a different reason: all its adjacent normals sit in normal-only plexes, so batch is perfectly confounded with the comparison.
 
-**Ambiguous probes were dropped, not resolved.** On the array platforms, 1,223 of 22,283 probes on GPL96 (5.5%) and 2,354 of 33,297 on GPL11532 (7.1%) map to more than one gene symbol. These were excluded rather than assigned to their first listed gene, which loses a small fraction of measurable genes (2.6% of signature symbols on GPL96, 4.9% on GPL11532) but avoids attributing the signal of a probe to an arbitrary one of its targets. No canonical marker is affected.
+**Ambiguous probe mappings.** On the array platforms, 1,223 of 22,283 probes on GPL96 (5.5%) and 2,354 of 33,297 on GPL11532 (7.1%) map to more than one gene symbol. These were excluded rather than assigned to their first listed gene, which loses a small fraction of measurable genes (2.6% of signature symbols on GPL96, 4.9% on GPL11532) but avoids attributing the signal of a probe to an arbitrary one of its targets. No canonical marker is affected.
 
 **Bulk tissue on both sides.** TCGA and GTEx values mix malignant, stromal and immune compartments, so receptor signal cannot be assigned to tumor cells. Compartment markers were extracted but a deconvolution was not performed.
 
-**Method heterogeneity across cohorts.** GSE116250 provides RPKM and GSE141910 log-scale normalized counts, so cross-cohort effect sizes are not strictly comparable, and we rely on rank concordance rather than pooled magnitudes. The empirical-Bayes moderated t is our own implementation of a limma-trend equivalent rather than a call into limma{^42}.
+**Method heterogeneity across cohorts.** GSE116250 provides RPKM and GSE141910 log-scale normalized counts, so cross-cohort effect sizes are not strictly comparable, and we rely on rank concordance rather than pooled magnitudes. The empirical-Bayes moderated t is our own implementation of a limma-trend equivalent rather than a call into limma.{^42}
 
 **GTEx heart is non-failing.** Tissue specificity in healthy myocardium bounds baseline distinctiveness rather than HF inducibility. A ligand could be non-cardiac-enriched at baseline yet become a major cardiac output in failure. That possibility is no longer hypothetical, since Section 3.9 tests it directly and recovers PTN, which then fails on independent grounds.
 
@@ -525,35 +536,41 @@ The decisive experiments are therefore measurement rather than analysis: plasma 
 
 **TIMER2 not used.** The Thorsson immune-landscape table substituted for TIMER2. To be precise about why, compbio.cn is reachable, but TIMER2 is served as an interactive Shiny application with no bulk-download endpoint we could locate (/timer2/data/ and /timer2/estimation.php both return 404), so its deconvolution estimates are not retrievable programmatically at pan-cancer scale. Thorsson is the published source for the same immune and stromal quantities over the same TCGA samples, but it is not an identical computation, and we did not cross-validate the two.
 
-**Induction is not a systemic source.** The corrected specificity criterion in Section 3.9 admits ligands on induction magnitude without establishing that the failing heart dominates the circulating pool. Converting tissue mRNA into a circulating contribution requires parameters unavailable for these ligands, so that analysis was pre-emptively excluded rather than attempted with fabricated values.
+**Induction as distinct from systemic release.** The corrected specificity criterion in Section 3.9 admits ligands on induction magnitude without establishing that the failing heart dominates the circulating pool. Converting tissue mRNA into a circulating contribution requires parameters unavailable for these ligands, so that analysis was pre-emptively excluded rather than attempted with fabricated values.
 
-**A relaxed criterion needs a base-rate guard.** The seven-axis result was recovered by relaxing one criterion and withdrawn by measuring the base rate of the criterion it was recovered against. Any screen that loosens a filter to recover hits should report the rate at which the unmodified half of the test passes; ours was 74%.
+**Base-rate guard for relaxed criteria.** The seven-axis result was recovered by relaxing one criterion and withdrawn by measuring the base rate of the criterion it was recovered against. Any screen that loosens a filter to recover hits should report the rate at which the unmodified half of the test passes; ours was 74%.
 
-**Bulk induction may not be per-cell induction.** Cardiac PTN induction (logFC 1.50, replicated across two cohorts) does not reproduce as per-cell induction in two single-nucleus atlases. Bulk differential expression in a tissue whose composition changes with disease can reflect cell-proportion shifts rather than per-cell regulation, and the ligand-availability term of this screen is computed from bulk for every ligand, not only PTN.
+**Bulk versus per-cell induction.** Cardiac PTN induction (logFC 1.50, replicated across two cohorts) does not reproduce as per-cell induction in two single-nucleus atlases. Bulk differential expression in a tissue whose composition changes with disease can reflect cell-proportion shifts rather than per-cell regulation, and the ligand-availability term of this screen is computed from bulk for every ligand, not only PTN. The receptor side carries the same exposure: tumor purity varies by
+several-fold across the types scored here and was not adjusted for, so a receptor's
+apparent depletion or enrichment against adjacent normal is compatible with a shift in
+malignant-cell fraction as well as with regulation, and purity remains an untested
+alternative explanation for the receptor result.
 
 **Power.** Dependency correlations use 22 lineage-level aggregates, so only a large effect would be detectable. The null result bounds effect size rather than excluding a small one.
 
-### 4.6 What the model decided, and what the code enforces
-
-Describing this pipeline as agentic invites a fair question: how much of the result depends on the language model that assembled it, and would a different or cheaper model have produced something else. The answer follows from where the work sits. None of the 4,858 lines contains a call to a language model, an API key or a platform function, so given the same inputs they return the same numbers whichever agent invoked them, and every figure and table here is output of that layer.
-
-The contribution of the model was orchestration and judgment: deciding that ligand distinctiveness and receptor abundance are the two factors worth scoring, recognising that untranscribed receptors were inflating the null and that a floor was therefore required, choosing an expression-matched rather than a naive background, and requiring a base rate before the hits recovered by a relaxed filter could be believed. Those are the decisions this paper argues about. Once made, each was written into a module as an assertion, at which point it ceased to be a judgment and became a property of the software.
-
-That division has a practical consequence for cost. The expensive capability is needed at the design stage, where the number of decisions is small, whereas the deterministic layer, where essentially all the compute goes, needs no model at all. A cheaper or smaller model driving these skills inherits the same guardrails, because a below-floor receptor raises an error regardless of which agent supplied the arguments. What a weaker model risks is not a corrupted number but a worse experiment: a poorly chosen comparison, or a filter relaxed without checking its base rate. Running the modules is cheap and safe; deciding what to run is where model quality matters, and it is also where a mistake is hardest to detect afterwards.
-
-### 4.7 Reuse beyond this question
+### 4.6 Reuse beyond this question
 
 The same six skills apply wherever the secreted output of a source tissue is scored against receiver contexts, including any organ-crosstalk screen, any secretome-to-receptor ranking, and any compatibility score across many tissues or cell lines. Nothing in the scoring module depends on the source being heart or the receivers being tumors, since it consumes a feature matrix and a vector of source-derived weights.
 
-What does not transfer automatically is the threshold. The floor is calibrated as a fraction of GAPDH in RSEM units, and a study on a different platform must recalibrate it rather than inherit the number, since the assertion enforces that a floor exists and was applied rather than that 0.005×GAPDH is correct everywhere. That is the honest limit of the mechanism: it makes a requirement unavoidable, not universally parameterised.
+What does not transfer automatically is the threshold. The floor is calibrated as a fraction of GAPDH in RSEM units, and a study on a different platform must recalibrate it rather than inherit the number, since the assertion enforces that a floor exists and was applied rather than that 0.005×GAPDH is correct everywhere. The limit of the mechanism is therefore that it renders a requirement unavoidable without making its parameterisation universal.
 
-### 4.8 What the multi-agent split bought, and what it cost
+### 4.7 Effects and costs of the multi-agent execution model
 
-Splitting the work bought three things, and the third changed a result. These are observations from one execution, not a controlled comparison: no single-agent baseline, no scripted-workflow baseline and no context-isolation ablation were run, so what follows describes what this configuration did and not what an alternative would have failed to do.
+Three effects of partitioning the work were observed, the third of which altered a reported result. These are observations from a single execution rather than a controlled comparison: no single-agent baseline, no scripted-workflow baseline and no context-isolation ablation were run, so what follows describes what this configuration did and not what an alternative would have failed to do.
 
-The first is throughput on independent tracks. The four wave-1 acquisition tracks share no inputs and ran concurrently; serially they would have consumed the sum of their durations rather than the maximum.
+Where the work sits determines how much of it depends on the language model. None of the
+4,858 lines contains a call to a language model, an API key or a platform function, so
+given the same inputs they return the same numbers whichever agent invoked them, and every
+figure and table here is output of that layer. The model contributed orchestration and
+judgment: choosing ligand distinctiveness and receptor abundance as the two factors,
+recognizing that an unfloored score was measuring the expression axis, and deciding that a
+recovered axis had to be tested against a ligand-free base rate. Those choices are
+reported so they can be disputed, and a different model making different ones would
+produce a different paper from the same modules.
 
-The second is context isolation as a correctness property rather than an efficiency one. Each sub-agent received a task statement and a summary, never the conversation of the orchestrator, so it could not inherit an assumption formed earlier. This is what made the wave-4 audits usable, since tracks were dispatched specifically to re-derive claims the orchestrator had already written into the manuscript, working from the result tables rather than from its prose, and they found errors. The adjacent-normal sample count was reported as 710 where the table sums to 680, because 710 counts samples before the minimum-normals filter. The number of tumor types in which NPR1 fails the expression floor was reported as 26 of 30 where the column gives 24. One survival claim mixed units, stating zero of 160 when the table holds 146 subunit-level axes and 160 is the complex-level count. A review track separately found a pre-specification justifying its matched-null requirement by citing the expression-floor contrast (ρ=0.363 against 0.107) rather than the matching contrast (ρ=0.323), which is a reasoning error rather than a typographical one. None of these changes a conclusion, and that is the point: they are the class of error that survives self-review, because an agent auditing its own prose in its own context has already been persuaded by it.
+The first effect was increased throughput on independent tracks. The four wave-1 acquisition tracks share no inputs and ran concurrently; serially they would have consumed the sum of their durations rather than the maximum.
+
+The second is context isolation as a correctness property rather than an efficiency one. Each sub-agent received a task statement and a summary, never the conversation of the orchestrator, so it could not inherit an assumption formed earlier. This is what made the wave-4 audits usable, since tracks were dispatched specifically to re-derive claims the orchestrator had already written into the manuscript, working from the result tables rather than from its prose, and they found errors. The adjacent-normal sample count was reported as 710 where the table sums to 680, because 710 counts samples before the minimum-normals filter. The number of tumor types in which NPR1 fails the expression floor was reported as 26 of 30 where the column gives 24. One survival claim mixed units, stating zero of 160 when the table holds 146 subunit-level axes and 160 is the complex-level count. A review track separately found a pre-specification justifying its matched-null requirement by citing the expression-floor contrast (ρ=0.363 against 0.107) rather than the matching contrast (ρ=0.323), which is a reasoning error rather than a typographical one. None of these alters a conclusion, which is the relevant observation: they represent the class of error that survives self-review, because an agent auditing its own prose in its own context has already been persuaded by it.
 
 The third is that isolation is what allowed the kill criteria to bite. The adversarial phase of Section 3.9 was dispatched with its criteria in the task statement and no access to the reasoning that had produced the seven candidate axes, and it withdrew all seven. We do not claim that a single-context agent could not have done this, but the design removes the mechanism by which it would most plausibly have failed to.
 
@@ -565,158 +582,119 @@ Across 30 solid tumor types, no ligand–receptor axis has both a distinctively 
 
 Two further tests were pre-specified and run after the negative was reached. The signature reproduces on independent microarray platforms, but NPPB does not, so the cardiac-ligand arm rests on NPPA alone once platform is varied. A protein-level test of the receptor result was attempted in CPTAC proteomics and abandoned under its own kill criterion, because NPR1 reaches the required coverage in too few tumor types. The three types where it is testable all show lower NPR1 protein in tumor, which is directional agreement with the transcript result but not independent confirmation of it: three types cannot validate a conclusion drawn across 15, and the analysis was abandoned precisely because it is underpowered. The pleiotrophin panel is withdrawn at protein level as it was at transcript level.
 
-The hypothesis is not refuted in general. It remains tenable in the weaker form that heart failure raises circulating concentrations of factors secreted by many tissues, which would require neither a cardiac-specific ligand nor a tumor-specific receptor. Distinguishing that from the specific form tested here requires plasma measurements in heart-failure patients, and for pleiotrophin, the strongest candidate this screen produced, such measurements do not exist. Tumor proteomics does not substitute, since it measures the receiver rather than the circulating signal. The screen also cannot recover a mediator that acts without a curated cognate receptor, is regulated in the opposite direction in human end-stage disease than in the mouse model, or acts through protease activity rather than receptor binding, which is the case of SerpinA3 (Section 3.12). The negative applies to receptor-mediated signaling by ligands induced in the failing human ventricle rather than to secreted mediators in general.
+The hypothesis is not refuted in general. It remains tenable in the weaker form that heart failure raises circulating concentrations of factors secreted by many tissues, which would require neither a cardiac-specific ligand nor a tumor-specific receptor. Distinguishing that from the specific form tested here requires plasma measurements in heart-failure patients, and for pleiotrophin, the strongest candidate this screen produced, such measurements do not exist. Tumor proteomics does not substitute, since it measures the receiver rather than the circulating signal. The screen also cannot recover a mediator that acts without a curated cognate receptor, is regulated in the opposite direction in human end-stage disease than in the mouse model, or acts through protease activity rather than receptor binding, which is the case of SerpinA3 (Section 3.13). The negative applies to receptor-mediated signaling by ligands induced in the failing human ventricle rather than to secreted mediators in general.
 
-What we would hand to the next group is not the negative but the instrument. The three requirements of Section 4.2 were each discovered as an error this pipeline made, and each now exists as an assertion inside a skill rather than as a paragraph here. That is the difference the paper argues for: a study built on the scoring module cannot omit the expression floor or substitute an unmatched null without raising an error that names the offending gene, whereas a study inheriting the same three findings as prose can omit all of them and produce output that looks correct.
+The transferable output of this study is the instrument rather than the negative result itself. The three requirements of Section 4.2 were each discovered as an error this pipeline made, and each now exists as an assertion inside a skill rather than as a paragraph here. The distinction is as follows: a study built on the scoring module cannot omit the expression floor or substitute an unmatched null without raising an error that names the offending gene, whereas a study inheriting the same three findings as prose can omit all of them and produce output that looks correct.
 
 The untested premise is reuse. We can demonstrate the mechanism within one study, since the kill criteria that withdrew the only positive result of this study were themselves evaluated against a floored, expression-matched background because the module enforced it. Demonstrating that the constraint binds a different group would require a second analysis built on the same skills, and that has not happened yet. Section 6 sets out where that second analysis should be built: an imaging task with a known ground truth, where the two guardrails that proved load-bearing here have direct analogues in a signal floor and an acquisition-matched null, and where a segmentation or detection benchmark would permit the controlled comparison of agent configurations that this study could not run.
 
-## 6. Future directions: the architecture as radiology infrastructure
+## 6. Future directions
 
-The screen reported here is molecular, and the reason it belongs in a radiology venue is
-not the biology but the instrument. What was built is a way of writing methodological
-requirements so that an autonomous agent cannot skip them, and radiology research has the
-same problem this screen had, in a more acute form.
+### 6.1 What would make this a clinical tool
 
-**Why the transfer is not incidental.** The failure mode this pipeline was designed
-against is the one that produced its own two corrections: a score that looked
-receptor-specific but was reproduced by random receptor sets, and a source criterion that
-answered a subtly different question than the one asked. Neither error announced itself.
-Both were caught by a check that halted execution, and both are now assertions inside a
-reusable module rather than sentences in a methods section. Imaging analysis is dense with
-the same class of error. A radiomic feature that tracks scanner or acquisition protocol
-rather than biology, a segmentation model evaluated on slices from patients also present
-in training, a batch effect between sites read as a phenotype: each produces a confident
-number, each survives review of the prose, and none is visible in the output. The
-requirement that would catch it is usually known and usually written as advice. Written
-as advice, it is optional for the next study; written as an assertion, it is not.
+The screen reported here answers a question about tissue transcripts, and a clinical
+instrument would have to answer a question about patients. Three measurements separate the
+two, and each is obtainable with existing technology rather than new biology.
 
-**What a radiology skill would contain.** The six modules here follow one pattern: a
-documentation file an agent reads to decide whether the procedure fits its task, and a
-Python module that executes it with the correctness requirements compiled in. A
-radiomics-extraction skill on that pattern would carry the analogues of the two guardrails
-that proved load-bearing in this study. The expression floor becomes a signal floor,
-refusing to compute texture statistics on regions below a stated signal-to-noise threshold,
-because a feature computed on noise still yields a number and still enters a model. The
-expression-matched null becomes an acquisition-matched null, requiring that any claimed
-association be tested against features drawn from images matched on scanner, protocol and
-slice thickness rather than against an unmatched pool, since an unmatched background was
-precisely what inflated the apparent specificity here. Neither is a novel methodological
-idea. The contribution is the form: a requirement that halts the run cannot be
-inadvertently omitted by the next group, whichever agent or person operates the pipeline.
+**A circulating measurement, not a tissue one.** The endocrine premise requires the
+concentration a tumor is exposed to, which is a plasma quantity. For the recovered ligand
+that measurement has never been made in a heart-failure cohort against controls (Section
+4.4), and no reanalysis of expression data substitutes for it: converting tissue mRNA into a
+circulating contribution requires translation efficiency, secretion rate, clearance and
+volume of distribution, none of which this design observes. A single targeted immunoassay
+in banked plasma from an existing heart-failure cohort would settle whether the ligand arm
+of the hypothesis has a basis, and would cost less than any of the analyses reported here.
 
-**Multi-agent execution and where it needs evidence.** Section 4.8 reports what the split
-across 23 sub-agents did in this study and states plainly what it did not test. That gap
-is itself a radiology-relevant research direction, and a well-posed one: an imaging task
-with a known ground truth is a better testbed for comparing a single-agent pipeline, a
-scripted workflow and an isolated multi-agent fleet than a screen whose answer is a
-negative. Segmentation against expert contours, or detection against adjudicated labels,
-would let the comparison this paper could not run be run properly, measuring not only
-accuracy but the rate at which each configuration commits and then propagates a
-methodological error. The delegation record released here (`delegation_record.csv`) is
-offered as a starting schema for reporting that: tracks, waves, terminal status, duration
-and token cost, including the four tracks that did not complete.
+**A continuous exposure, not a diagnostic label.** Cases here were failing versus
+non-failing explanted ventricles, which collapses a continuum onto a binary. If a ligand's
+release scales with fibrotic burden or wall stress rather than with a diagnostic category,
+that contrast is the wrong estimator and attenuates a real signal toward the null. The
+natriuretic peptides make this concrete: NPPA and NPPB are clinically graded biomarkers
+whose plasma concentration tracks filling pressure across orders of magnitude, so scoring
+them as present-or-absent in tissue discards the axis on which they carry information.
+Cardiac MRI indices of fibrosis, NYHA class, ejection fraction and natriuretic-peptide
+concentration are all recorded routinely in cardiology cohorts and any of them would serve
+as a graded exposure.
 
-**Integration with imaging data.** The concrete extension of this screen is to replace its
-weakest measurements with imaging ones. Heart-failure status was a binary contrast between
-failing and non-failing explanted ventricles, which discards the severity, chamber
-geometry and fibrotic burden that cardiac MRI and echocardiography quantify routinely in
-living patients; late gadolinium enhancement and native T1 mapping index myocardial
-fibrosis directly, and strain imaging indexes dysfunction before an ejection-fraction
-threshold is crossed. If a ligand's release scales with fibrotic burden rather than with a
-diagnostic label, an imaging-derived severity score is the better exposure variable. On the
-receiver side, the analysis used bulk expression that mixes malignant, stromal and immune
-compartments, and TCGA carries diagnostic whole-slide images for most of the tumors scored
-here; a receptor enriched in bulk tissue but confined to stroma would not support a
-tumor-cell-intrinsic claim, and digital pathology tests that directly rather than inferring
-it. Both extensions require the imaging module described above, and both would inherit its
-guardrails. We have not built it, and this section is a specification rather than a result.
+**Receiver-cell identity, not bulk tissue.** The receptor arm used bulk expression that
+mixes malignant, stromal, immune and endothelial compartments. A receptor enriched in bulk
+tissue but confined to stroma does not support a tumor-cell-intrinsic claim. Single-cell or
+spatial data on the receiver side would test directly what this design can only infer, and
+TCGA carries diagnostic whole-slide images for most of the tumors scored here.
 
-**Which heart failure?** This screen treated heart failure as one exposure, and every
-limitation of that choice is a question a subsequent study can answer with existing
-cohort designs rather than new biology.
+Until those three exist, a compatibility score of this kind is a hypothesis-generating
+filter and not a clinical decision aid, and it should be described as one. Its immediate
+clinical value is negative and still useful: it says which axes are not worth taking into a
+validation cohort. Screens are cheap to run and cheap to believe, and in a translational
+chain the alternative to an early withdrawal is expensive, since a target that survives to
+an animal model or a trial before its base rate is computed consumes resources that a
+pre-specified criterion would have saved.
 
-**Severity is not binary, and the design assumed it was.** Cases were failing versus
-non-failing explanted ventricles, which collapses a continuum onto a label. If a ligand's
-release scales with fibrotic burden or wall stress rather than with a diagnostic
-category, the case-control contrast used here is the wrong estimator and would attenuate
-a real signal toward the null. The natriuretic peptides make the point concrete: NPPA
-and NPPB are clinically graded biomarkers whose plasma concentration tracks filling
-pressure across orders of magnitude, so a design that scores them as present-or-absent in
-tissue discards precisely the axis on which they carry information. The imaging-derived
-severity indices in the preceding subsection are one route to a continuous exposure;
-NYHA class, natriuretic-peptide concentration, and ejection fraction are others already
-recorded in most cardiology cohorts.
+### 6.2 Heart failure as a heterogeneous exposure
 
-**Etiology was tested and did not change the conclusion, but only for three etiologies.**
-Stratifying the 42 upregulated secreted ligands by cardiomyopathy subtype found 12 with
-etiology-specific induction in at least one cohort, none of which is cardiac-enriched at
-rank 1, and two of which clear the abundance bar set by NPPA and NPPB — so pooling did
-not conceal a candidate axis (Section 3.1). That test covers dilated, ischemic, and
-hypertrophic cardiomyopathy, with strata of 37, 13, and 28 patients, and a null in the
-two small strata is low power rather than demonstrated absence. It says nothing about
-the etiologies absent from these cohorts entirely. Pressure overload from aortic
-stenosis, volume overload from mitral regurgitation, and inflammatory myocarditis impose
-mechanically and immunologically distinct stresses on the ventricle, and there is no
-reason to assume their secreted programs are the union of what dilated and ischemic
-disease produce. Myocarditis in particular is an inflammatory state, and the one
-mediator this screen was structurally unable to recover — SerpinA3, an acute-phase
-protease inhibitor (Section 3.12) — is exactly the class of molecule an inflammatory
-etiology would be expected to elevate.
+This screen treated heart failure as one exposure. Each limitation of that choice is
+answerable with existing cohort designs, and each is a stratification the compatibility
+score accepts without modification, because the scoring module consumes a feature matrix
+and a vector of source-derived weights and is indifferent to how the source group was
+defined. The guardrails travel with it: a severity-stratified or etiology-stratified rerun
+inherits the expression floor and the matched null whether or not whoever runs it has read
+this paper.
 
-**Stage is confounded with tissue availability.** Explanted ventricles come from
-transplant recipients, so every case here is end-stage disease under maximal therapy.
-Early-stage heart failure, which is where the epidemiological association with cancer
-incidence would have to originate if the relationship is causal, is not represented in
-any tissue cohort and cannot be, since those patients are not undergoing
-cardiectomy. Endomyocardial biopsy series and circulating markers are the only accessible
-windows onto that stage, and both trade tissue depth for accessibility. This is a
-structural limit on the entire tissue-transcriptomic approach to this question, not a
-gap in the present study.
+**Etiology.** Stratifying the 42 upregulated secreted ligands by cardiomyopathy subtype
+found 12 with etiology-specific induction in at least one cohort, none cardiac-enriched at
+rank 1, and two clearing the abundance bar set by NPPA and NPPB, so pooling did not conceal
+a candidate axis (Section 3.1). That test covers dilated, ischemic and hypertrophic
+cardiomyopathy with strata of 37, 13 and 28 patients, and a null in the two small strata is
+low power rather than demonstrated absence. Pressure overload from aortic stenosis, volume
+overload from mitral regurgitation and inflammatory myocarditis impose mechanically and
+immunologically distinct stresses, and there is no reason to assume their secreted programs
+are the union of what dilated and ischemic disease produce. Myocarditis is the pointed
+case: the one mediator this screen was structurally unable to recover, SerpinA3, an
+acute-phase protease inhibitor (Section 3.13), is exactly the class of molecule an
+inflammatory etiology would elevate.
 
-**Treatment is an unmodeled exposure that acts on the same genes.** Patients supplying
-these ventricles were on guideline-directed therapy, and the major drug classes
-demonstrably alter the transcripts this screen scores: neurohormonal blockade changes
-natriuretic-peptide signaling, and mechanical unloading by a left ventricular assist
-device produces partial reverse remodeling with measurable transcriptional recovery.
-What is measured here is therefore the treated failing ventricle, not the failing
-ventricle. Whether the secreted program of interest is a property of the disease or a
-property of the disease under therapy is an answerable question — paired pre- and
-post-LVAD samples exist — and it should be answered before a circulating-ligand
+**Disease stage.** Explanted ventricles come from transplant recipients, so every case is
+end-stage disease under maximal therapy. Early-stage heart failure, where the
+epidemiological association with cancer incidence would have to originate if the
+relationship is causal, is not represented in any tissue cohort and cannot be, since those
+patients are not undergoing cardiectomy. Endomyocardial biopsy series and circulating
+markers are the only accessible windows onto that stage. This is a structural limit on the
+tissue-transcriptomic approach to this question rather than a gap in the present study.
+
+**Pharmacological treatment.** Patients supplying these ventricles were on
+guideline-directed therapy, and the major drug classes alter the transcripts this screen
+scores: neurohormonal blockade changes natriuretic-peptide signaling, and mechanical
+unloading by a left ventricular assist device produces partial reverse remodeling with
+measurable transcriptional recovery. What is measured here is the treated failing
+ventricle, not the failing ventricle. Whether the secreted program of interest is a
+property of the disease or of the disease under therapy is answerable, since paired pre-
+and post-LVAD samples exist, and it should be answered before a circulating-ligand
 hypothesis is tested prospectively in a treated population.
 
-Each of these is a stratification the compatibility score can accept without
-modification, because the scoring module consumes a feature matrix and a vector of
-source-derived weights and is indifferent to how the source group was defined. The
-guardrails travel with it: a severity-stratified or etiology-stratified rerun inherits
-the expression floor and the matched null whether or not whoever runs it has read this
-paper.
+### 6.3 Evaluation of delegated analysis
 
-**What this implies for how medicine gets done.** The work these directions describe shares
-a shape with most translational questions now: the hypothesis is cheap to state, the data
-already exist across several public resources, and the difficulty is integration under
-methodological choices that determine the answer. That work is increasingly delegated to
-agents. This study argues that delegating it safely depends less on the capability of the
-agent than on where the methodological knowledge is written down. The pipeline nominated
-seven candidate axes and then destroyed them, at no cost beyond compute, because a
-criterion fixed in advance was enforced by code rather than by an analyst's memory. In a
-translational chain the alternative is expensive: a target that survives to a validation
-cohort, an animal model or a trial before the base rate that should have withdrawn it is
-computed. Screens of this kind are cheap to run and cheap to believe, and what makes them
-worth running is not the model performing the analysis but the encoded refusal to score
-what should not be scored.
+Section 4.7 reports what the split across 23 sub-agents did in this study and states what
+it did not test. That gap is a well-posed research direction: a task with a known ground
+truth is a better testbed for comparing a single-agent pipeline, a scripted workflow and an
+isolated multi-agent fleet than a screen whose answer is a negative, because it permits
+measuring not only accuracy but the rate at which each configuration commits and then
+propagates a methodological error. The delegation record released here
+(`delegation_record.csv`) is offered as a starting schema for reporting that: tracks, waves,
+terminal status, duration and token cost, including the four tracks that did not complete.
 
 ## 7. Data and code availability
 
 All data are public: GSE116250 and GSE141910 (Gene Expression Omnibus){^53,54} TCGA PanCanAtlas expression and the Thorsson immune landscape, GTEx v8 median tissue expression, Human Protein Atlas protein-class annotations, CellChatDB, and DepMap 24Q4. Accession numbers, endpoints and retrieval dates are given in Section 2.1.
 
-Analysis code is available at https://github.com/nav92061/hf-crosstalk and is released as six skills, each comprising a documentation file plus a Python module: geo-bulk-de (GEO retrieval and moderated-t differential expression), hpa-secretome (protein-class annotation and secretion tiering), cellchat-lr (ligand–receptor parsing with receptor-complex expansion), tcga-pancan (memory-bounded streaming of the PanCanAtlas matrix), crosstalk-score (two-factor compatibility scoring with the floor, the matched-random null and the conjunction rule), and depmap-lineage (dependency screening with release resolution). The expression floor, the matched-random null and the conjunction rule are assertions that halt execution on violation rather than documented recommendations.
+Analysis code is available at https://github.com/nav92061/hf-crosstalk and is released as
+the six skills itemized in Table 1, each comprising a documentation file plus a Python
+module. The expression floor, the matched-random null and the conjunction rule are assertions that halt execution on violation rather than documented recommendations.
 
-The skills carry no dependency on the environment used here: no language-model call, no API key, no platform function. They can be driven by another agent framework, or by a plain Python script with no agent at all, and the guardrails hold in every case because they are assertions in the code rather than instructions in a prompt. Continuous integration fails the build if a platform call appears in any module. The repository additionally carries the result tables, figures, pre-specifications, control log, and build_manuscript.py, which regenerates the typeset manuscript from source.
+The skills carry no dependency on the environment used here: no language-model call, no API key, no platform function. They can be driven by another agent framework, or by a plain Python script with no agent at all, and the guardrails hold in every case because they are assertions in the code rather than instructions in a prompt. Continuous integration fails the build if a platform call appears in any module. The repository additionally carries the result tables, figures, pre-specifications, control log, and build_manuscript.py, which regenerates the typeset manuscript from source. Every figure is regenerated from the released tables by figures/build_figures.py, which writes vector PDF with embedded fonts alongside raster PNG and requires neither network access nor a language-model call.
 
 What is not released is the agent layer itself. The orchestrator and the 23 sub-agents were runtime configurations of a general-purpose agent on a hosted platform rather than software we wrote, and they cannot be packaged. What is reproducible is the delegation record, comprising the tracks, their waves, their status, duration and token cost, in delegation_record.csv, together with the skills the agents called, which is where the guardrails live. A reader wanting to reproduce the analysis runs the skills directly; a reader wanting to reproduce the system would need to reconstruct the delegation from that record on whatever agent framework they use. We state this explicitly because a paper about agents that ships no agent should say so.
 
-Sixty-eight numbered result tables, 8 figures, the pre-specifications for all three analysis phases, and a log of 197 controls and verdicts, including those that failed, accompany the code.
+Sixty-eight numbered result tables, 8 figures, the pre-specifications for all three analysis phases, and a log of 264 controls and verdicts, including those that failed, accompany the code.
 
 ## Author contributions
 
@@ -729,8 +707,7 @@ editing.
 
 The analysis was executed by a hierarchical multi-agent system (one orchestrating agent
 and 23 sub-agent instances dispatched across five waves) operating on six deterministic,
-model-free analytical modules, under human design and audit (Sections 2.11, 4.6 and
-4.8). N.A. specified the guardrails, audited every reported quantity against its source
+model-free analytical modules, under human design and audit (Sections 2.11 and 4.7). N.A. specified the guardrails, audited every reported quantity against its source
 table, and is responsible for the final content. All authors reviewed the completed
 manuscript and take responsibility for the integrity of the analysis, including the
 portion executed by the agent pipeline described in Section 2.11.
@@ -749,10 +726,6 @@ The authors declare no conflicts of interest. No employment, consultancy, stock 
 
 This study exclusively re-analyzed de-identified, publicly available human genomic, transcriptomic, and proteomic datasets (Gene Expression Omnibus, TCGA PanCanAtlas, CPTAC/Proteomic Data Commons, GTEx, DepMap, CELLxGENE Census; Section 2.1). No new human subjects data were collected and no additional ethics approval was sought beyond that obtained by the original data-generating studies, consistent with their terms of use.
 
-## Reporting guidelines
-
-As a computational reanalysis rather than a clinical or animal study, no single existing reporting checklist (e.g., STROBE, ARRIVE) applies in full. The manuscript instead follows, and reports adherence to, the pre-specification, multiplicity-correction, matched-null, and negative-control conventions detailed in Section 2.12 and cross-referenced at each point of use (Sections 2.5-2.8, 3.9). Pre-registration of thresholds within phases is stated explicitly wherever a criterion is applied.
-
 ## Acknowledgments
 
 The authors thank the patients and donor families whose tissue made the primary datasets
@@ -761,19 +734,19 @@ TCGA and the PanCanAtlas, GTEx, CPTAC and the Proteomic Data Commons, DepMap, th
 Protein Atlas, and the maintainers of CellChatDB. This work is entirely a reanalysis of
 their data.
 
-## Declaration of generative AI and AI-assisted technologies in the writing process
+## Declaration of generative AI and AI-assisted technologies in the manuscript preparation process
 
-During the preparation of this work the authors used Claude (Anthropic) both to execute
-the computational analysis and to draft the manuscript text. The distinction matters for
-this declaration. Use of AI to analyze data and draw insights is part of the research
-process and is described in full in Sections 2.11 and 4.8, including the delegation
-record, per-track costs and failure modes; it is a reported method of the study rather
-than a writing aid. Separately, and within the scope of this declaration, the same system
-was used to draft and revise manuscript text. Every numerical claim was verified against
-its source table, corrections were logged in `validation_summary.csv`, and no figure or
-image was generated or altered by AI: all figures are matplotlib renderings of the
-analysis outputs. The authors reviewed and edited the content and take full
-responsibility for the content of the published article.
+During the preparation of this work, the authors used Claude (Anthropic) for drafting and
+revising the manuscript text. The authors reviewed and edited the output as
+needed and take full responsibility for the content of the published article.
+
+The same system also executed the computational analysis. That use is part of the
+research process rather than of manuscript preparation, and it is therefore reported as
+a method of the study in Sections 2.11 and 4.8, which give the delegation record,
+per-track costs and failure modes. Every numerical claim in the manuscript was verified
+against its source table and every correction was logged in `validation_summary.csv`
+(Section 7). No figure or image was generated or altered by generative AI; all figures
+are renderings of the analysis outputs produced by the analysis code.
 
 ## References
 
@@ -793,7 +766,7 @@ responsibility for the content of the published article.
 
 8. Kwak S, Kwon S, Lee SY, et al. Differential risk of incident cancer in patients with heart failure: A nationwide population-based cohort study. J Cardiol 2021;77(3):231-238. doi:10.1016/j.jjcc.2020.07.026.
 
-9. van den Berg PF, Yousif LI, Koop Y, et al. Framingham risk score associates with incident cancer and heart failure. Eur J Prev Cardiol 2026;33(4):490-497. doi:10.1093/eurjpc/zwaf618.
+9. van den Berg PF, Yousif LI, Koop Y, et al. Framingham risk score associates with incident cancer and heart failure. Eur J Prev Cardiol 2026;33(4):490-497. doi:10.1093/eurjpc/zwaf618. Published online 27 September 2025.
 
 10. Jaiswal S, Natarajan P, Silver AJ, et al. Clonal Hematopoiesis and Risk of Atherosclerotic Cardiovascular Disease. N Engl J Med 2017;377(2):111-121. doi:10.1056/NEJMoa1701719.
 
@@ -887,4 +860,4 @@ responsibility for the content of the published article.
 
 55. Seuthe K, Picard FSR, Winkels H, Pfister R. Cancer Development and Progression in Patients with Heart Failure. Curr Heart Fail Rep 2024;21(6):515-529. doi:10.1007/s11897-024-00680-y. PMID: 39340596.
 
-56. Caller T, Weiss L, Sharon E, et al. Human heart-tumor interaction in ischemic / failing heart is mediated by cardiac mesenchymal stromal cells. Eur Heart J 2025. doi:10.1093/eurheartj/ehaf784.4672.
+56. Caller T, Weiss L, Sharon E, et al. Human heart-tumor interaction in ischemic / failing heart is mediated by cardiac mesenchymal stromal cells [abstract]. Eur Heart J 2025;46(Suppl 1):ehaf784.4672. doi:10.1093/eurheartj/ehaf784.4672.

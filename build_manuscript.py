@@ -106,6 +106,8 @@ def inline(t):
         s = m.group(1)
         if s.startswith("-"):          # scientific exponent, not a citation
             return "<super>\u2212%s</super>" % s[1:]
+        if s[0].isalpha():             # affiliation marker (letters), never a range
+            return "<super>%s</super>" % s
         if "," in s:
             # AMA: consecutive citations collapse to a range, others stay comma-listed
             ns = [int(x) for x in s.split(",")]
@@ -119,7 +121,7 @@ def inline(t):
                 i = j + 1
             s = ",".join(out)
         return "<super>%s</super>" % s.replace("-", "\u2013")
-    t = re.sub(r"\{\^(-?[\d,]+)\}", _sup, t)
+    t = re.sub(r"\{\^(-?[\d,]+|[a-z](?:,[a-z])*)\}", _sup, t)
     return t
 
 
