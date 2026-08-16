@@ -686,9 +686,10 @@ terminal status, duration and token cost, including the four tracks that did not
 
 All data are public: GSE116250 and GSE141910 (Gene Expression Omnibus){^53,54} TCGA PanCanAtlas expression and the Thorsson immune landscape, GTEx v8 median tissue expression, Human Protein Atlas protein-class annotations, CellChatDB, and DepMap 24Q4. Accession numbers, endpoints and retrieval dates are given in Section 2.1.
 
-Analysis code is available at https://github.com/nav92061/hf-crosstalk and is released as
-the six skills itemized in Table 1, each comprising a documentation file plus a Python
-module. The expression floor, the matched-random null and the conjunction rule are assertions that halt execution on violation rather than documented recommendations.
+Analysis code is available at https://github.com/nav92061/hf-crosstalk and is archived at
+Zenodo (doi:10.5281/zenodo.21968364), which resolves to the most recent release. It is
+released as the six skills itemized in Table 1, each comprising a documentation file plus a
+Python module. The expression floor, the matched-random null and the conjunction rule are assertions that halt execution on violation rather than documented recommendations.
 
 The skills carry no dependency on the environment used here: no language-model call, no API key, no platform function. They can be driven by another agent framework, or by a plain Python script with no agent at all, and the guardrails hold in every case because they are assertions in the code rather than instructions in a prompt. Continuous integration fails the build if a platform call appears in any module. The repository additionally carries the result tables, figures, pre-specifications, control log, and build_manuscript.py, which regenerates the typeset manuscript from source. Every figure is regenerated from the released tables by figures/build_figures.py, which writes vector PDF with embedded fonts alongside raster PNG and requires neither network access nor a language-model call.
 

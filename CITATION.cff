@@ -1,0 +1,43 @@
+cff-version: 1.2.0
+message: "If you use this software or its results, please cite the article below."
+title: "hf-crosstalk: reusable skills for organ-crosstalk ligand-receptor screens"
+type: software
+license: MIT
+repository-code: "https://github.com/nav92061/hf-crosstalk"
+doi: "10.5281/zenodo.21968364"
+authors:
+  - family-names: Avelar
+    given-names: Nicolas
+    orcid: "https://orcid.org/0009-0007-1875-2197"
+    affiliation: "North Oconee High School, Bogart, GA, USA; School of Computing, University of Georgia, Athens, GA, USA"
+  - family-names: Zhang
+    given-names: Ruidong
+    affiliation: "School of Computing, University of Georgia, Athens, GA, USA"
+  - family-names: Pan
+    given-names: Yi
+    affiliation: "School of Computing, University of Georgia, Athens, GA, USA"
+keywords:
+  - "Cardio-oncology"
+  - "heart failure"
+  - "ligand-receptor signaling"
+  - "multi-agent systems"
+  - "computational reproducibility"
+  - "pan-cancer transcriptomics"
+abstract: >-
+  Six deterministic, model-free analysis skills carrying their methodological
+  requirements as executable assertions, with the heart-failure ligand-receptor
+  screen reported in the accompanying article as the case study. Every figure
+  regenerates from the released tables with no network access and no
+  language-model call.
+preferred-citation:
+  type: article
+  title: "A multi-agent skill pipeline finds no tumor-selective heart-failure ligand–receptor axis across 30 tumor types under rank-based source criteria"
+  authors:
+    - family-names: Avelar
+      given-names: Nicolas
+    - family-names: Zhang
+      given-names: Ruidong
+    - family-names: Pan
+      given-names: Yi
+  journal: "Meta-Radiology"
+  year: 2026

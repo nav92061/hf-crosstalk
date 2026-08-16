@@ -1,5 +1,7 @@
 # hf-crosstalk
 
+[![DOI](https://zenodo.org/badge/1314401222.svg)](https://doi.org/10.5281/zenodo.21968364)
+
 **A multi-agent bioinformatics pipeline with executable methodological guardrails.** Six skills — each a
 documentation file an agent reads to decide whether the procedure fits its task, plus a
 Python module that executes it — applied to the question of whether the failing heart

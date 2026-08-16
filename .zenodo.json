@@ -1,0 +1,30 @@
+{
+  "title": "hf-crosstalk: reusable skills for organ-crosstalk ligand-receptor screens",
+  "upload_type": "software",
+  "license": "mit",
+  "access_right": "open",
+  "description": "Analysis code, result tables and pre-specifications for the heart-failure ligand-receptor screen. Six skills carry their methodological requirements as executable assertions that halt execution on violation. Includes 81 result tables, a log of 264 controls and verdicts, pre-specifications for all three analysis phases, and a figure builder that regenerates all eight figures from the released tables with no network access.",
+  "creators": [
+    {
+      "name": "Avelar, Nicolas",
+      "affiliation": "North Oconee High School; University of Georgia",
+      "orcid": "0009-0007-1875-2197"
+    },
+    {
+      "name": "Zhang, Ruidong",
+      "affiliation": "University of Georgia"
+    },
+    {
+      "name": "Pan, Yi",
+      "affiliation": "University of Georgia"
+    }
+  ],
+  "keywords": [
+    "Cardio-oncology",
+    "heart failure",
+    "ligand-receptor signaling",
+    "multi-agent systems",
+    "computational reproducibility",
+    "pan-cancer transcriptomics"
+  ]
+}
