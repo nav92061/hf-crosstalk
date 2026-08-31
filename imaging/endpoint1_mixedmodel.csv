@@ -1,0 +1,6 @@
+structure,n_pairs,n_patients,mm_mean_pct,mm_ci_lo,mm_ci_hi,patient_var
+heart,59,37,4.89,-0.71,10.48,300.3
+aorta,59,37,5.38,-0.26,11.01,303.4
+pulmonary_vein,57,35,6.23,4.64,7.81,2.4
+superior_vena_cava,57,35,3.14,2.82,3.46,0.0
+inferior_vena_cava,59,37,5.23,1.65,8.82,115.5

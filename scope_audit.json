@@ -1,0 +1,37 @@
+{
+  "question": "Does the manuscript match the Meta-Radiology special issue call and the journal's scope?",
+  "verdict": "YES on the call's central premise and on 10 of 10 named topics, with one honest mismatch: the call's framing anticipates agents that ENABLE new capability, and this paper reports what agents get WRONG. That is a difference in emphasis, not in scope, and the call explicitly names the challenges this paper addresses.",
+  "call_topics": {
+    "autonomous agents as a research paradigm": "CORE. Both arms executed by a hierarchical multi-agent system (23 sub-agents, 5 waves), with per-track cost and failure record (Sections 2.12, 4.8).",
+    "medical image segmentation": "CORE. TotalSegmentator 2.18.0 on 217 CT series; primary endpoint is the reproducibility of its output.",
+    "feature extraction": "YES. Volumetric features (volume, voxel count, mean intensity) for five thoracic structures; the paper measures their stability under reconstruction change.",
+    "abnormality detection": "NOT ADDRESSED. No detection or classification task. Stated as a scope limit rather than implied.",
+    "risk prediction": "NOT ADDRESSED. No prognostic model.",
+    "end-to-end research workflows": "CORE. Cohort construction, header audit, pair confirmation, segmentation, three endpoints, manuscript assembly, all delegated and logged.",
+    "bioinformatics data integration": "YES. TCGA primary-tumour RNA-seq joined to imaging at patient level; 100-receptor panel scored per patient.",
+    "clinical information integration": "YES. DICOM acquisition metadata, cohort staging context, vendor and protocol strata.",
+    "cross-modal / multi-omics fusion": "YES, and it is the arms' single point of contact: endpoint 2 correlates receptor expression with AI-derived structure volume, computed twice per patient.",
+    "disease mechanism understanding": "PARTIAL. The transcriptomic arm asks a mechanistic question and answers it negatively. The imaging arm makes no mechanistic claim.",
+    "precision medicine": "NOT CLAIMED. Explicitly disclaimed: cancer patients on staging CT cannot speak to heart failure.",
+    "model interpretability": "ADDRESSED (Section 4.9). Distinguishes interpretability of the network from interpretability of the pipeline around it, and argues the latter determines auditability.",
+    "system reliability": "ADDRESSED. Three quantitative measures: 4/217 failure rate, 0.63-4.96% reconstruction variation, and an association endpoint calibrated against a permutation null.",
+    "data privacy protection": "ADDRESSED (Section 4.9). Public de-identified data only; states what would be required for institutional data.",
+    "ethical standards": "ADDRESSED (Section 4.9). Pre-specified withdrawal criteria exercised three times; agent use declared as method, with named accountability."
+  },
+  "journal_fit": {
+    "modality": "CT, the journal's most published modality in the issue list.",
+    "register": "Title follows the journal's descriptive pattern; abstract is structured to the required 250 words.",
+    "article_type": "Full-length research article, matching the required section structure."
+  },
+  "residual_risks": [
+    "Imaging is 12-13% of body word count. Ordering is imaging-first throughout and Results opens with it, but a reviewer counting pages still finds the transcriptomic arm larger. Mitigated by cutting 3,277 words of it; not eliminable without removing the second demonstration the argument needs.",
+    "n=59 patients, one model, one archive. Bounded methods result, stated as such in Abstract, Limitations and Conclusions.",
+    "Two of three imaging endpoints are nulls. Defensible as pre-specified withdrawals, but the paper offers no positive imaging discovery.",
+    "The call anticipates agents enabling discovery; this paper reports agents failing and being caught. Framed as the reliability and ethics contribution the call also solicits."
+  ],
+  "not_claimed": [
+    "No abnormality detection, classification or risk-prediction task.",
+    "No claim that imaging validates the heart-failure hypothesis; the populations do not overlap.",
+    "No claim of agent superiority over a single-agent pipeline; that comparison was not run."
+  ]
+}

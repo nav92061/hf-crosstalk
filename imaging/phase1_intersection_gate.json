@@ -1,0 +1,105 @@
+{
+  "question": "Is Phase 1 worth starting? Decided on the contrast cross-tab and the primary-endpoint intersection n.",
+  "contrast_crosstab_74_within_patient_pairs": {
+    "contrast_x_contrast": 16,
+    "contrast_x_non": 2,
+    "contrast_x_unknown": 21,
+    "non_x_non": 0,
+    "non_x_unknown": 3,
+    "unknown_x_unknown": 20,
+    "unknown_x_contrast": 8,
+    "unknown_x_non": 2,
+    "note": "contrast resolved study-wide (all series in each study, not just the segmented one); recovery over series-level gained only 1 study"
+  },
+  "intersection_n": {
+    "A_strict_contrast_verified_concordant": {
+      "patients": 5,
+      "pairs": 7,
+      "MDE_d": 1.53,
+      "requires_within_patient_SD_below_pct": 6.5
+    },
+    "B_relaxed_unknown_pairs_assumed_concordant": {
+      "patients": 17,
+      "pairs": 24,
+      "MDE_d": 0.83,
+      "requires_within_patient_SD_below_pct": 12.1
+    },
+    "C_contrast_ignored": {
+      "patients": 31,
+      "pairs": 60,
+      "MDE_d": 0.61,
+      "requires_within_patient_SD_below_pct": 16.3
+    }
+  },
+  "confounding_base_rate": {
+    "acq_discordant_pairs_with_both_contrast_labels_known": 11,
+    "of_those_contrast_discordant": 4,
+    "rate_pct": 36,
+    "rate_95CI_pct": [
+      14,
+      65
+    ],
+    "unknown_unknown_pairs_added_by_option_B": 17,
+    "expected_silently_contrast_discordant": 6.2,
+    "expected_95CI": [
+      2.3,
+      11.1
+    ]
+  },
+  "verdict": "DO NOT START PHASE 1 AS PRE-SPECIFIED. The primary endpoint requires acquisition discordance, <=90 day spacing, AND verified contrast concordance simultaneously; only 5 patients (7 pairs) satisfy all three, giving MDE d=1.53 -- roughly 15% of mean volume, above the 10% kill threshold the criterion is written against. The endpoint cannot reach its own threshold. Option B (n=17) is only reachable by assuming 17 unknown/unknown pairs share a protocol, and among pairs where contrast IS verifiable 36% (95% CI 14-65%) are discordant, implying ~6 silently confounded pairs in that set. Contrast is not a nuisance here: it is a large-effect confounder for chamber segmentation.",
+  "options_for_the_arm": [
+    "Reframe the endpoint away from absolute volume to a contrast-insensitive measure and re-derive the intersection.",
+    "Report the guardrail firing on the intersection count as the arm's result -- the safeguard refusing to run is the demonstrable instance.",
+    "Widen the cohort beyond the 4 TCGA collections to recover contrast-concordant repeat imaging."
+  ],
+  "rescue_design": {
+    "name": "within-study reconstruction pairs (same acquisition, different reconstruction)",
+    "confirmed_by": "identical FrameOfReferenceUID plus identical AcquisitionTime or AcquisitionNumber; 234/234 tags fetched, 0 errors",
+    "pairs_confirmed": 193,
+    "patients": 59,
+    "kernel_arm": {
+      "patients": 58,
+      "pairs": 151,
+      "MDE_d": 0.45
+    },
+    "thickness_arm": {
+      "patients": 28,
+      "pairs": 108,
+      "MDE_d": 0.65
+    },
+    "why_it_works": "Contrast, cardiac phase, anatomy, patient position and time are identical by construction because both series are reconstructions of the SAME irradiation event. The contrast confound that reduced the cross-study endpoint to n=5 cannot arise. No BSA normalization needed.",
+    "limitation": "Isolates RECONSTRUCTION sensitivity, not full acquisition sensitivity - it cannot speak to scanner-to-scanner or protocol-to-protocol variation, which the cross-study design would have covered. This must be stated as the scope of the claim.",
+    "download_sizing": {
+      "distinct_series_all_confirmed": 217,
+      "total_GiB": 20.2,
+      "kernel_arm": {
+        "pairs": 151,
+        "series": 210,
+        "GiB": 19.0
+      },
+      "thickness_arm": {
+        "pairs": 108,
+        "series": 121,
+        "GiB": 12.9
+      },
+      "arm_overlap_series": 114,
+      "median_series_MiB": 70.5,
+      "note": "Series are shared across pairs; distinct-series count is a set union, not pairs*2 or pairs/2.",
+      "staging": "Mandatory. 2.8 GiB free-disk ceiling vs 20.2 GiB total -> per-series download/segment/discard, peak ~200 MiB, resumable."
+    }
+  },
+  "expression_matching": {
+    "extra_patients_available_if_dropped": 40,
+    "projected_added_to_strict_intersection": 2.3,
+    "verdict": "Dropping expression-matching does not rescue the cross-study endpoint; the binding constraint is the contrast field, not cohort size. Not recommended for that purpose alone."
+  },
+  "revised_verdict": "Phase 1 IS worth starting, but on the within-study reconstruction design (n=58 kernel / n=28 thickness), not the pre-specified cross-study paired endpoint (n=5). The cross-study endpoint is reported as halted by the intersection guardrail.",
+  "artifact_corrections": [
+    {
+      "artifact": "IMAGING_ARM_REMAINING.md v1",
+      "defect": "download estimate stated as '~118 series', derived by halving the 234-series pull; series are shared across pairs so halving is invalid",
+      "scope": "step-3 data-transfer sizing only; design, n, and MDE unaffected",
+      "fix": "counted set union of ua/ub over the 193 confirmed pairs = 217 distinct series, 20.2 GiB; staged transfer now stated as mandatory"
+    }
+  ]
+}

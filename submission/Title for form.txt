@@ -1,0 +1,1 @@
+Reconstruction sensitivity of automated cardiac and vascular volumetry on routine chest CT: a same-acquisition paired study with executable guardrails

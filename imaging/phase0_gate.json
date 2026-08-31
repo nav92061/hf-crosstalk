@@ -1,0 +1,164 @@
+{
+  "phase": "Phase 0 header audit",
+  "method": {
+    "route": "TCIA getSOPInstanceUIDs + getSingleImage, one middle slice per series; full DICOM header read with stop_before_pixels. No image volume was downloaded.",
+    "bytes_per_series_approx": 528332,
+    "total_series_probed": 573,
+    "fetch_errors": 0
+  },
+  "cohort": {
+    "patients_expression_matched_definite_fov": 83,
+    "series_probed": 573,
+    "patients_with_segmentable_series": 81,
+    "dropped_patients": [
+      "TCGA-38-4625",
+      "TCGA-38-4628"
+    ],
+    "dropped_reason": "only 8mm-thickness axial series with <40 slices plus localizers; too coarse for cardiac chamber segmentation",
+    "series_exclusions": {
+      "localizer_or_scout": 145,
+      "secondary_capture": 61,
+      "under_40_slices": 212,
+      "no_slice_thickness": 6,
+      "seg_usable_series": 304
+    }
+  },
+  "gate_1_vendor_strata": {
+    "rule": ">=2 vendor strata with n>=15 patients each",
+    "counts": {
+      "GE": 55,
+      "SIEMENS": 23,
+      "PHILIPS": 3
+    },
+    "strata_meeting_15": [
+      "GE",
+      "SIEMENS"
+    ],
+    "verdict": "PASS",
+    "kill_rule_one_vendor_70_of_83": {
+      "largest_vendor_n": 55,
+      "largest_vendor_pct": 67.9,
+      "tripped": false
+    }
+  },
+  "gate_2_continuous_spread": {
+    "rule": "meaningful spread on >=1 continuous acquisition parameter",
+    "slice_thickness_mm": {
+      "n_unique": 8,
+      "min": 0.625,
+      "median": 2.5,
+      "max": 5.0,
+      "fold_range": 8.0
+    },
+    "tube_current_ma": {
+      "n_unique": 64,
+      "min": 40.0,
+      "median": 253.0,
+      "max": 713.0
+    },
+    "pixel_spacing_mm": {
+      "n_unique": 55,
+      "min": 0.429688,
+      "max": 1.367188
+    },
+    "kvp": {
+      "values": {
+        "120": 49,
+        "140": 18,
+        "130": 14
+      }
+    },
+    "verdict": "PASS on slice thickness (8 levels, 0.625-5.0mm, 8x), tube current (64 levels) and in-plane spacing (55 levels)"
+  },
+  "gate_3_confounding": {
+    "vendor_x_thickness": {
+      "chi2_p": 0.001,
+      "cramers_v": 0.412,
+      "note": "associated but not collinear: thickness varies within both vendors (GE 0.625-5.0, SIEMENS 1.0-5.0)"
+    },
+    "contrast_field": {
+      "ContrastBolusAgent_populated": 21,
+      "of": 81,
+      "resolved_by_adding_description_keywords": {
+        "unknown": 39,
+        "contrast": 38,
+        "non": 4
+      },
+      "verdict": "ContrastBolusAgent is populated in only 21/81 primary series and disagrees with the series description in 17 more. Contrast must be modelled as a 3-level factor including 'unknown', not a binary.",
+      "pct": 25.9
+    },
+    "kvp_vendor": {
+      "crosstab": {
+        "GE": {
+          "120": 38,
+          "140": 17
+        },
+        "SIEMENS": {
+          "120": 9,
+          "130": 14
+        },
+        "PHILIPS": {
+          "120": 2,
+          "140": 1
+        }
+      },
+      "design_matrix_rank": "5 of 5 (full)",
+      "max_VIF": 2.26,
+      "verdict": "kVp is ESTIMABLE: GE spans 120/140 and SIEMENS spans 120/130, so within-vendor contrasts exist. Corrected from an earlier draft that claimed non-identifiability. Confounding is partial: 130 kVp is SIEMENS-only and 140 kVp never SIEMENS, so report within-vendor contrasts with per-cell n rather than a pooled coefficient.",
+      "supersedes": "earlier field 'kvp_nested_in_vendor' claiming the model was not identifiable"
+    }
+  },
+  "gate_4_test_retest": {
+    "rule": "Phase 3 was conditional on repeat scans existing",
+    "patients_with_2plus_usable_studies": 35,
+    "scanner_model_discordant": 31,
+    "vendor_discordant": 7,
+    "slice_thickness_discordant": 27,
+    "total_within_patient_study_pairs": 52,
+    "median_span_days": 46.0,
+    "verdict": "FAR EXCEEDS the plan's 5-10 pair expectation"
+  },
+  "overall_verdict": "PROCEED to Phase 1. Both gate conditions met. The design should be restructured around the within-patient paired comparison (n=27-31 discordant patients) as PRIMARY rather than the between-patient regression, on power and confounding grounds.",
+  "header_coverage_pct_81_primary_series": {
+    "Manufacturer": 100.0,
+    "ManufacturerModelName": 100.0,
+    "KVP": 100.0,
+    "XRayTubeCurrent": 100.0,
+    "SliceThickness": 100.0,
+    "PixelSpacing": 100.0,
+    "ConvolutionKernel": 100.0,
+    "SoftwareVersions": 100.0,
+    "ContrastBolusAgent": 25.9
+  },
+  "header_coverage_pct_573_probed_series": {
+    "Manufacturer": 100.0,
+    "ManufacturerModelName": 100.0,
+    "KVP": 99.0,
+    "XRayTubeCurrent": 92.0,
+    "SliceThickness": 99.0,
+    "PixelSpacing": 99.0,
+    "ConvolutionKernel": 95.8,
+    "SoftwareVersions": 94.6,
+    "ContrastBolusAgent": 16.8
+  },
+  "artifact_corrections": [
+    {
+      "artifact": "dicom_header_audit.csv v1",
+      "defect": "built with per-column groupby().first(), which skips NaN independently per column; for 7 patients whose primary series lacks ContrastBolusAgent it back-filled the value from a different series of the same patient, showing 28 populated where the primary series carry 21",
+      "scope": "ContrastBolusAgent only; vendor, kVp, tube current, thickness, spacing, kernel, software version and series UID identical under whole-row selection (0 of 81 differing)",
+      "fix": "regenerated by whole-row selection; 21/81 confirmed"
+    },
+    {
+      "artifact": "PHASE0_GATE.md v1 + phase0_gate.json v1",
+      "defect": "header-coverage table captioned 'of 81 primary series' but carried the 573-series percentages (99/96/92%)",
+      "scope": "presentation only; gate verdicts unchanged",
+      "fix": "both populations now reported separately; all fields are 100% in the 81 analysed patients"
+    },
+    {
+      "artifact": "PHASE0_GATE.md v1-v3, phase0_gate.json v1-v2",
+      "defect": "claimed kVp was 'not identifiable' / nested in vendor and must be dropped as a free term",
+      "scope": "design recommendation for the secondary between-patient model; primary paired endpoint unaffected",
+      "fix": "verified full rank (5/5), max VIF 2.26; kVp retained with within-vendor contrasts reported and per-cell n stated"
+    }
+  ]
+}

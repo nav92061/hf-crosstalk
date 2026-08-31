@@ -1,0 +1,75 @@
+patient,days,c_a,c_b,th_a,th_b,mod_a,mod_b,ven_a,ven_b,acq_disc,cc,known
+TCGA-34-5231,0,unknown,contrast,1.25,5.0,LightSpeed16,LightSpeed Ultra,GE,GE,True,False,False
+TCGA-34-5234,0,unknown,unknown,1.25,3.75,LightSpeed16,Discovery STE,GE,GE,True,True,False
+TCGA-34-5236,0,contrast,unknown,3.75,5.0,Discovery ST,LightSpeed VCT,GE,GE,True,False,False
+TCGA-34-5236,0,contrast,unknown,3.75,1.25,Discovery ST,LightSpeed16,GE,GE,True,False,False
+TCGA-34-5236,0,unknown,unknown,5.0,1.25,LightSpeed VCT,LightSpeed16,GE,GE,True,True,False
+TCGA-34-5239,0,non,contrast,5.0,2.5,LightSpeed VCT,Discovery STE,GE,GE,True,False,True
+TCGA-34-5240,0,unknown,contrast,5.0,2.5,LightSpeed Ultra,Discovery STE,GE,GE,True,False,False
+TCGA-34-7107,0,contrast,non,5.0,5.0,LightSpeed Pro 16,LightSpeed Ultra,GE,GE,True,False,True
+TCGA-34-7107,0,contrast,contrast,5.0,3.75,LightSpeed Pro 16,Discovery STE,GE,GE,True,True,True
+TCGA-34-7107,0,non,contrast,5.0,3.75,LightSpeed Ultra,Discovery STE,GE,GE,True,False,True
+TCGA-34-A5IX,0,contrast,unknown,1.25,2.5,LightSpeed Pro 16,LightSpeed Pro 16,GE,GE,True,False,False
+TCGA-34-A5IX,0,contrast,unknown,1.25,3.75,LightSpeed Pro 16,Discovery ST,GE,GE,True,False,False
+TCGA-34-A5IX,0,contrast,non,1.25,1.25,LightSpeed Pro 16,LightSpeed16,GE,GE,True,False,True
+TCGA-34-A5IX,0,unknown,unknown,2.5,3.75,LightSpeed Pro 16,Discovery ST,GE,GE,True,True,False
+TCGA-34-A5IX,0,unknown,non,2.5,1.25,LightSpeed Pro 16,LightSpeed16,GE,GE,True,False,False
+TCGA-34-A5IX,0,unknown,non,3.75,1.25,Discovery ST,LightSpeed16,GE,GE,True,False,False
+TCGA-38-4626,0,contrast,contrast,5.0,5.0,Sensation 16,Sensation 16,SIEMENS,SIEMENS,False,True,True
+TCGA-38-4626,0,contrast,unknown,5.0,5.0,Sensation 16,SOMATOM PLUS 4,SIEMENS,SIEMENS,True,False,False
+TCGA-38-4626,0,contrast,unknown,5.0,5.0,Sensation 16,SOMATOM PLUS 4,SIEMENS,SIEMENS,True,False,False
+TCGA-38-4629,0,contrast,contrast,5.0,5.0,Sensation 16,Sensation 16,SIEMENS,SIEMENS,False,True,True
+TCGA-38-4629,0,contrast,contrast,5.0,5.0,Sensation 16,Sensation 16,SIEMENS,SIEMENS,False,True,True
+TCGA-38-4629,0,contrast,contrast,5.0,5.0,Sensation 16,Sensation 16,SIEMENS,SIEMENS,False,True,True
+TCGA-38-6178,0,contrast,unknown,5.0,5.0,Sensation 64,Emotion,SIEMENS,SIEMENS,True,False,False
+TCGA-38-6178,0,contrast,contrast,5.0,1.25,Sensation 64,LightSpeed16,SIEMENS,GE,True,True,True
+TCGA-38-6178,0,contrast,unknown,5.0,5.0,Sensation 64,LightSpeed16,SIEMENS,GE,True,False,False
+TCGA-38-6178,0,contrast,unknown,5.0,5.0,Sensation 64,Biograph 40,SIEMENS,SIEMENS,True,False,False
+TCGA-38-6178,0,unknown,contrast,5.0,1.25,Emotion,LightSpeed16,SIEMENS,GE,True,False,False
+TCGA-38-6178,0,unknown,unknown,5.0,5.0,Emotion,LightSpeed16,SIEMENS,GE,True,True,False
+TCGA-38-6178,0,unknown,unknown,5.0,5.0,Emotion,Biograph 40,SIEMENS,SIEMENS,True,True,False
+TCGA-38-6178,0,contrast,unknown,1.25,5.0,LightSpeed16,LightSpeed16,GE,GE,True,False,False
+TCGA-38-6178,0,contrast,unknown,1.25,5.0,LightSpeed16,Biograph 40,GE,SIEMENS,True,False,False
+TCGA-38-6178,0,unknown,unknown,5.0,5.0,LightSpeed16,Biograph 40,GE,SIEMENS,True,True,False
+TCGA-50-5066,0,unknown,contrast,5.0,3.75,HiSpeed CT/i,Discovery STE,GE,GE,True,False,False
+TCGA-50-5072,0,unknown,contrast,0.625,2.5,LightSpeed16,Discovery STE,GE,GE,True,False,False
+TCGA-50-5072,0,unknown,contrast,0.625,2.5,LightSpeed16,Discovery STE,GE,GE,True,False,False
+TCGA-50-5072,0,contrast,contrast,2.5,2.5,Discovery STE,Discovery STE,GE,GE,False,True,True
+TCGA-50-6592,0,contrast,unknown,5.0,5.0,LightSpeed QX/i,Emotion Duo,GE,SIEMENS,True,False,False
+TCGA-50-6592,0,contrast,unknown,5.0,1.25,LightSpeed QX/i,LightSpeed16,GE,GE,True,False,False
+TCGA-50-6592,0,unknown,unknown,5.0,1.25,Emotion Duo,LightSpeed16,SIEMENS,GE,True,True,False
+TCGA-50-6594,0,contrast,contrast,5.0,2.5,LightSpeed Ultra,Discovery STE,GE,GE,True,True,True
+TCGA-50-6595,0,contrast,contrast,1.25,3.75,LightSpeed VCT,Discovery STE,GE,GE,True,True,True
+TCGA-50-6673,0,unknown,unknown,5.0,5.0,HiSpeed CT/i,HiSpeed CT/i,GE,GE,False,True,False
+TCGA-50-6673,0,unknown,unknown,5.0,5.0,HiSpeed CT/i,HiSpeed CT/i,GE,GE,False,True,False
+TCGA-50-6673,0,unknown,unknown,5.0,5.0,HiSpeed CT/i,HiSpeed CT/i,GE,GE,False,True,False
+TCGA-50-8459,0,unknown,unknown,1.25,3.75,LightSpeed VCT,Discovery STE,GE,GE,True,True,False
+TCGA-50-8460,0,non,unknown,1.25,2.5,Discovery STE,LightSpeed Pro 16,GE,GE,True,False,False
+TCGA-50-8460,0,non,unknown,1.25,1.25,Discovery STE,Discovery STE,GE,GE,False,False,False
+TCGA-50-8460,0,non,unknown,1.25,1.25,Discovery STE,LightSpeed16,GE,GE,True,False,False
+TCGA-50-8460,0,unknown,unknown,2.5,1.25,LightSpeed Pro 16,Discovery STE,GE,GE,True,True,False
+TCGA-50-8460,0,unknown,unknown,2.5,1.25,LightSpeed Pro 16,LightSpeed16,GE,GE,True,True,False
+TCGA-50-8460,0,unknown,unknown,1.25,1.25,Discovery STE,LightSpeed16,GE,GE,True,True,False
+TCGA-51-4079,0,unknown,unknown,4.0,5.0,Biograph 6,Sensation 40,SIEMENS,SIEMENS,True,True,False
+TCGA-51-4080,0,unknown,unknown,3.0,5.0,Emotion 6 (2007),Emotion Duo,SIEMENS,SIEMENS,True,True,False
+TCGA-51-6867,0,unknown,contrast,5.0,5.0,Emotion,Sensation 16,SIEMENS,SIEMENS,True,False,False
+TCGA-51-6867,0,unknown,unknown,5.0,5.0,Emotion,Sensation 16,SIEMENS,SIEMENS,True,True,False
+TCGA-51-6867,0,contrast,unknown,5.0,5.0,Sensation 16,Sensation 16,SIEMENS,SIEMENS,False,False,False
+TCGA-60-2695,0,contrast,unknown,5.0,3.75,Definition AS+,Discovery ST,SIEMENS,GE,True,False,False
+TCGA-60-2696,0,contrast,unknown,5.0,3.75,LightSpeed Plus,Discovery ST,GE,GE,True,False,False
+TCGA-60-2715,0,contrast,unknown,2.5,3.75,LightSpeed VCT,Discovery ST,GE,GE,True,False,False
+TCGA-60-2721,0,unknown,unknown,3.75,5.0,Discovery ST,LightSpeed QX/i,GE,GE,True,True,False
+TCGA-60-2722,0,contrast,unknown,2.5,3.75,Brilliance 64,Discovery ST,PHILIPS,GE,True,False,False
+TCGA-60-2723,0,contrast,unknown,5.0,3.75,Brilliance 16,Discovery ST,PHILIPS,GE,True,False,False
+TCGA-60-2724,0,contrast,unknown,5.0,5.0,LightSpeed Xtra,Sensation 16,GE,SIEMENS,True,False,False
+TCGA-60-2726,0,contrast,unknown,3.0,3.27,Brilliance 16,Discovery ST,PHILIPS,GE,True,False,False
+TCGA-92-7340,0,unknown,unknown,5.0,3.0,Biograph 40,Sensation 64,SIEMENS,SIEMENS,True,True,False
+TCGA-92-7341,0,contrast,contrast,3.0,3.0,Sensation 64,Sensation 64,SIEMENS,SIEMENS,False,True,True
+TCGA-92-8063,0,contrast,contrast,3.0,1.0,Sensation 16,Sensation 64,SIEMENS,SIEMENS,True,True,True
+TCGA-92-8063,0,contrast,contrast,3.0,3.0,Sensation 16,Sensation 64,SIEMENS,SIEMENS,True,True,True
+TCGA-92-8063,0,contrast,contrast,1.0,3.0,Sensation 64,Sensation 64,SIEMENS,SIEMENS,True,True,True
+TCGA-92-8064,0,unknown,contrast,5.0,1.0,Biograph 40,Sensation 64,SIEMENS,SIEMENS,True,False,False
+TCGA-92-8065,0,contrast,contrast,3.0,3.0,Sensation 16,Sensation 16,SIEMENS,SIEMENS,False,True,True
+TCGA-92-8065,0,contrast,contrast,3.0,3.0,Sensation 16,Sensation 16,SIEMENS,SIEMENS,False,True,True
+TCGA-92-8065,0,contrast,contrast,3.0,3.0,Sensation 16,Sensation 16,SIEMENS,SIEMENS,False,True,True
+TCGA-VR-A8EZ,0,unknown,unknown,1.25,1.25,LightSpeed VCT,BrightSpeed,GE,GE,True,True,False

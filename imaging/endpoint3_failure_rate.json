@@ -1,0 +1,71 @@
+{
+  "overall": {
+    "failed": 4,
+    "n": 217,
+    "pct": 1.84
+  },
+  "by_vendor": {
+    "GE": {
+      "failed": 4,
+      "n": 150,
+      "pct": 2.67
+    },
+    "PHILIPS": {
+      "failed": 0,
+      "n": 9,
+      "pct": 0.0
+    },
+    "SIEMENS": {
+      "failed": 0,
+      "n": 58,
+      "pct": 0.0
+    }
+  },
+  "by_thickness": {
+    "0.625": {
+      "failed": 1,
+      "n": 4,
+      "pct": 25.0
+    },
+    "1.0": {
+      "failed": 0,
+      "n": 2,
+      "pct": 0.0
+    },
+    "1.25": {
+      "failed": 2,
+      "n": 27,
+      "pct": 7.41
+    },
+    "2.5": {
+      "failed": 0,
+      "n": 61,
+      "pct": 0.0
+    },
+    "3.0": {
+      "failed": 0,
+      "n": 24,
+      "pct": 0.0
+    },
+    "3.75": {
+      "failed": 0,
+      "n": 22,
+      "pct": 0.0
+    },
+    "4.0": {
+      "failed": 0,
+      "n": 2,
+      "pct": 0.0
+    },
+    "5.0": {
+      "failed": 1,
+      "n": 75,
+      "pct": 1.33
+    }
+  },
+  "error_types": {
+    "MISSING_DICOM_FILES": 4
+  },
+  "resampled_by_leniency": 6,
+  "interpretation": "All 4 failures are DICOM archive-integrity faults (incomplete instance series), not segmentation faults. All 4 are GE; 0/58 SIEMENS and 0/9 PHILIPS. Not a model-reliability finding: the model was never invoked on these series because format conversion failed upstream."
+}

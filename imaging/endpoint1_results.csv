@@ -1,0 +1,16 @@
+arm,structure,n_patients,n_pairs,median_pct,ci_lo,ci_hi,iqr_lo,iqr_hi,max_pct,frac_gt10,exceeds_10_threshold
+kernel,heart,37,59,0.82,0.54,1.16,0.5,1.39,94.4,5.4,False
+kernel,aorta,37,59,0.98,0.69,1.56,0.47,1.84,80.8,5.4,False
+kernel,pulmonary_vein,35,57,4.86,3.2,6.49,2.22,9.18,15.6,22.9,False
+kernel,superior_vena_cava,35,57,2.26,1.9,3.67,1.52,4.09,9.2,0.0,False
+kernel,inferior_vena_cava,37,59,1.72,1.23,3.58,1.0,4.21,65.8,8.1,False
+kernel-only,heart,31,45,0.63,0.5,0.97,0.44,1.22,2.5,0.0,False
+kernel-only,aorta,31,45,0.98,0.69,1.17,0.52,1.36,2.8,0.0,False
+kernel-only,pulmonary_vein,31,45,4.96,3.2,5.63,2.22,6.64,15.6,12.9,False
+kernel-only,superior_vena_cava,31,45,2.12,1.9,3.46,1.52,4.06,7.0,0.0,False
+kernel-only,inferior_vena_cava,31,45,1.52,1.15,2.22,0.86,3.31,16.6,3.2,False
+thickness,heart,16,31,1.18,0.79,3.3,0.87,3.42,47.5,12.5,False
+thickness,aorta,16,31,1.5,0.64,3.74,0.63,4.08,40.6,18.8,False
+thickness,pulmonary_vein,16,29,5.38,4.37,10.66,4.2,11.36,21.0,31.2,True
+thickness,superior_vena_cava,16,29,1.6,0.63,3.88,0.61,3.88,9.6,0.0,False
+thickness,inferior_vena_cava,16,31,2.95,1.05,6.43,0.95,7.03,33.4,12.5,False

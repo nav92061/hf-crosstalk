@@ -1,0 +1,29 @@
+{
+  "totalsegmentator": "2.18.0",
+  "nnunetv2": "2.8.1",
+  "torch": "2.10.0+cu128",
+  "gpu": "Tesla T4",
+  "platform": "kaggle",
+  "task": "total",
+  "structures": [
+    "heart",
+    "aorta",
+    "pulmonary_vein",
+    "superior_vena_cava",
+    "inferior_vena_cava"
+  ],
+  "flags": "-s -sx -sii -ss",
+  "fast_mode": false,
+  "fast_mode_note": "--fast resamples to 3.0 mm, which would attenuate the 0.625-5.0 mm thickness differences the thickness arm measures. Full-resolution model only.",
+  "weights_dir": "/root/.totalsegmentator/nnunet/results",
+  "weights": {
+    "Dataset291_TotalSegmentator_part1_organs_1559subj/nnUNetTrainerNoMirroring__nnUNetPlans__3d_fullres/fold_0/checkpoint_final.pth": "98c429f89fd9b3b08890fbb2b4c08c36",
+    "Dataset292_TotalSegmentator_part2_vertebrae_1532subj/nnUNetTrainerNoMirroring__nnUNetPlans__3d_fullres/fold_0/checkpoint_final.pth": "7022f71829ef00aa14d790a7667bc18e",
+    "Dataset293_TotalSegmentator_part3_cardiac_1559subj/nnUNetTrainerNoMirroring__nnUNetPlans__3d_fullres/fold_0/checkpoint_final.pth": "189010ac67fec3f1704df7547306d006",
+    "Dataset294_TotalSegmentator_part4_muscles_1559subj/nnUNetTrainerNoMirroring__nnUNetPlans__3d_fullres/fold_0/checkpoint_final.pth": "655eb40de03aa3de7348b69d7569a1cc",
+    "Dataset295_TotalSegmentator_part5_ribs_1559subj/nnUNetTrainerNoMirroring__nnUNetPlans__3d_fullres/fold_0/checkpoint_final.pth": "a674364c60b304fbd56feccdd95f8d0f",
+    "Dataset298_TotalSegmentator_total_6mm_1559subj/nnUNetTrainer_4000epochs_NoMirroring__nnUNetPlans__3d_fullres/fold_0/checkpoint_final.pth": "3489323a4b759506ab46b489eb78b721"
+  },
+  "n_weight_files": 6,
+  "weights_total_MiB": 1357.3
+}

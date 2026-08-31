@@ -59,6 +59,12 @@ def register_fonts():
                          ("ARI", "Arial.ttf"), ("ARI-B", "Arial Bold.ttf")]:
         pdfmetrics.registerFont(TTFont(alias, _font(fname)))
     pdfmetrics.registerFontFamily("TNR", normal="TNR", bold="TNR-B", italic="TNR-I")
+    # reportlab >= 4 resolves ps2tt() on whatever fontName a style names, so the
+    # bold/italic faces and Arial must be registered as families in their own right.
+    pdfmetrics.registerFontFamily("TNR-B", normal="TNR-B", bold="TNR-B", italic="TNR-I")
+    pdfmetrics.registerFontFamily("TNR-I", normal="TNR-I", bold="TNR-B", italic="TNR-I")
+    pdfmetrics.registerFontFamily("ARI", normal="ARI", bold="ARI-B", italic="ARI")
+    pdfmetrics.registerFontFamily("ARI-B", normal="ARI-B", bold="ARI-B", italic="ARI-B")
 
 
 def styles():

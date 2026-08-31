@@ -1,0 +1,73 @@
+{
+  "design": "Clean stratum: 45 same-acquisition pairs in 31 patients, z-coverage matched within 5%, convolution kernel differs, slice thickness identical. 100 floor-passing receptors x 5 structures = 500 Spearman associations, each computed twice from the SAME patients and SAME acquisition -- only the reconstruction kernel differs.",
+  "headline": {
+    "SUPERSEDED": "see CORRECTION.correct_symmetric_statistic"
+  },
+  "key_finding": "NULL. Endpoint 2 does not support a claim of reconstruction-induced association instability.",
+  "structure_of_the_instability": {
+    "sign_flips_are_noise": "All 29 sign flips occur at |rho| < 0.05, where the correlation is indistinguishable from zero. 26% of near-zero associations flip; 0% of associations with |rho| >= 0.05 flip. Sign is not the fragile quantity.",
+    "crossings_are_borderline_p": "All 8 crossings occur at |rho| ~ 0.33-0.38 with p_A in 0.033-0.050 and p_B in 0.055-0.070. The kernel change moves rho by 0.008-0.054, enough to cross a threshold that was never far away."
+  },
+  "npr1": "The paper's exploratory receptor is stable across all five structures: no sign flip, no significance crossing, max |delta rho| = 0.046. Its heart association (rho ~ 0.316, p ~ 0.083) is non-significant under BOTH reconstructions -- the kernel is not what keeps it from significance.",
+  "interpretation": "This is the endpoint's point, and it is about dichotomised inference rather than about TotalSegmentator. Volumes are reproducible (endpoint 1: heart 0.63%, all CIs excluding 10%), and correlations are reproducible (median |delta rho| 0.014). What is NOT reproducible is the significant/not-significant verdict: a third of it is decided by a radiographer's choice of reconstruction filter. A study reporting only 'p<0.05' on one reconstruction would have reported 8 associations another equally valid reconstruction of the SAME scan does not support.",
+  "does_not_show": "This is not evidence about heart failure, and not a claim that these receptor-volume associations are biologically real. 31 patients, one model, one archive, cancer patients on staging CT. None of the 500 associations survives multiplicity correction, and none is claimed as a finding.",
+  "CORRECTION": {
+    "what_was_wrong": "The first framing said '8 of 24 nominally significant associations LOSE significance when the kernel changes' and '67% survive'. That is a DIRECTIONAL statement and it is not defensible: the A/B labels come from itertools pairing of series within a study, not from any kernel ordering. Swapping the labels gives 16 significant in A and 24 in B -- i.e. '100% survive'. Same data, opposite headline.",
+    "correct_symmetric_statistic": {
+      "significant_in_either": 24,
+      "significant_in_both": 16,
+      "discordant_exactly_one": 8,
+      "discordance_pct_of_either": 33,
+      "discordance_pct_of_all_500": 1.6,
+      "wording": "Of 24 associations reaching nominal p<0.05 under at least one reconstruction, 8 (33%) are significant under one reconstruction and not the other. No direction is implied or implied-able."
+    },
+    "second_fragility_found": {
+      "issue": "Patients contribute 1-5 pairs to the clean stratum; the reported analysis took the FIRST pair per patient. Re-running with a randomly chosen pair per patient gives discordance of 32%, 9%, 8% across three seeds.",
+      "implication": "The discordance rate is itself unstable to an arbitrary analyst choice, ranging ~8-33%. A single point estimate is not honest; the range must be reported, or the statistic aggregated over all pairs rather than one representative.",
+      "status": "NOT YET FIXED -- requires aggregating across all pairs per patient before this endpoint is reportable."
+    },
+    "multiplicity": {
+      "finding": "ZERO of the 500 associations survive BH-FDR (min q = 0.98).",
+      "implication": "All 24 'significant' associations are nominal only. The endpoint is a statement about the behaviour of an uncorrected p<0.05 rule, not about any real receptor-volume relationship. The text must say so explicitly or it invites exactly the over-reading the paper argues against."
+    }
+  },
+  "FINAL_VERDICT": {
+    "result": "NULL. Endpoint 2 does not support a claim of reconstruction-induced association instability.",
+    "aggregation_fixed": {
+      "method": "The arbitrary choices \u2014 which pair per patient (1-6 available) and which side is labelled A \u2014 are now integrated over: 200 random realisations, reporting the distribution rather than one draw.",
+      "observed_discordance_pct": {
+        "median": 27.6,
+        "ci95": [
+          4.8,
+          46.7
+        ]
+      },
+      "n_significant_in_either": {
+        "median": 22,
+        "range": [
+          16,
+          33
+        ]
+      }
+    },
+    "calibration_against_null": {
+      "null_construction": "Patient labels on the expression matrix permuted, destroying any real receptor-volume association while preserving the volume pair structure, the reconstruction difference, n, and the p-value density near 0.05.",
+      "null_discordance_pct": {
+        "median": 22.1,
+        "ci95": [
+          8.0,
+          41.0
+        ]
+      },
+      "p_null_ge_observed": 0.33,
+      "conclusion": "Observed 28% is indistinguishable from the 22% permutation null (p=0.33). The discordance is a property of dichotomising at p<0.05 with n=31, and occurs equally for real and spurious associations. It is NOT a specific instability of the segmentation output."
+    },
+    "what_can_be_claimed": "Reconstruction-induced volume differences of the magnitude measured in endpoint 1 (0.6-5.0%) are sufficient to flip roughly a quarter of nominal p<0.05 verdicts at n=31 \u2014 but so is any perturbation of that size, and the flipping is blind to whether the association is real. The defensible claim is about threshold fragility at small n, not about AI measurement reliability.",
+    "what_cannot_be_claimed": [
+      "That the receptor panel's imaging associations are specifically unstable under reconstruction.",
+      "That reconstruction choice threatens radiogenomic findings \u2014 0/500 survive FDR (min q=0.98), so there are no findings here to threaten.",
+      "Any directional 'X% lose significance' statement \u2014 the A/B labelling is arbitrary."
+    ],
+    "consequence_for_the_paper": "Section 3.13 reports a null. This is the THIRD pre-specified withdrawal in the project (seven PTN axes; the cross-study imaging endpoint; now the association-stability endpoint). The guardrail thesis is served better by a third honest withdrawal than by a headline that inverts when the labels are swapped."
+  }
+}

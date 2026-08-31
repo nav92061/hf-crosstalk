@@ -1,0 +1,356 @@
+{
+ "ACKR1": [
+  "ACKR1"
+ ],
+ "ACVR1B_ACVR2A": [
+  "ACVR1B",
+  "ACVR2A"
+ ],
+ "ACVR1B_ACVR2B": [
+  "ACVR1B",
+  "ACVR2B"
+ ],
+ "ACVR1B_BMPR2": [
+  "ACVR1B",
+  "BMPR2"
+ ],
+ "ACVR1B_TGFBR2": [
+  "ACVR1B",
+  "TGFBR2"
+ ],
+ "ACVR1_ACVR2A": [
+  "ACVR1",
+  "ACVR2A"
+ ],
+ "ACVR1_ACVR2B": [
+  "ACVR1",
+  "ACVR2B"
+ ],
+ "ACVR1_BMPR2": [
+  "ACVR1",
+  "BMPR2"
+ ],
+ "ACVR1_TGFBR1": [
+  "ACVR1",
+  "TGFBR1"
+ ],
+ "ACVR2A": [
+  "ACVR2A"
+ ],
+ "AGTR1B": [
+  "AGTR1"
+ ],
+ "AXL": [
+  "AXL"
+ ],
+ "BMPR1A_ACVR2A": [
+  "BMPR1A",
+  "ACVR2A"
+ ],
+ "BMPR1A_ACVR2B": [
+  "BMPR1A",
+  "ACVR2B"
+ ],
+ "BMPR1A_BMPR2": [
+  "BMPR1A",
+  "BMPR2"
+ ],
+ "BMPR1B_ACVR2A": [
+  "BMPR1B",
+  "ACVR2A"
+ ],
+ "BMPR1B_ACVR2B": [
+  "BMPR1B",
+  "ACVR2B"
+ ],
+ "BMPR1B_BMPR2": [
+  "BMPR1B",
+  "BMPR2"
+ ],
+ "CCR1": [
+  "CCR1"
+ ],
+ "CCR5": [
+  "CCR5"
+ ],
+ "CD4": [
+  "CD4"
+ ],
+ "CD44": [
+  "CD44"
+ ],
+ "CD45": [
+  "PTPRC"
+ ],
+ "CX3CR1": [
+  "CX3CR1"
+ ],
+ "EGFR": [
+  "EGFR"
+ ],
+ "EGFR_ERBB2": [
+  "EGFR",
+  "ERBB2"
+ ],
+ "ERBB2_ERBB3": [
+  "ERBB2",
+  "ERBB3"
+ ],
+ "ERBB2_ERBB4": [
+  "ERBB2",
+  "ERBB4"
+ ],
+ "ERBB3": [
+  "ERBB3"
+ ],
+ "ERBB4": [
+  "ERBB4"
+ ],
+ "F2R": [
+  "F2R"
+ ],
+ "F2RL1": [
+  "F2RL1"
+ ],
+ "F2RL2": [
+  "F2RL2"
+ ],
+ "F2RL3": [
+  "F2RL3"
+ ],
+ "FGFR1": [
+  "FGFR1"
+ ],
+ "FGFR2": [
+  "FGFR2"
+ ],
+ "FGFR3": [
+  "FGFR3"
+ ],
+ "FGFR4": [
+  "FGFR4"
+ ],
+ "FZD10_LRP5": [
+  "FZD10",
+  "LRP5"
+ ],
+ "FZD10_LRP6": [
+  "FZD10",
+  "LRP6"
+ ],
+ "FZD1_LRP5": [
+  "FZD1",
+  "LRP5"
+ ],
+ "FZD1_LRP6": [
+  "FZD1",
+  "LRP6"
+ ],
+ "FZD2_LRP5": [
+  "FZD2",
+  "LRP5"
+ ],
+ "FZD2_LRP6": [
+  "FZD2",
+  "LRP6"
+ ],
+ "FZD3_LRP5": [
+  "FZD3",
+  "LRP5"
+ ],
+ "FZD3_LRP6": [
+  "FZD3",
+  "LRP6"
+ ],
+ "FZD4_LRP5": [
+  "FZD4",
+  "LRP5"
+ ],
+ "FZD4_LRP6": [
+  "FZD4",
+  "LRP6"
+ ],
+ "FZD5_LRP5": [
+  "FZD5",
+  "LRP5"
+ ],
+ "FZD5_LRP6": [
+  "FZD5",
+  "LRP6"
+ ],
+ "FZD6_LRP5": [
+  "FZD6",
+  "LRP5"
+ ],
+ "FZD6_LRP6": [
+  "FZD6",
+  "LRP6"
+ ],
+ "FZD7_LRP5": [
+  "FZD7",
+  "LRP5"
+ ],
+ "FZD7_LRP6": [
+  "FZD7",
+  "LRP6"
+ ],
+ "FZD8_LRP5": [
+  "FZD8",
+  "LRP5"
+ ],
+ "FZD8_LRP6": [
+  "FZD8",
+  "LRP6"
+ ],
+ "FZD9_LRP5": [
+  "FZD9",
+  "LRP5"
+ ],
+ "FZD9_LRP6": [
+  "FZD9",
+  "LRP6"
+ ],
+ "HAVCR2": [
+  "HAVCR2"
+ ],
+ "IGF1R": [
+  "IGF1R"
+ ],
+ "IGF2R": [
+  "IGF2R"
+ ],
+ "IL17RB": [
+  "IL17RB"
+ ],
+ "ITGA4_ITGB1": [
+  "ITGA4",
+  "ITGB1"
+ ],
+ "ITGA6_ITGB1": [
+  "ITGA6",
+  "ITGB1"
+ ],
+ "ITGA6_ITGB4": [
+  "ITGA6",
+  "ITGB4"
+ ],
+ "ITGAV_ITGB3": [
+  "ITGAV",
+  "ITGB3"
+ ],
+ "ITGAV_ITGB5": [
+  "ITGAV",
+  "ITGB5"
+ ],
+ "LIFR_IL6ST": [
+  "LIFR",
+  "IL6ST"
+ ],
+ "LRP1": [
+  "LRP1"
+ ],
+ "MERTK": [
+  "MERTK"
+ ],
+ "NCL": [
+  "NCL"
+ ],
+ "NPR1": [
+  "NPR1"
+ ],
+ "NRP1_PLXNA1": [
+  "NRP1",
+  "PLXNA1"
+ ],
+ "NRP1_PLXNA2": [
+  "NRP1",
+  "PLXNA2"
+ ],
+ "NRP1_PLXNA3": [
+  "NRP1",
+  "PLXNA3"
+ ],
+ "NRP1_PLXNA4": [
+  "NRP1",
+  "PLXNA4"
+ ],
+ "NRP2_PLXNA1": [
+  "NRP2",
+  "PLXNA1"
+ ],
+ "NRP2_PLXNA2": [
+  "NRP2",
+  "PLXNA2"
+ ],
+ "NRP2_PLXNA3": [
+  "NRP2",
+  "PLXNA3"
+ ],
+ "NRP2_PLXNA4": [
+  "NRP2",
+  "PLXNA4"
+ ],
+ "NTRK1": [
+  "NTRK1"
+ ],
+ "NTRK2": [
+  "NTRK2"
+ ],
+ "NTRK3": [
+  "NTRK3"
+ ],
+ "PARD3": [
+  "PARD3"
+ ],
+ "PDGFRB": [
+  "PDGFRB"
+ ],
+ "PTPRZ1": [
+  "PTPRZ1"
+ ],
+ "SDC1": [
+  "SDC1"
+ ],
+ "SDC2": [
+  "SDC2"
+ ],
+ "SDC3": [
+  "SDC3"
+ ],
+ "SDC4": [
+  "SDC4"
+ ],
+ "SORT1": [
+  "SORT1"
+ ],
+ "TGFBR1_ACVR2A": [
+  "TGFBR1",
+  "ACVR2A"
+ ],
+ "TGFBR1_ACVR2B": [
+  "TGFBR1",
+  "ACVR2B"
+ ],
+ "TGFBR1_TGFBR2": [
+  "TGFBR1",
+  "TGFBR2"
+ ],
+ "TGFBR2": [
+  "TGFBR2"
+ ],
+ "TNFRSF12A": [
+  "TNFRSF12A"
+ ],
+ "TNFRSF1A": [
+  "TNFRSF1A"
+ ],
+ "TNFRSF1B": [
+  "TNFRSF1B"
+ ],
+ "TYRO3": [
+  "TYRO3"
+ ],
+ "VEGFR1": [
+  "FLT1"
+ ]
+}

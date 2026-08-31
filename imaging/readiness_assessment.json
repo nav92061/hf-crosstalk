@@ -1,0 +1,47 @@
+{
+  "question": "Is the imaging plan ready to implement into the paper?",
+  "verdict": "The DESIGN is ready. EXECUTION is blocked on disk, and no results exist yet.",
+  "ready": [
+    "Cohort closed and reproducible: 59 patients, 80 studies, 193 confirmed pairs, 217 series",
+    "Same-acquisition confirmation done from real DICOM tags (234/234 fetched, 0 errors)",
+    "PRESPECIFICATION_IMAGING.md v2 fixed before segmentation: unit of inference declared (patient, not pair), magnitude-led framing, 10% kill criterion, 3 endpoints",
+    "Endpoint 2 feasibility verified: 59/59 patients have primary-tumour RNA-seq; NPR1 and the 100-receptor floor-passing panel all present in the matrix",
+    "Prior-art positioning done (26 verified DOIs); Introduction claims narrowed to what is defensible",
+    "Guardrail halt of the v1 endpoint is itself a reportable result and needs no further compute"
+  ],
+  "blocking": {
+    "disk": {
+      "available_GiB": 2.2,
+      "capacity_pct": 99,
+      "needed_peak_GiB": 4.3,
+      "breakdown": "torch+TotalSegmentator ~3.0, weights ~0.35, largest single series 0.94, masks ~0.05",
+      "note": "staged download does NOT solve this; the software stack alone exceeds free space",
+      "options": [
+        "free ~5 GiB on this machine",
+        "add a remote compute target (list_compute currently returns none)",
+        "run segmentation elsewhere and bring back masks/volumes only"
+      ]
+    },
+    "unpinned_model": "TotalSegmentator not installed or version-pinned. PyPI current 2.18.0, nnU-Net 2.8.1. Prespec requires weights hash logged; an unpinned run is discarded.",
+    "no_results": "Zero segmentations have run. Endpoints 1, 2 and 3 have no data. Nothing about volumes or association stability can enter the manuscript yet."
+  },
+  "runtime_estimate_if_unblocked": {
+    "cpu_only": true,
+    "per_series_min": "2-5 (--fast)",
+    "single_threaded_h": 12.7,
+    "three_concurrent_h": 4.2,
+    "note": "8 GiB RAM caps concurrency; no GPU"
+  },
+  "what_can_go_into_the_paper_today": [
+    "Methods: cohort derivation, header audit, same-acquisition confirmation",
+    "Results: the v1 endpoint halt with its funnel (35 -> 31 -> 17 -> 5) and the contrast cross-tab",
+    "Figures: fig_phase0_gate.png, fig_design_pivot.png",
+    "Discussion: prior-art positioning, the narrowed claim (reconstruction, not acquisition)"
+  ],
+  "what_cannot": [
+    "any volume number",
+    "any effect size",
+    "any association-stability rate",
+    "the retitle, which presumes a direction the data has not shown"
+  ]
+}

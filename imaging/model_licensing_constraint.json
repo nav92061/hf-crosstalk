@@ -1,0 +1,51 @@
+{
+  "finding": "The 5 cardiac chambers named in PRESPECIFICATION_IMAGING.md v2 are NOT in the free TotalSegmentator model.",
+  "evidence": {
+    "package": "totalsegmentator 2.18.0 (PyPI wheel inspected directly)",
+    "chamber_task": "heartchambers_highres (task_id 301), labels 1-5 = heart_myocardium, heart_atrium_left, heart_ventricle_left, heart_atrium_right, heart_ventricle_right",
+    "gating": "map_tasks_config.py marks it under '# Commercial models' with commercial: True; python_api exposes requires_license(task) and directs users to https://backend.totalsegmentator.com/license-academic/ for a free NON-COMMERCIAL academic licence",
+    "free_task": "'total' (92 structures) contains only whole-heart label 51 plus aorta 52, pulmonary_vein 53, atrial_appendage_left 61, superior_vena_cava 62, inferior_vena_cava 63",
+    "note": "labels 44-48 in map_to_binary.py are the legacy total_v1 map, not the current 'total' task"
+  },
+  "consequence": "Endpoint 1 as written (LV, RV, LA, RA, myocardium) cannot run on the free model. Two options, and the choice must be made BEFORE segmentation because it changes the pre-specified structure list.",
+  "options": {
+    "A_academic_licence": {
+      "action": "Request the free academic (non-commercial) licence, then run heartchambers_highres",
+      "keeps": "all 5 chambers exactly as pre-specified; Bonferroni x5 unchanged",
+      "costs": "external dependency and a wait; licence is non-commercial only; disallow_fast=True so no fast mode, slower per series",
+      "note": "task crops to heart first, so the 'total' model must run anyway as a prerequisite"
+    },
+    "B_free_whole_heart": {
+      "action": "Re-specify endpoint 1 on the free 'total' structures",
+      "structures": [
+        "heart",
+        "aorta",
+        "pulmonary_vein",
+        "superior_vena_cava",
+        "inferior_vena_cava"
+      ],
+      "keeps": "5 structures, so multiplicity correction unchanged; fully open weights, better for reproducibility",
+      "costs": "whole-heart volume instead of per-chamber; the reconstruction-sensitivity question is arguably BETTER served by thin structures (vessels) which are more sensitive to slice thickness"
+    }
+  },
+  "recommendation": "Ask the user. Option A preserves the pre-specification verbatim; option B is more reproducible and needs no third party. Either way it is a prespec amendment that must be dated and versioned before any segmentation runs.",
+  "execution_findings": [
+    {
+      "issue": "`--ml` makes `-o` a FILE path, not a directory",
+      "evidence": "TotalSegmentator.py help text: '-o ... Or path of multilabel output nifti file if --ml option is used.'",
+      "symptom": "process exits 0, tmp_seg never created, FileNotFoundError on every series",
+      "fix": "dropped --ml; -o is a directory again"
+    },
+    {
+      "issue": "Border-touching structures are silently reported as volume 0.0",
+      "evidence": "statistics.py: `if touches_border(data) and exclude_masks_at_border:` sets volume 0.0; the flag defaults to True",
+      "why_critical": "Thoracic staging CT routinely clips the great vessels at the scan boundary. Four of the five pre-specified structures are vessels. Left at the default, an unknown fraction of the cohort would record aorta/SVC/IVC volume 0.0 -- indistinguishable from a genuine measurement of zero and silently biasing the reconstruction comparison, since the two reconstructions of a pair can have different z-coverage.",
+      "fix": "-sii (--stats_include_incomplete) forces volumes to be computed for border-touching structures",
+      "prespec_consequence": "Volumes for border-truncated structures are partial-field measurements. Because both members of a pair come from the SAME acquisition they share z-coverage, so the paired comparison remains valid; but absolute volumes are not anatomical totals and must not be reported as such."
+    },
+    {
+      "issue": "Volumes were being recomputed by hand from the mask",
+      "fix": "switched to the tool's own `-s -sx` statistics.json (volume mm3, n_voxels, intensity, centroid, bbox); `-ss` skips writing masks entirely -> faster and less disk"
+    }
+  ]
+}

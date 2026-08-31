@@ -1,0 +1,26 @@
+{
+  "finding": "A pre-specification assumption is empirically FALSE and was caught by the data.",
+  "the_assumption": "PRESPECIFICATION_IMAGING.md v5 stated: 'The paired comparison remains valid because both members of a pair are reconstructions of the same acquisition and therefore share z-coverage.' This was asserted from first principles, not measured.",
+  "what_the_data_show": {
+    "z_coverage_pct_diff_within_pairs": {
+      "median": 14.9,
+      "p90": 93.4,
+      "max": 158.0
+    },
+    "interpretation": "Reconstructions of ONE irradiation event are routinely exported over different z-ranges -- a full chest-abdomen series and a heart-focused reformat share raw data but not extent. Same acquisition does NOT imply same coverage.",
+    "spearman_vol_vs_zcoverage": {
+      "heart": 0.496,
+      "aorta": 0.703,
+      "pulmonary_vein": 0.371,
+      "superior_vena_cava": 0.263,
+      "inferior_vena_cava": 0.675
+    },
+    "consequence_if_ignored": "Volume differences would have been attributed to the reconstruction kernel when they are largely field-of-view truncation. The aorta correlation (rho=0.70) means roughly half the rank variance in that endpoint was coverage, not convolution."
+  },
+  "remedy": "Added a z-coverage matching criterion (within 5%) as an analysis-time gate, and report the kernel-only / thickness-identical stratum as primary. This is a post-hoc filter and is declared as such: it was not pre-specified, it was forced by a pre-specified assumption failing.",
+  "cost": {
+    "pairs": "186 -> 45 in the clean stratum",
+    "patients": "58 -> 31"
+  },
+  "why_this_is_the_paper_s_point": "The guardrail thesis says methodological requirements should be executable rather than asserted. Here an assumption written as PROSE in our own pre-specification was false, and only measuring it caught that. Had z-coverage equality been written as an assertion over the header table, it would have failed at Phase 0 rather than after 4.9 h of GPU."
+}
