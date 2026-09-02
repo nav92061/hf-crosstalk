@@ -6,13 +6,13 @@ Nicolas Avelar{^a,b}, Ruidong Zhang{^b}, Yi Pan{^b}
 
 {^b} School of Computing, University of Georgia, 200 D.W. Brooks Drive, Athens, GA 30602, USA
 
-*Corresponding author:* Nicolas Avelar, School of Computing, University of Georgia, 200 D.W. Brooks Drive, Athens, GA 30602, USA. E-mail: navelar773gmail.com
+*Corresponding author:* Nicolas Avelar, School of Computing, University of Georgia, 200 D.W. Brooks Drive, Athens, GA 30602, USA. E-mail: navelar773@gmail.com
 
 ## Highlights
 
 - Same-acquisition CT pairs isolate reconstruction effects from anatomy: 193 pairs
 - AI heart volume shifts 0.6% across kernels; pulmonary vein 5.0%, an 8-fold gap
-- Reconstructions of one scan do not share z-coverage; rho 0.70 with volume error
+- Same-acquisition CT reconstructions differ in z-coverage: 59% of pairs by over 5%
 - That false assumption was in our own prespecification, where it could not fail
 - Segmentation failed on 4 of 217 series, all archive faults, not model faults
 
@@ -20,15 +20,15 @@ Nicolas Avelar{^a,b}, Ruidong Zhang{^b}, Yi Pan{^b}
 
 **Background.** Reliability of automated radiological analysis is limited less by model accuracy than by having no mechanism to refuse. A pre-trained segmentation network returns a measurement for any image, including acquisitions outside its validated range, and when analysis is delegated to agents nothing is obliged to notice.
 
-**Methods.** In The Cancer Imaging Archive we identified 193 reconstruction pairs in 59 patients: two CT series from one irradiation event, matched on DICOM frame of reference and acquisition time, differing only in convolution kernel or slice thickness, holding patient, anatomy, contrast and timing fixed. TotalSegmentator 2.18.0 measured heart, aorta, pulmonary vein and venae cavae across 217 series. Three endpoints and a 10% threshold were fixed in advance as assertions.
+**Methods.** In The Cancer Imaging Archive we identified 193 reconstruction pairs in 59 patients: two CT series from one irradiation event, matched on DICOM frame of reference and acquisition time, differing only in convolution kernel or slice thickness. TotalSegmentator 2.18.0 measured heart, aorta, pulmonary vein and venae cavae across 217 series. Three endpoints and a 10% threshold were fixed in advance as assertions.
 
-**Results.** An eligibility check halted one endpoint at five patients, on metadata. A pre-specification assumption proved false: reconstructions of one acquisition need not share z-coverage (median difference 15%), which predicts apparent volume difference (rho 0.70). In 45 coverage-matched pairs of identical thickness, kernel change altered heart volume by 0.63% (95% CI 0.50-0.97) and pulmonary vein by 4.96% (3.20-5.63); all intervals excluded 10%. Segmentation failed on 4 of 217 series. Discordance of radiogenomic associations, volumes against tumour RNA-seq in the same patients, did not exceed a permutation null (p=0.33).
+**Results.** An eligibility check halted one endpoint at five patients, on metadata. Reconstructions of one acquisition need not share z-coverage: median 15%, and 59% of pairs exceeded 5% despite matched frame of reference; coverage predicts volume difference (rho 0.70), confounding any study pairing series on those keys. In 45 coverage-matched pairs of identical thickness, kernel change altered heart volume by 0.63% (95% CI 0.50-0.97) and pulmonary vein by 4.96% (3.20-5.63); all intervals excluded 10%. Segmentation failed on 4 of 217 series. Radiogenomic association discordance, volumes against tumor RNA-seq in the same patients, did not exceed a permutation null (p=0.33).
 
 **Conclusions.** Whole-heart volumetry on chest CT is reproducible across kernels to about 1% when field of view matches; thin vessels vary several times more. The failed assumption was prose, where it could not halt; measurement caught it.
 
 ## Keywords
 
-Computed tomography; image reconstruction; automated segmentation; measurement reproducibility; autonomous agent
+Computed tomography; Image reconstruction; Automated segmentation; Measurement reproducibility; Radiogenomics; Autonomous agent
 
 ## Abbreviations
 
@@ -106,7 +106,7 @@ We do not attempt to settle causality, because no available dataset links heart-
 
 Treating the problem as receptor compatibility rather than causation makes it falsifiable, because it can fail in three separable ways. The ligand may not be cardiac-specific, in which case the heart is not a distinctive source. The receptor may not be transcribed in tumor tissue at all, in which case no signal can be received. Or the receptor may be present but no more abundant than in normal tissue, in which case there is no reason to expect a tumor-selective effect. We tested all three across 30 solid tumor types and report where each candidate axis failed.
 
-The screen was executed by an autonomous agent, and the work involved is the kind now routinely delegated: five public resources in three unit systems, a join at every boundary, and a methodological choice at each join that determines the answer while leaving no trace in the output when it goes wrong. Two of those choices went wrong here, in ways that produced confident and entirely spurious rankings. Both were caught, and the question this paper takes seriously is what to do with a correction once it has been made. Recorded as a sentence in a methods section, it binds nobody, and the next study inherits the text rather than the constraint. We instead packaged the analysis as six reusable skills in which each correction is an assertion that halts execution, and we report both what that changed and what it cost. The second imaging endpoint is radiogenomic in design, pairing image-derived volumes with primary-tumour RNA-seq in the same patients, and it is reported as a null.
+The screen was executed by an autonomous agent, and the work involved is the kind now routinely delegated: five public resources in three unit systems, a join at every boundary, and a methodological choice at each join that determines the answer while leaving no trace in the output when it goes wrong. Two of those choices went wrong here, in ways that produced confident and entirely spurious rankings. Both were caught, and the question this paper takes seriously is what to do with a correction once it has been made. Recorded as a sentence in a methods section, it binds nobody, and the next study inherits the text rather than the constraint. We instead packaged the analysis as six reusable skills in which each correction is an assertion that halts execution, and we report both what that changed and what it cost. The second imaging endpoint is radiogenomic in design, pairing image-derived volumes with primary-tumor RNA-seq in the same patients, and it is reported as a null.
 
 ## 2. Material and methods
 
@@ -181,7 +181,7 @@ This section and Sections 2.6 to 2.8 are the crosstalk-score skill, where the me
 
 **Receptor capacity.** Subunit expression is aggregated per interaction using a minimum rule, which encodes obligate-subunit semantics: a complex cannot signal above the level of its scarcest component. A geometric-mean rule was run as a sensitivity analysis.
 
-**Expression floor (mandatory).** Aggregated capacity must exceed an absolute floor set at 0.005 × the median GAPDH level across per-tumor-type medians. Expressing the floor relative to a housekeeping gene makes it unit-agnostic and therefore portable across platforms. In this matrix the median GAPDH value is 69,134.5, giving a floor of 345.7 RSEM normalized_count. The validator raises by default and names the offending receptor; interactions failing it in every tumor type are dropped before scoring rather than down-weighted.
+**Expression floor (mandatory).** Aggregated capacity must exceed an absolute floor set at 0.005 × the median GAPDH level across per-tumor-type medians. Expressing the floor relative to a housekeeping gene makes it unit-agnostic and therefore portable across platforms. In this matrix the median GAPDH value is 69,134.5, giving a floor of 345.67 RSEM normalized_count. The validator raises by default and names the offending receptor; interactions failing it in every tumor type are dropped before scoring rather than down-weighted.
 
 **Standardization and weighting.** Floor-passing capacities are z-standardized per receptor across tumor types, then averaged across interactions weighted by ligand availability, defined as the mean replicated log fold change of the ligand across the two heart cohorts.
 
@@ -286,17 +286,30 @@ reconstructions removes contrast, interval and anatomical change by construction
 patient, the irradiation event and the moment are identical, and only the reconstruction
 differs.
 
-One pre-specification assumption proved false and is the reason this section reports a
-restricted stratum. We had asserted that pairs sharing an acquisition therefore share
-z-coverage. Measured, within-pair z-coverage differs by a median of 15% and by up to 158%.
-Reconstructions of one event are routinely exported over different ranges: a chest–abdomen
-series and a heart-focused reformat share raw data but not extent. Volume difference correlates with
+Reconstructions of one acquisition do not share reconstructed extent, and this is the
+first result the design returns. Within-pair z-coverage differs by a median of 15% and by
+up to 158%, and 110 of 186 pairs (59%) differ by more than 5%. The cause is ordinary
+radiological practice rather than archive corruption: a chest–abdomen series and a
+heart-focused reformat are built from one irradiation event and exported as two series of
+the same study, sharing raw data but not extent.
+
+The consequence for quantitative imaging is direct. Volume difference correlates with
 coverage difference (Spearman ρ = 0.70 for aorta, 0.68 for inferior vena cava, 0.50 for
-heart), so a substantial part of the apparent reconstruction effect is field-of-view
-truncation. Analysis is therefore restricted to pairs matched on z-coverage within 5% with
-slice thickness held identical, leaving **45 pairs in 31 patients**. This filter is
-post-hoc and declared as such; it was not pre-specified, it was forced by a pre-specified
-assumption failing.
+heart), so comparing two reconstructions of one event measures field-of-view truncation
+together with kernel and attributes the sum to the kernel. **Matching on
+`FrameOfReferenceUID` and `AcquisitionTime` does not remove this**: every pair here
+satisfies both, which is how the pairs were built, and 59% still differ in coverage by
+more than 5%. A shared frame of reference constrains the coordinate system, not the
+reconstructed range. Any retrospective study that pairs series by study, by acquisition
+time or by frame of reference, and then attributes the residual difference to
+reconstruction, inherits this confound. It is invisible in the series description and
+requires reading `ImagePositionPatient` across the stack to detect.
+
+Our own pre-specification asserted the opposite, which is why the effect was measured
+rather than assumed (Section 4.1). Analysis is therefore restricted to pairs matched on
+z-coverage within 5% with slice thickness held identical, leaving **45 pairs in 31
+patients**. This filter is post-hoc and declared as such; it was not pre-specified, it was
+forced by a pre-specified assumption failing.
 
 With the patient as the unit of inference and the pair as the unit of measurement, both
 pre-specified aggregations agree (Table 2; Fig. 2).
@@ -343,7 +356,7 @@ rate, and is reported as such.
 ### 3.3 Association stability under reconstruction change: a null result
 
 The remaining pre-specified endpoint asked whether the screen's own receptor panel produces
-stable imaging associations. Primary-tumour RNA-seq is available for 58 of the 59 patients in
+stable imaging associations. Primary-tumor RNA-seq is available for 58 of the 59 patients in
 the reconstruction cohort, and for 31 of the 31 in the coverage-matched stratum that carries
 this endpoint. All 100 floor-passing receptors were scored per patient (obligate complexes
 scored as the minimum of their subunits), and each receptor–structure Spearman correlation was
@@ -377,7 +390,7 @@ both reconstructions.
 
 ![Figure 3](art_d1c73ebc-ef4d-4e5a-91d0-3a0c9d1f659e)
 
-**Figure 3.** Association stability under reconstruction change is a null result. (a) Spearman correlations between receptor score and structure volume, computed twice from the same patients and the same acquisitions and differing only in reconstruction (500 associations; median absolute change 0.014). (b) Percentage of nominally significant associations discordant between reconstructions, integrated over the two arbitrary analyst choices (which pair is used for patients contributing several, and which member is labeled first) across 200 realisations, against a permutation null in which patient labels on the expression matrix are shuffled (60 realisations). Observed 28% does not exceed the null 22% (p = 0.33). (c) Distribution of nominal p values across all 500 tests; none survives Benjamini-Hochberg correction (minimum q = 0.98). Tables: endpoint2_associations.csv, endpoint2_verdict.json.
+**Figure 3.** Association stability under reconstruction change is a null result. (a) Spearman correlations between receptor score and structure volume, computed twice from the same patients and the same acquisitions and differing only in reconstruction (500 associations; median absolute change 0.014). (b) Percentage of nominally significant associations discordant between reconstructions, integrated over the two arbitrary analyst choices (which pair is used for patients contributing several, and which member is labeled first) across 200 realizations, against a permutation null in which patient labels on the expression matrix are shuffled (60 realizations). Observed 28% does not exceed the null 22% (p = 0.33). (c) Distribution of nominal p values across all 500 tests; none survives Benjamini-Hochberg correction (minimum q = 0.98). Tables: endpoint2_associations.csv, endpoint2_verdict.json.
 
 ### 3.4 A replicated human heart-failure signature
 
@@ -400,7 +413,7 @@ Of 3,084 replicated HF-upregulated genes, 295 are annotated as secreted by the H
 
 ### 3.6 The absolute expression floor as a determinant of the result
 
-TCGA PanCanAtlas values are RSEM normalized counts rather than TPM. The median GAPDH value across the 30 per-tumor-type medians is 69,134, so any floor expressed in transcript-per-million terms is meaningless in this matrix, and a familiar TPM threshold imported from elsewhere would return a number that carried no information. The floor was therefore defined relative to a housekeeping gene: 0.005×GAPDH = 345.7 in these units.
+TCGA PanCanAtlas values are RSEM normalized counts rather than TPM. The median GAPDH value across the 30 per-tumor-type medians is 69,134.5, so any floor expressed in transcript-per-million terms is meaningless in this matrix, and a familiar TPM threshold imported from elsewhere would return a number that carried no information. The floor was therefore defined relative to a housekeeping gene: 0.005×GAPDH = 345.67 in these units.
 
 Twenty-eight of 188 interactions fall below it in every one of the 30 tumor types. These include all four proenkephalin-to-opioid-receptor axes (OPRD1, OPRK1, OPRL1, OPRM1), where OPRD1 reaches at most 4×10{^-4} of GAPDH, OPRM1 5×10{^-4} and OPRK1 1.4×10{^-3}. PENK is the third most available HF ligand, so an unfiltered analysis would have nominated the opioid axis prominently, whereas the entire pathway is non-viable on receptor-expression grounds.
 
@@ -511,25 +524,38 @@ This paper reports one methodological result and tests it twice. The imaging arm
 
 ### 4.1 What the imaging arm establishes
 
-The arm supports one measurement claim and two methodological ones.
+The arm supports two measurement claims and two methodological ones.
 
-The measurement claim is narrow and quantified: for a widely used open segmentation model,
-whole-heart volume derived from thoracic CT is reproducible to about 1% across
+The first measurement claim is narrow and quantified: for a widely used open segmentation
+model, whole-heart volume derived from thoracic CT is reproducible to about 1% across
 reconstruction kernels when field of view is matched, while thin vascular structures vary
 several times more. Anyone using automated chamber or vessel volumetry across
 heterogeneously reconstructed archives now has an effect size for the reconstruction
 component of their measurement error, on this model and this population.
 
-The first methodological claim concerns what prose cannot enforce. Our own pre-specification
-asserted that same-acquisition pairs share z-coverage. It was written in advance, in good
-faith, and it was false, with ρ up to 0.70 between coverage difference and apparent volume
-difference, an unguarded analysis would have attributed field-of-view truncation to the
-reconstruction kernel. Measurement caught it; the pre-specification did not, because an
-assumption stated as a sentence cannot fail. Had the same requirement been written as an
-assertion over the header table, it would have halted at the audit stage rather than after
-segmentation. This is the paper's thesis applied to the paper's own authors, and it is the
-strongest evidence in it that the distinction between executable and asserted requirements
-is not stylistic.
+The second is a property of the archives themselves and applies to any retrospective
+quantitative imaging study, not only to those using a segmentation model. Reconstructions
+of a single acquisition differ in z-coverage by a median of 15%, and 59% of pairs differ by
+more than 5%, even though all of them share `FrameOfReferenceUID` and `AcquisitionTime`.
+Coverage difference correlates with apparent volume difference at ρ up to 0.70. Pairing
+series by study, acquisition time or frame of reference is therefore not sufficient to
+isolate a reconstruction effect: the natural matching keys constrain the coordinate system
+and the irradiation event, but not the exported range, and the resulting truncation is
+attributed to whichever variable the study set out to test. The check is inexpensive —
+compare `ImagePositionPatient` extent across the two stacks before comparing anything
+derived from them — and it is not something a series description reveals. We report it
+because a study that omits it will not see it fail; it will see a plausible effect size for
+the wrong variable.
+
+The first methodological claim concerns what prose cannot enforce, and the coverage result
+is where we learned it. Our own pre-specification asserted that same-acquisition pairs
+share z-coverage. It was written in advance, in good faith, and it was false; an unguarded
+analysis would have attributed field-of-view truncation to the reconstruction kernel.
+Measurement caught it; the pre-specification did not, because an assumption stated as a
+sentence cannot fail. Had the same requirement been written as an assertion over the header
+table, it would have halted at the audit stage rather than after segmentation. This is the
+paper's thesis applied to the paper's own authors, and it is the strongest evidence in it
+that the distinction between executable and asserted requirements is not stylistic.
 
 The second concerns thresholds. Endpoint 2 was designed to ask whether reconstruction
 choice destabilises radiogenomic associations, and the honest answer is that at n = 31 the
@@ -707,7 +733,7 @@ Sixty-eight numbered result tables, 8 figures, the pre-specifications for all th
 **Nicolas Avelar:** Conceptualization, Methodology, Software, Formal analysis,
 Investigation, Data curation, Visualization, Writing – original draft, Writing – review
 & editing, Project administration, Funding acquisition. **Ruidong Zhang:** Methodology,
-Software (original pipeline on which the present analysis was developed), Writing –
+Software (original transcriptomic pipeline on which that arm was developed), Writing –
 review & editing. **Yi Pan:** Conceptualization, Methodology, Writing – review &
 editing.
 
