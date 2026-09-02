@@ -19,3 +19,8 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+Data note: derived tables in this repository are computed from public sources
+(The Cancer Imaging Archive, Gene Expression Omnibus, TCGA, GTEx, Human Protein
+Atlas, CellChatDB, DepMap). Each retains the licence of its source; consult
+those before redistribution.

@@ -17,6 +17,9 @@ authors:
     given-names: Yi
     affiliation: "School of Computing, University of Georgia, Athens, GA, USA"
 keywords:
+  - "Computed tomography"
+  - "Automated segmentation"
+  - "Measurement reproducibility"
   - "Cardio-oncology"
   - "heart failure"
   - "ligand-receptor signaling"
@@ -31,7 +34,7 @@ abstract: >-
   language-model call.
 preferred-citation:
   type: article
-  title: "A multi-agent skill pipeline finds no tumor-selective heart-failure ligand–receptor axis across 30 tumor types under rank-based source criteria"
+  title: "Reproducibility of automated cardiac and vascular volumetry across chest CT reconstruction kernels: a same-acquisition paired study with executable guardrails"
   authors:
     - family-names: Avelar
       given-names: Nicolas

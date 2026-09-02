@@ -39,7 +39,8 @@ FONTDIRS = ["/System/Library/Fonts/Supplemental/", "/Library/Fonts/",
 
 # Figure placement offsets, in paragraphs after the figure's first citation.
 # Tuned by the search in tune_offsets(); see README for how to re-tune.
-OFFSETS = {2: 3, 3: -4, 6: 2, 7: 2, 5: -2}
+OFFSETS = {6: 2}   # Fig 6 pushed 2 paragraphs: at offset<2 a long
+                   # methods paragraph cannot split into the remaining column height
 # Figures given a dedicated page rather than an inline strip (tall multi-panel).
 TALL_FRACTION = 0.62
 

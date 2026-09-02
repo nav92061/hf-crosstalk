@@ -102,8 +102,7 @@ verified: no caption's title text appears inside its own figure.
 
 **Full Title** (copy exactly):
 
-> A multi-agent skill pipeline finds no tumor-selective heart-failure
-> ligand–receptor axis across 30 tumor types under rank-based source criteria
+> Reproducibility of automated cardiac and vascular volumetry across chest CT reconstruction kernels: a same-acquisition paired study with executable guardrails
 
 **Abstract:** 239 words, structured as Background / Methods / Results /
 Conclusions. If the parser mangles the structure, paste it from the

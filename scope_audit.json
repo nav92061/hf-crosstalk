@@ -1,6 +1,6 @@
 {
   "question": "Does the manuscript match the Meta-Radiology special issue call and the journal's scope?",
-  "verdict": "YES on the call's central premise and on 10 of 10 named topics, with one honest mismatch: the call's framing anticipates agents that ENABLE new capability, and this paper reports what agents get WRONG. That is a difference in emphasis, not in scope, and the call explicitly names the challenges this paper addresses.",
+  "verdict": "IN SCOPE on the call's central premise. Of 15 topics the call names, 11 are fully covered (3 central to the paper, 4 substantively present, 4 addressed in the new Section 4.9), 1 is partial (disease mechanism, answered negatively by the transcriptomic arm only), and 3 are outside the study: abnormality detection, risk prediction and precision medicine, none of which this design attempts. One honest mismatch of emphasis remains: the call anticipates agents that ENABLE new capability, whereas this paper reports what agents get wrong and how a pre-specified criterion catches it. The call's second paragraph explicitly solicits work on interpretability, reliability, privacy and ethics, which is where this contribution sits.",
   "call_topics": {
     "autonomous agents as a research paradigm": "CORE. Both arms executed by a hierarchical multi-agent system (23 sub-agents, 5 waves), with per-track cost and failure record (Sections 2.12, 4.8).",
     "medical image segmentation": "CORE. TotalSegmentator 2.18.0 on 217 CT series; primary endpoint is the reproducibility of its output.",
@@ -33,5 +33,23 @@
     "No abnormality detection, classification or risk-prediction task.",
     "No claim that imaging validates the heart-failure hypothesis; the populations do not overlap.",
     "No claim of agent superiority over a single-agent pipeline; that comparison was not run."
-  ]
+  ],
+  "topic_tally": {
+    "total_topics_assessed": 15,
+    "core": 3,
+    "yes": 4,
+    "addressed": 4,
+    "fully_covered": 11,
+    "partial": 1,
+    "not_addressed_or_claimed": 3,
+    "not_covered": [
+      "abnormality detection",
+      "risk prediction",
+      "precision medicine"
+    ],
+    "partial_topic": [
+      "disease mechanism understanding"
+    ],
+    "note": "Counts computed from call_topics, not asserted."
+  }
 }

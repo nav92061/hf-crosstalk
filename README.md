@@ -1,6 +1,8 @@
-# Executable guardrails in two autonomous analysis pipelines
+# Reproducibility of automated cardiac and vascular volumetry across chest CT reconstruction kernels: a same-acquisition paired study with executable guardrails
 
 Reproduction material for the manuscript. Every number in the paper traces to a file here.
+The paper's methodological claim is that a requirement enforced by code cannot be silently
+violated, whereas the same requirement written as prose can.
 
 ## Layout
 
@@ -8,6 +10,8 @@ Reproduction material for the manuscript. Every number in the paper traces to a 
     imaging/notebooks/  segmentation notebooks (Kaggle primary, Colab fallback)
     figures/            manuscript figures
     submission/         journal submission items
+    LICENSE             MIT (code); data retain their source licences
+    CITATION.cff        machine-readable citation
 
 ## Imaging arm, in order
 
