@@ -1,0 +1,40 @@
+stratum,field,field_class,n_pairs_total,n_pairs_evaluable,n_concordant,n_discordant,n_missing_either,n_missing_both,pct_concordant,example_discordant_values,note
+all_186,SeriesDescription,categorical,186,184,12,172,2,2,6.5,Recon 2: vs REDI CAT & 125CC OPTIRAY; Recon 2: vs HELICAL MODE; CTAC 3.75 thick vs Recon 2: CTAC 3.75 thick,Free-text series label; expected to differ when kernel differs.
+all_186,ConvolutionKernel,categorical,186,186,40,146,0,0,21.5,LUNG vs STANDARD; LUNG vs STANDARD; STANDARD vs LUNG,The exposure of interest; discordant by construction in this stratum.
+all_186,XRayTubeCurrent,continuous,186,186,65,121,0,0,34.9,334.0 vs 326.0; 143.0 vs 140.0; 60.0 vs 313.0,Tube current (mA); drives image noise.
+all_186,Exposure,continuous,186,186,66,120,0,0,35.5,3.0 vs 17.0; 3.0 vs 11.0; 17.0 vs 11.0,mAs; drives image noise.
+all_186,SliceThickness,continuous,186,186,84,102,0,0,45.2,2.5 vs 3.75; 3.75 vs 2.5; 3.75 vs 2.5,Matched by construction in the 45-pair stratum (inclusion criterion).
+all_186,PixelSpacing_col,continuous,186,186,116,70,0,0,62.4,0.630859 vs 0.628906; 0.636719 vs 0.976562; 0.636719 vs 0.585938,"In-plane pixel size, column direction. In-plane analogue of z-coverage confound."
+all_186,PixelSpacing_row,continuous,186,186,116,70,0,0,62.4,0.630859 vs 0.628906; 0.636719 vs 0.976562; 0.636719 vs 0.585938,"In-plane pixel size, row direction. In-plane analogue of z-coverage confound."
+all_186,ReconstructionDiameter,continuous,186,186,118,68,0,0,63.4,323.0 vs 322.0; 326.0 vs 500.0; 326.0 vs 300.0,"Displayed in-plane FOV (mm). With fixed 512 matrix, sets pixel size."
+all_186,ExposureTime,continuous,186,181,137,44,5,5,75.7,808.0 vs 1186.0; 808.0 vs 1186.0; 628.0 vs 603.0,Rotation/exposure time (ms); partly determines mAs.
+all_186,SpacingBetweenSlices,continuous,186,71,57,14,115,115,80.3,2.5 vs 1.25; 2.5 vs 1.25; 2.5 vs 1.25,Reconstruction interval; sparsely populated in TCIA headers.
+all_186,ImageType_full,categorical,186,186,176,10,0,0,94.6,ORIGINAL\PRIMARY\AXIAL\CT_SOM5 SPI vs DERIVED\PRIMARY\AXIAL\CT_SOM5 SPO; ORIGINAL\PRIMARY\AXIAL\CT_SOM5 SPI vs DERIVED\PRIMARY\AXIAL\CT_SOM5 SPO; ORIGINAL\PRIMARY\AXIAL\CT_SOM5 SPI vs DERIVED\PRIMARY\AXIAL\CT_SOM5 SPO,"Full DICOM ImageType (0008,0008)."
+all_186,ImageType_p0_origin,categorical,186,186,176,10,0,0,94.6,ORIGINAL vs DERIVED; ORIGINAL vs DERIVED; ORIGINAL vs DERIVED,ImageType value 1: ORIGINAL vs DERIVED.
+all_186,ImageType_suffix,categorical,186,44,34,10,142,142,77.3,CT_SOM5 SPI vs CT_SOM5 SPO; CT_SOM5 SPI vs CT_SOM5 SPO; CT_SOM5 SPI vs CT_SOM5 SPO,"ImageType values 4+: vendor reconstruction-mode suffix (e.g. CT_SOM5 SPI/SPO, HELIX)."
+all_186,ContrastBolusAgent,categorical,186,37,31,6,149,149,83.8,GASTROVIEW vs GASTROVIEW & 125CC ISOVUE; GASTROVIEW vs GASTROVIEW & 125CC ISOVUE; GASTROVIEW vs GASTROVIEW & 100CC ISOVUE,Contrast agent text; iodine load affects vessel conspicuity.
+all_186,ContrastBolusRoute,categorical,186,68,62,6,118,94,91.2,Oral vs Oral & IV; Oral vs Oral & IV; Oral vs Oral & IV,Contrast route.
+all_186,FilterType,categorical,186,186,180,6,0,0,96.8,L vs C; YA vs B; C vs YB,Bowtie/beam filter.
+all_186,SpiralPitchFactor,continuous,186,124,118,6,62,62,95.2,0.984375 vs 1.375; 0.984375 vs 1.375; 0.984375 vs 1.375,Helical pitch; acquisition geometry.
+all_186,Columns,continuous,186,186,182,4,0,0,97.8,512 vs 604; 512 vs 604; 512 vs 983,Image matrix columns.
+all_186,CTDIvol,continuous,186,7,6,1,179,179,85.7,25.06783963585434 vs 16.94585959383754,Dose index; acquisition-side surrogate for noise.
+all_186,Rows,continuous,186,186,185,1,0,0,99.5,512 vs 545,Image matrix rows.
+all_186,AcquisitionDate,categorical,186,186,186,0,0,0,100.0,,Acquisition date; must match for same-irradiation pairs.
+all_186,AcquisitionNumber,continuous,186,180,180,0,6,6,100.0,,DICOM acquisition index; a difference would question same-irradiation assumption.
+all_186,DataCollectionDiameter,continuous,186,182,182,0,4,4,100.0,,"Acquired FOV; acquisition-side, not reconstruction-side."
+all_186,ExposureModulationType,categorical,186,4,4,0,182,182,100.0,,Tube-current modulation scheme.
+all_186,GantryDetectorTilt,continuous,186,186,186,0,0,0,100.0,,Gantry tilt; affects reformatted geometry.
+all_186,ImageType_p1_primacy,categorical,186,186,186,0,0,0,100.0,,ImageType value 2: PRIMARY vs SECONDARY.
+all_186,ImageType_p2_plane,categorical,186,186,186,0,0,0,100.0,,ImageType value 3: reconstruction plane.
+all_186,KVP,continuous,186,186,186,0,0,0,100.0,,Tube potential; affects HU of iodine/soft tissue and thus threshold-based boundaries.
+all_186,Manufacturer,categorical,186,186,186,0,0,0,100.0,,Scanner vendor.
+all_186,ManufacturerModelName,categorical,186,186,186,0,0,0,100.0,,Scanner model.
+all_186,PatientPosition,categorical,186,186,186,0,0,0,100.0,,Patient orientation on table.
+all_186,ProtocolName,categorical,186,185,185,0,1,1,100.0,,Scan protocol name.
+all_186,RescaleIntercept,continuous,186,186,186,0,0,0,100.0,,HU rescale intercept; a mismatch would shift all HU thresholds.
+all_186,RescaleSlope,continuous,186,186,186,0,0,0,100.0,,HU rescale slope; a mismatch would shift all HU thresholds.
+all_186,SingleCollimationWidth,continuous,186,124,124,0,62,62,100.0,,Detector row width; acquisition geometry.
+all_186,SoftwareVersions,categorical,186,186,186,0,0,0,100.0,,Scanner software build; reconstruction implementation.
+all_186,StationName,categorical,186,0,0,0,186,186,,,Scanner station identifier.
+all_186,TableHeight,continuous,186,186,186,0,0,0,100.0,,"Table height; changes object position in FOV, not reconstruction."
+all_186,TotalCollimationWidth,continuous,186,124,124,0,62,62,100.0,,Total beam collimation; acquisition geometry.

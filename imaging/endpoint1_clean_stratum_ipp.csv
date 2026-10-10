@@ -1,0 +1,6 @@
+structure,n_patients,n_pairs,median_pct,med_ci,max_pct,mm_mean,mm_ci,both_exclude_10
+heart,32,47,0.73,0.52-1.15,2.76,0.94,0.71-1.16,True
+aorta,32,47,1.05,0.70-1.26,19.86,1.65,0.49-2.81,True
+pulmonary_vein,32,47,4.97,3.48-6.05,27.99,5.9,4.04-7.75,True
+superior_vena_cava,32,47,2.13,1.87-3.60,22.99,3.34,1.99-4.68,True
+inferior_vena_cava,32,47,1.68,1.19-3.21,16.58,3.17,1.90-4.43,True

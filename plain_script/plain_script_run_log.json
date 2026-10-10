@@ -1,0 +1,28 @@
+{
+ "python": "3.11.15",
+ "numpy": "2.4.6",
+ "pandas": "2.3.3",
+ "module_sha256_16": "d24f488a58059bd9",
+ "inputs_sha256_16": {
+  "crosstalk_network.csv": "e6af8c83c4a1fcdc",
+  "pancancer_susceptibility_ranking.csv": "765680dfe444ab92",
+  "tcga_background_genes.json": "bb3452da3747f618",
+  "tcga_expr_by_tumor_type.csv": "5a13f8329bff0a7e"
+ },
+ "floor": 345.6725,
+ "n_interactions_scored": 160,
+ "n_interactions_below_floor": 28,
+ "null_n_iter": 300,
+ "null_A_rho_mean": 0.11312717834631072,
+ "null_A_frac_rho_gt_0_5": 0.02666666666666667,
+ "null_B_rho_mean": 0.10196959584723768,
+ "null_B_frac_rho_gt_0_5": 0.03,
+ "runtime_s_primary": 21.8,
+ "n_below_floor_examples": [
+  "AGT_MAS1",
+  "PENK_OPRD1",
+  "UCN_CRHR2",
+  "CCL24_CCR3",
+  "CCL5_CCR3"
+ ]
+}

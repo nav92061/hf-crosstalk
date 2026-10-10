@@ -1,0 +1,8 @@
+check,halted,exception,message
+Expression floor: scoring includes below-floor interactions,True,AssertionError,"expression floor violated by 28 interaction(s): ['AGT_MAS1', 'PENK_OPRD1', 'UCN_CRHR2', 'CCL24_CCR3', 'CCL5_CCR3', 'PENK_OPRM1', 'CCL5_CCR4', 'FLT3L_FLT3', 'UCN"
+Floor reference gene missing from matrix,True,KeyError,"""floor reference gene 'GAPDH' absent from expression matrix; pass a reference that was extracted (e.g. one of ACTB/GAPDH/RPLP0)"""
+Ligand availability does not match network ligands,True,ValueError,all ligand availability weights are zero; check that availability index matches the interaction ligands
+Null background pool too small,True,ValueError,background pool too small after intersecting with the expression matrix: 5 genes
+Unknown receptor-complex rule,True,ValueError,"rule must be one of ('min', 'geomean', 'mean'), got 'max'"
+Empty conjunction,True,ValueError,results is empty; a conjunction needs at least one conjunct
+Control: valid input runs without halting,False,,160 interactions scored

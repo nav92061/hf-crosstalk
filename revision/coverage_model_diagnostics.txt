@@ -1,0 +1,909 @@
+COVERAGE CONTINUOUS MODEL DIAGNOSTICS
+Seeds: bootstrap median CI seed=42 (n_boot=2000); quantile-regression patient-cluster bootstrap seed=2026 (n_boot=2000)
+Precision: float64. Outcome y=|within-pair percent volume difference|; predictor absz=|z_pctdiff|.
+Random effect: patient intercept (statsmodels MixedLM, REML) for M1/M2/M3/M6.
+M4/M5: median (q=0.5) quantile regression; CIs bootstrap PATIENTS (clusters), not pairs.
+DESIGN NON-IDENTIFIABILITY: among 186 pairs, kernel_change=0 occurs ONLY with differing slice thickness
+(crosstab: kernel_change=0 & th_same=True -> 0 pairs). M2/M5 intercepts are therefore extrapolations into
+an empty design cell and must not be read as effect estimates. M6 replaces them with a 3-level design cell.
+====================================================================================================
+
+=== heart | all_186_pairs | M1_linear_absz ===
+         Mixed Linear Model Regression Results
+=======================================================
+Model:            MixedLM Dependent Variable: y        
+No. Observations: 181     Method:             REML     
+No. Groups:       58      Scale:              733.1463 
+Min. group size:  1       Log-Likelihood:     -865.9737
+Max. group size:  14      Converged:          Yes      
+Mean group size:  3.1                                  
+-------------------------------------------------------
+              Coef.  Std.Err.   z   P>|z| [0.025 0.975]
+-------------------------------------------------------
+Intercept      5.206    3.304 1.576 0.115 -1.269 11.681
+absz           0.221    0.063 3.502 0.000  0.098  0.345
+Group Var    155.708    2.607                          
+=======================================================
+
+
+=== heart | all_186_pairs | M2_linear_absz_plus_covariates ===
+          Mixed Linear Model Regression Results
+==========================================================
+Model:             MixedLM  Dependent Variable:  y        
+No. Observations:  181      Method:              REML     
+No. Groups:        58       Scale:               732.2602 
+Min. group size:   1        Log-Likelihood:      -860.8713
+Max. group size:   14       Converged:           Yes      
+Mean group size:   3.1                                    
+----------------------------------------------------------
+               Coef.  Std.Err.   z    P>|z|  [0.025 0.975]
+----------------------------------------------------------
+Intercept      11.646    6.374  1.827 0.068  -0.846 24.138
+absz            0.211    0.064  3.306 0.001   0.086  0.336
+kernel_change  -7.359    5.430 -1.355 0.175 -18.002  3.284
+abs_th_diff    -0.086    1.877 -0.046 0.963  -3.765  3.593
+Group Var     157.232    2.621                            
+==========================================================
+
+
+=== heart | all_186_pairs | M3_log1p ===
+         Mixed Linear Model Regression Results
+=======================================================
+Model:            MixedLM Dependent Variable: y        
+No. Observations: 181     Method:             REML     
+No. Groups:       58      Scale:              1.3310   
+Min. group size:  1       Log-Likelihood:     -293.9106
+Max. group size:  14      Converged:          Yes      
+Mean group size:  3.1                                  
+--------------------------------------------------------
+           Coef.  Std.Err.    z    P>|z|  [0.025  0.975]
+--------------------------------------------------------
+Intercept  0.914     0.126  7.231  0.000   0.666   1.162
+absz       0.014     0.003  5.384  0.000   0.009   0.019
+Group Var  0.101     0.080                              
+=======================================================
+
+
+=== heart | kernel_arm_thickness_identical_84 | M1_linear_absz ===
+         Mixed Linear Model Regression Results
+=======================================================
+Model:            MixedLM Dependent Variable: y        
+No. Observations: 84      Method:             REML     
+No. Groups:       54      Scale:              427.9987 
+Min. group size:  1       Log-Likelihood:     -387.7439
+Max. group size:  6       Converged:          Yes      
+Mean group size:  1.6                                  
+-------------------------------------------------------
+              Coef.  Std.Err.   z   P>|z| [0.025 0.975]
+-------------------------------------------------------
+Intercept      1.793    3.630 0.494 0.621 -5.322  8.909
+absz           0.274    0.092 2.976 0.003  0.093  0.454
+Group Var    232.955    5.464                          
+=======================================================
+
+
+=== heart | kernel_arm_thickness_identical_84 | M2_reduced_to_M1_no_covariate_variation ===
+         Mixed Linear Model Regression Results
+=======================================================
+Model:            MixedLM Dependent Variable: y        
+No. Observations: 84      Method:             REML     
+No. Groups:       54      Scale:              427.9987 
+Min. group size:  1       Log-Likelihood:     -387.7439
+Max. group size:  6       Converged:          Yes      
+Mean group size:  1.6                                  
+-------------------------------------------------------
+              Coef.  Std.Err.   z   P>|z| [0.025 0.975]
+-------------------------------------------------------
+Intercept      1.793    3.630 0.494 0.621 -5.322  8.909
+absz           0.274    0.092 2.976 0.003  0.093  0.454
+Group Var    232.955    5.464                          
+=======================================================
+
+
+=== heart | kernel_arm_thickness_identical_84 | M3_log1p ===
+         Mixed Linear Model Regression Results
+=======================================================
+Model:            MixedLM Dependent Variable: y        
+No. Observations: 84      Method:             REML     
+No. Groups:       54      Scale:              0.5679   
+Min. group size:  1       Log-Likelihood:     -115.5580
+Max. group size:  6       Converged:          Yes      
+Mean group size:  1.6                                  
+--------------------------------------------------------
+           Coef.  Std.Err.    z    P>|z|  [0.025  0.975]
+--------------------------------------------------------
+Intercept  0.704     0.131  5.373  0.000   0.447   0.961
+absz       0.014     0.003  4.009  0.000   0.007   0.020
+Group Var  0.294     0.221                              
+=======================================================
+
+
+=== aorta | all_186_pairs | M1_linear_absz ===
+         Mixed Linear Model Regression Results
+=======================================================
+Model:            MixedLM Dependent Variable: y        
+No. Observations: 185     Method:             REML     
+No. Groups:       58      Scale:              959.4548 
+Min. group size:  1       Log-Likelihood:     -904.8591
+Max. group size:  16      Converged:          Yes      
+Mean group size:  3.2                                  
+-------------------------------------------------------
+              Coef.  Std.Err.   z   P>|z| [0.025 0.975]
+-------------------------------------------------------
+Intercept      2.610    3.479 0.750 0.453 -4.208  9.429
+absz           0.497    0.066 7.487 0.000  0.367  0.627
+Group Var    112.476    1.943                          
+=======================================================
+
+
+=== aorta | all_186_pairs | M2_linear_absz_plus_covariates ===
+          Mixed Linear Model Regression Results
+==========================================================
+Model:             MixedLM  Dependent Variable:  y        
+No. Observations:  185      Method:              REML     
+No. Groups:        58       Scale:               948.5300 
+Min. group size:   1        Log-Likelihood:      -898.1642
+Max. group size:   16       Converged:           Yes      
+Mean group size:   3.2                                    
+----------------------------------------------------------
+               Coef.  Std.Err.   z    P>|z|  [0.025 0.975]
+----------------------------------------------------------
+Intercept      14.951    6.962  2.147 0.032   1.305 28.597
+absz            0.480    0.067  7.212 0.000   0.349  0.610
+kernel_change -13.150    6.018 -2.185 0.029 -24.945 -1.356
+abs_th_diff    -1.098    2.056 -0.534 0.593  -5.127  2.931
+Group Var     105.316    1.906                            
+==========================================================
+
+
+=== aorta | all_186_pairs | M3_log1p ===
+         Mixed Linear Model Regression Results
+=======================================================
+Model:            MixedLM Dependent Variable: y        
+No. Observations: 185     Method:             REML     
+No. Groups:       58      Scale:              1.1118   
+Min. group size:  1       Log-Likelihood:     -289.1255
+Max. group size:  16      Converged:          Yes      
+Mean group size:  3.2                                  
+--------------------------------------------------------
+           Coef.  Std.Err.    z    P>|z|  [0.025  0.975]
+--------------------------------------------------------
+Intercept  1.103     0.124  8.903  0.000   0.860   1.346
+absz       0.022     0.002  9.626  0.000   0.018   0.027
+Group Var  0.191     0.095                              
+=======================================================
+
+
+=== aorta | kernel_arm_thickness_identical_84 | M1_linear_absz ===
+         Mixed Linear Model Regression Results
+=======================================================
+Model:            MixedLM Dependent Variable: y        
+No. Observations: 84      Method:             REML     
+No. Groups:       54      Scale:              345.0845 
+Min. group size:  1       Log-Likelihood:     -367.8869
+Max. group size:  6       Converged:          Yes      
+Mean group size:  1.6                                  
+-------------------------------------------------------
+              Coef.  Std.Err.   z   P>|z| [0.025 0.975]
+-------------------------------------------------------
+Intercept      3.524    2.668 1.321 0.187 -1.705  8.753
+absz           0.328    0.075 4.372 0.000  0.181  0.476
+Group Var     39.109    3.030                          
+=======================================================
+
+
+=== aorta | kernel_arm_thickness_identical_84 | M2_reduced_to_M1_no_covariate_variation ===
+         Mixed Linear Model Regression Results
+=======================================================
+Model:            MixedLM Dependent Variable: y        
+No. Observations: 84      Method:             REML     
+No. Groups:       54      Scale:              345.0845 
+Min. group size:  1       Log-Likelihood:     -367.8869
+Max. group size:  6       Converged:          Yes      
+Mean group size:  1.6                                  
+-------------------------------------------------------
+              Coef.  Std.Err.   z   P>|z| [0.025 0.975]
+-------------------------------------------------------
+Intercept      3.524    2.668 1.321 0.187 -1.705  8.753
+absz           0.328    0.075 4.372 0.000  0.181  0.476
+Group Var     39.109    3.030                          
+=======================================================
+
+
+=== aorta | kernel_arm_thickness_identical_84 | M3_log1p ===
+         Mixed Linear Model Regression Results
+=======================================================
+Model:            MixedLM Dependent Variable: y        
+No. Observations: 84      Method:             REML     
+No. Groups:       54      Scale:              0.7352   
+Min. group size:  1       Log-Likelihood:     -111.5740
+Max. group size:  6       Converged:          Yes      
+Mean group size:  1.6                                  
+--------------------------------------------------------
+           Coef.  Std.Err.    z    P>|z|  [0.025  0.975]
+--------------------------------------------------------
+Intercept  0.974     0.118  8.261  0.000   0.743   1.205
+absz       0.026     0.004  7.439  0.000   0.019   0.033
+Group Var  0.000     0.118                              
+=======================================================
+
+
+=== pulmonary_vein | all_186_pairs | M1_linear_absz ===
+         Mixed Linear Model Regression Results
+=======================================================
+Model:            MixedLM Dependent Variable: y        
+No. Observations: 171     Method:             REML     
+No. Groups:       58      Scale:              1761.5386
+Min. group size:  1       Log-Likelihood:     -888.1935
+Max. group size:  14      Converged:          Yes      
+Mean group size:  2.9                                  
+-------------------------------------------------------
+              Coef.  Std.Err.   z   P>|z| [0.025 0.975]
+-------------------------------------------------------
+Intercept     10.266    4.886 2.101 0.036  0.689 19.843
+absz           0.353    0.099 3.585 0.000  0.160  0.546
+Group Var    224.163    3.009                          
+=======================================================
+
+
+=== pulmonary_vein | all_186_pairs | M2_linear_absz_plus_covariates ===
+          Mixed Linear Model Regression Results
+==========================================================
+Model:             MixedLM  Dependent Variable:  y        
+No. Observations:  171      Method:              REML     
+No. Groups:        58       Scale:               1698.2583
+Min. group size:   1        Log-Likelihood:      -878.8728
+Max. group size:   14       Converged:           Yes      
+Mean group size:   2.9                                    
+----------------------------------------------------------
+               Coef.  Std.Err.   z    P>|z|  [0.025 0.975]
+----------------------------------------------------------
+Intercept      33.035    9.905  3.335 0.001  13.621 52.449
+absz            0.325    0.097  3.343 0.001   0.135  0.516
+kernel_change -25.157    8.674 -2.900 0.004 -42.158 -8.156
+abs_th_diff    -1.139    2.820 -0.404 0.686  -6.667  4.389
+Group Var     207.721    2.938                            
+==========================================================
+
+
+=== pulmonary_vein | all_186_pairs | M3_log1p ===
+         Mixed Linear Model Regression Results
+=======================================================
+Model:            MixedLM Dependent Variable: y        
+No. Observations: 171     Method:             REML     
+No. Groups:       58      Scale:              1.0350   
+Min. group size:  1       Log-Likelihood:     -261.8991
+Max. group size:  14      Converged:          Yes      
+Mean group size:  2.9                                  
+-------------------------------------------------------
+              Coef. Std.Err.   z    P>|z| [0.025 0.975]
+-------------------------------------------------------
+Intercept     1.839    0.124 14.881 0.000  1.597  2.081
+absz          0.011    0.002  4.423 0.000  0.006  0.016
+Group Var     0.181    0.098                           
+=======================================================
+
+
+=== pulmonary_vein | kernel_arm_thickness_identical_84 | M1_linear_absz ===
+         Mixed Linear Model Regression Results
+=======================================================
+Model:            MixedLM Dependent Variable: y        
+No. Observations: 83      Method:             REML     
+No. Groups:       53      Scale:              925.0029 
+Min. group size:  1       Log-Likelihood:     -408.9842
+Max. group size:  6       Converged:          Yes      
+Mean group size:  1.6                                  
+-------------------------------------------------------
+              Coef.  Std.Err.   z   P>|z| [0.025 0.975]
+-------------------------------------------------------
+Intercept     11.435    4.867 2.350 0.019  1.896 20.974
+absz           0.091    0.140 0.649 0.517 -0.184  0.366
+Group Var    287.215    6.345                          
+=======================================================
+
+
+=== pulmonary_vein | kernel_arm_thickness_identical_84 | M2_reduced_to_M1_no_covariate_variation ===
+         Mixed Linear Model Regression Results
+=======================================================
+Model:            MixedLM Dependent Variable: y        
+No. Observations: 83      Method:             REML     
+No. Groups:       53      Scale:              925.0029 
+Min. group size:  1       Log-Likelihood:     -408.9842
+Max. group size:  6       Converged:          Yes      
+Mean group size:  1.6                                  
+-------------------------------------------------------
+              Coef.  Std.Err.   z   P>|z| [0.025 0.975]
+-------------------------------------------------------
+Intercept     11.435    4.867 2.350 0.019  1.896 20.974
+absz           0.091    0.140 0.649 0.517 -0.184  0.366
+Group Var    287.215    6.345                          
+=======================================================
+
+
+=== pulmonary_vein | kernel_arm_thickness_identical_84 | M3_log1p ===
+         Mixed Linear Model Regression Results
+=======================================================
+Model:            MixedLM Dependent Variable: y        
+No. Observations: 83      Method:             REML     
+No. Groups:       53      Scale:              0.5820   
+Min. group size:  1       Log-Likelihood:     -117.7593
+Max. group size:  6       Converged:          Yes      
+Mean group size:  1.6                                  
+-------------------------------------------------------
+              Coef. Std.Err.   z    P>|z| [0.025 0.975]
+-------------------------------------------------------
+Intercept     1.751    0.139 12.567 0.000  1.478  2.024
+absz          0.005    0.004  1.299 0.194 -0.002  0.012
+Group Var     0.378    0.267                           
+=======================================================
+
+
+=== superior_vena_cava | all_186_pairs | M1_linear_absz ===
+         Mixed Linear Model Regression Results
+=======================================================
+Model:            MixedLM Dependent Variable: y        
+No. Observations: 158     Method:             REML     
+No. Groups:       58      Scale:              455.7006 
+Min. group size:  1       Log-Likelihood:     -712.6464
+Max. group size:  14      Converged:          Yes      
+Mean group size:  2.7                                  
+-------------------------------------------------------
+              Coef.  Std.Err.   z   P>|z| [0.025 0.975]
+-------------------------------------------------------
+Intercept      3.413    2.404 1.419 0.156 -1.300  8.125
+absz           0.108    0.052 2.087 0.037  0.007  0.210
+Group Var     36.325    1.170                          
+=======================================================
+
+
+=== superior_vena_cava | all_186_pairs | M2_linear_absz_plus_covariates ===
+          Mixed Linear Model Regression Results
+=========================================================
+Model:              MixedLM Dependent Variable: y        
+No. Observations:   158     Method:             REML     
+No. Groups:         58      Scale:              460.5162 
+Min. group size:    1       Log-Likelihood:     -708.5199
+Max. group size:    14      Converged:          Yes      
+Mean group size:    2.7                                  
+---------------------------------------------------------
+              Coef.  Std.Err.   z    P>|z|  [0.025 0.975]
+---------------------------------------------------------
+Intercept      6.460    5.405  1.195 0.232  -4.134 17.053
+absz           0.108    0.052  2.066 0.039   0.006  0.210
+kernel_change -3.806    4.951 -0.769 0.442 -13.509  5.898
+abs_th_diff    0.177    1.461  0.121 0.903  -2.687  3.041
+Group Var     35.067    1.170                            
+=========================================================
+
+
+=== superior_vena_cava | all_186_pairs | M3_log1p ===
+         Mixed Linear Model Regression Results
+=======================================================
+Model:            MixedLM Dependent Variable: y        
+No. Observations: 158     Method:             REML     
+No. Groups:       58      Scale:              0.6452   
+Min. group size:  1       Log-Likelihood:     -199.0083
+Max. group size:  14      Converged:          Yes      
+Mean group size:  2.7                                  
+-------------------------------------------------------
+              Coef. Std.Err.   z    P>|z| [0.025 0.975]
+-------------------------------------------------------
+Intercept     1.166    0.090 12.974 0.000  0.990  1.343
+absz          0.009    0.002  4.416 0.000  0.005  0.012
+Group Var     0.030    0.051                           
+=======================================================
+
+
+=== superior_vena_cava | kernel_arm_thickness_identical_84 | M1_linear_absz ===
+         Mixed Linear Model Regression Results
+=======================================================
+Model:            MixedLM Dependent Variable: y        
+No. Observations: 80      Method:             REML     
+No. Groups:       52      Scale:              21.8157  
+Min. group size:  1       Log-Likelihood:     -239.7803
+Max. group size:  6       Converged:          Yes      
+Mean group size:  1.5                                  
+--------------------------------------------------------
+           Coef.  Std.Err.    z    P>|z|  [0.025  0.975]
+--------------------------------------------------------
+Intercept  2.229     0.635  3.511  0.000   0.985   3.473
+absz       0.095     0.019  5.045  0.000   0.058   0.132
+Group Var  0.656     0.583                              
+=======================================================
+
+
+=== superior_vena_cava | kernel_arm_thickness_identical_84 | M2_reduced_to_M1_no_covariate_variation ===
+         Mixed Linear Model Regression Results
+=======================================================
+Model:            MixedLM Dependent Variable: y        
+No. Observations: 80      Method:             REML     
+No. Groups:       52      Scale:              21.8157  
+Min. group size:  1       Log-Likelihood:     -239.7803
+Max. group size:  6       Converged:          Yes      
+Mean group size:  1.5                                  
+--------------------------------------------------------
+           Coef.  Std.Err.    z    P>|z|  [0.025  0.975]
+--------------------------------------------------------
+Intercept  2.229     0.635  3.511  0.000   0.985   3.473
+absz       0.095     0.019  5.045  0.000   0.058   0.132
+Group Var  0.656     0.583                              
+=======================================================
+
+
+=== superior_vena_cava | kernel_arm_thickness_identical_84 | M3_log1p ===
+        Mixed Linear Model Regression Results
+======================================================
+Model:            MixedLM Dependent Variable: y       
+No. Observations: 80      Method:             REML    
+No. Groups:       52      Scale:              0.4084  
+Min. group size:  1       Log-Likelihood:     -85.5712
+Max. group size:  6       Converged:          Yes     
+Mean group size:  1.5                                 
+------------------------------------------------------
+             Coef. Std.Err.   z    P>|z| [0.025 0.975]
+------------------------------------------------------
+Intercept    1.124    0.091 12.363 0.000  0.946  1.302
+absz         0.010    0.003  3.685 0.000  0.005  0.015
+Group Var    0.023    0.082                           
+======================================================
+
+
+=== inferior_vena_cava | all_186_pairs | M1_linear_absz ===
+         Mixed Linear Model Regression Results
+=======================================================
+Model:            MixedLM Dependent Variable: y        
+No. Observations: 181     Method:             REML     
+No. Groups:       58      Scale:              282.1255 
+Min. group size:  1       Log-Likelihood:     -784.0887
+Max. group size:  16      Converged:          Yes      
+Mean group size:  3.1                                  
+-------------------------------------------------------
+              Coef.  Std.Err.   z   P>|z| [0.025 0.975]
+-------------------------------------------------------
+Intercept     10.509    2.181 4.818 0.000  6.234 14.784
+absz           0.333    0.039 8.553 0.000  0.257  0.410
+Group Var     85.367    2.386                          
+=======================================================
+
+
+=== inferior_vena_cava | all_186_pairs | M2_linear_absz_plus_covariates ===
+         Mixed Linear Model Regression Results
+========================================================
+Model:             MixedLM Dependent Variable: y        
+No. Observations:  181     Method:             REML     
+No. Groups:        58      Scale:              250.3257 
+Min. group size:   1       Log-Likelihood:     -771.5709
+Max. group size:   16      Converged:          Yes      
+Mean group size:   3.1                                  
+--------------------------------------------------------
+              Coef.  Std.Err.   z    P>|z| [0.025 0.975]
+--------------------------------------------------------
+Intercept      2.930    3.830  0.765 0.444 -4.576 10.437
+absz           0.354    0.038  9.429 0.000  0.281  0.428
+kernel_change 10.663    3.180  3.353 0.001  4.431 16.895
+abs_th_diff   -1.969    1.141 -1.726 0.084 -4.204  0.267
+Group Var     91.397    2.561                           
+========================================================
+
+
+=== inferior_vena_cava | all_186_pairs | M3_log1p ===
+         Mixed Linear Model Regression Results
+=======================================================
+Model:            MixedLM Dependent Variable: y        
+No. Observations: 181     Method:             REML     
+No. Groups:       58      Scale:              1.0216   
+Min. group size:  1       Log-Likelihood:     -279.0498
+Max. group size:  16      Converged:          Yes      
+Mean group size:  3.1                                  
+-------------------------------------------------------
+              Coef. Std.Err.   z    P>|z| [0.025 0.975]
+-------------------------------------------------------
+Intercept     1.634    0.128 12.812 0.000  1.384  1.884
+absz          0.021    0.002  9.150 0.000  0.017  0.026
+Group Var     0.258    0.149                           
+=======================================================
+
+
+=== inferior_vena_cava | kernel_arm_thickness_identical_84 | M1_linear_absz ===
+         Mixed Linear Model Regression Results
+=======================================================
+Model:            MixedLM Dependent Variable: y        
+No. Observations: 82      Method:             REML     
+No. Groups:       54      Scale:              137.8503 
+Min. group size:  1       Log-Likelihood:     -342.8696
+Max. group size:  6       Converged:          Yes      
+Mean group size:  1.5                                  
+-------------------------------------------------------
+              Coef.  Std.Err.   z   P>|z| [0.025 0.975]
+-------------------------------------------------------
+Intercept     10.617    2.506 4.236 0.000  5.705 15.529
+absz           0.548    0.061 8.965 0.000  0.428  0.667
+Group Var    155.309    8.715                          
+=======================================================
+
+
+=== inferior_vena_cava | kernel_arm_thickness_identical_84 | M2_reduced_to_M1_no_covariate_variation ===
+         Mixed Linear Model Regression Results
+=======================================================
+Model:            MixedLM Dependent Variable: y        
+No. Observations: 82      Method:             REML     
+No. Groups:       54      Scale:              137.8503 
+Min. group size:  1       Log-Likelihood:     -342.8696
+Max. group size:  6       Converged:          Yes      
+Mean group size:  1.5                                  
+-------------------------------------------------------
+              Coef.  Std.Err.   z   P>|z| [0.025 0.975]
+-------------------------------------------------------
+Intercept     10.617    2.506 4.236 0.000  5.705 15.529
+absz           0.548    0.061 8.965 0.000  0.428  0.667
+Group Var    155.309    8.715                          
+=======================================================
+
+
+=== inferior_vena_cava | kernel_arm_thickness_identical_84 | M3_log1p ===
+         Mixed Linear Model Regression Results
+=======================================================
+Model:            MixedLM Dependent Variable: y        
+No. Observations: 82      Method:             REML     
+No. Groups:       54      Scale:              0.9164   
+Min. group size:  1       Log-Likelihood:     -123.5401
+Max. group size:  6       Converged:          Yes      
+Mean group size:  1.5                                  
+-------------------------------------------------------
+              Coef. Std.Err.   z    P>|z| [0.025 0.975]
+-------------------------------------------------------
+Intercept     1.604    0.147 10.901 0.000  1.316  1.893
+absz          0.032    0.004  8.061 0.000  0.024  0.040
+Group Var     0.155    0.253                           
+=======================================================
+
+
+=== heart | all_186_pairs | M4_median_quantreg_absz (patient-cluster bootstrap, seed=2026, 2000 reps) ===
+                         QuantReg Regression Results                          
+==============================================================================
+Dep. Variable:                      y   Pseudo R-squared:              0.01088
+Model:                       QuantReg   Bandwidth:                       1.436
+Method:                 Least Squares   Sparsity:                        3.769
+Date:                Wed, 07 Oct 2026   No. Observations:                  181
+Time:                        18:18:40   Df Residuals:                      179
+                                        Df Model:                            1
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept      0.9768      0.183      5.337      0.000       0.616       1.338
+absz           0.0251      0.004      6.470      0.000       0.017       0.033
+==============================================================================
+
+=== heart | all_186_pairs | M5_median_quantreg_absz_plus_covariates (patient-cluster bootstrap, seed=2026, 2000 reps) ===
+                         QuantReg Regression Results                          
+==============================================================================
+Dep. Variable:                      y   Pseudo R-squared:              0.01297
+Model:                       QuantReg   Bandwidth:                       1.605
+Method:                 Least Squares   Sparsity:                        4.070
+Date:                Wed, 07 Oct 2026   No. Observations:                  181
+Time:                        18:18:51   Df Residuals:                      177
+                                        Df Model:                            3
+=================================================================================
+                    coef    std err          t      P>|t|      [0.025      0.975]
+---------------------------------------------------------------------------------
+Intercept         0.9481      0.440      2.154      0.033       0.079       1.817
+absz              0.0263      0.004      6.217      0.000       0.018       0.035
+kernel_change    -0.2741      0.397     -0.691      0.491      -1.057       0.509
+abs_th_diff       0.2181      0.128      1.700      0.091      -0.035       0.471
+=================================================================================
+
+=== heart | kernel_arm_thickness_identical_84 | M4_median_quantreg_absz (patient-cluster bootstrap, seed=2026, 2000 reps) ===
+                         QuantReg Regression Results                          
+==============================================================================
+Dep. Variable:                      y   Pseudo R-squared:              0.01360
+Model:                       QuantReg   Bandwidth:                       1.190
+Method:                 Least Squares   Sparsity:                        2.651
+Date:                Wed, 07 Oct 2026   No. Observations:                   84
+Time:                        18:18:58   Df Residuals:                       82
+                                        Df Model:                            1
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept      0.8151      0.173      4.709      0.000       0.471       1.160
+absz           0.0174      0.005      3.621      0.001       0.008       0.027
+==============================================================================
+
+=== aorta | all_186_pairs | M4_median_quantreg_absz (patient-cluster bootstrap, seed=2026, 2000 reps) ===
+                         QuantReg Regression Results                          
+==============================================================================
+Dep. Variable:                      y   Pseudo R-squared:              0.09284
+Model:                       QuantReg   Bandwidth:                       4.014
+Method:                 Least Squares   Sparsity:                        9.718
+Date:                Wed, 07 Oct 2026   No. Observations:                  185
+Time:                        18:19:07   Df Residuals:                      183
+                                        Df Model:                            1
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept      0.9693      0.468      2.073      0.040       0.047       1.892
+absz           0.1399      0.009     15.004      0.000       0.121       0.158
+==============================================================================
+
+=== aorta | all_186_pairs | M5_median_quantreg_absz_plus_covariates (patient-cluster bootstrap, seed=2026, 2000 reps) ===
+                         QuantReg Regression Results                          
+==============================================================================
+Dep. Variable:                      y   Pseudo R-squared:              0.09379
+Model:                       QuantReg   Bandwidth:                       4.383
+Method:                 Least Squares   Sparsity:                        10.57
+Date:                Wed, 07 Oct 2026   No. Observations:                  185
+Time:                        18:19:19   Df Residuals:                      181
+                                        Df Model:                            3
+=================================================================================
+                    coef    std err          t      P>|t|      [0.025      0.975]
+---------------------------------------------------------------------------------
+Intercept         2.4757      1.129      2.194      0.030       0.249       4.703
+absz              0.1418      0.010     13.799      0.000       0.122       0.162
+kernel_change    -1.4955      1.010     -1.481      0.140      -3.488       0.498
+abs_th_diff      -0.2526      0.332     -0.760      0.448      -0.909       0.403
+=================================================================================
+
+=== aorta | kernel_arm_thickness_identical_84 | M4_median_quantreg_absz (patient-cluster bootstrap, seed=2026, 2000 reps) ===
+                         QuantReg Regression Results                          
+==============================================================================
+Dep. Variable:                      y   Pseudo R-squared:               0.1881
+Model:                       QuantReg   Bandwidth:                       2.162
+Method:                 Least Squares   Sparsity:                        4.973
+Date:                Wed, 07 Oct 2026   No. Observations:                   84
+Time:                        18:19:26   Df Residuals:                       82
+                                        Df Model:                            1
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept      1.0157      0.325      3.128      0.002       0.370       1.662
+absz           0.1535      0.009     17.042      0.000       0.136       0.171
+==============================================================================
+
+=== pulmonary_vein | all_186_pairs | M4_median_quantreg_absz (patient-cluster bootstrap, seed=2026, 2000 reps) ===
+                         QuantReg Regression Results                          
+==============================================================================
+Dep. Variable:                      y   Pseudo R-squared:              0.02378
+Model:                       QuantReg   Bandwidth:                       5.864
+Method:                 Least Squares   Sparsity:                        14.92
+Date:                Wed, 07 Oct 2026   No. Observations:                  171
+Time:                        18:19:35   Df Residuals:                      169
+                                        Df Model:                            1
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept      4.9422      0.735      6.720      0.000       3.490       6.394
+absz           0.0691      0.016      4.353      0.000       0.038       0.100
+==============================================================================
+
+=== pulmonary_vein | all_186_pairs | M5_median_quantreg_absz_plus_covariates (patient-cluster bootstrap, seed=2026, 2000 reps) ===
+                         QuantReg Regression Results                          
+==============================================================================
+Dep. Variable:                      y   Pseudo R-squared:              0.04008
+Model:                       QuantReg   Bandwidth:                       5.011
+Method:                 Least Squares   Sparsity:                        13.64
+Date:                Wed, 07 Oct 2026   No. Observations:                  171
+Time:                        18:19:47   Df Residuals:                      167
+                                        Df Model:                            3
+=================================================================================
+                    coef    std err          t      P>|t|      [0.025      0.975]
+---------------------------------------------------------------------------------
+Intercept         4.8186      1.544      3.121      0.002       1.770       7.867
+absz              0.0433      0.015      2.956      0.004       0.014       0.072
+kernel_change    -0.8551      1.404     -0.609      0.543      -3.627       1.917
+abs_th_diff       1.6676      0.438      3.811      0.000       0.804       2.532
+=================================================================================
+
+=== pulmonary_vein | kernel_arm_thickness_identical_84 | M4_median_quantreg_absz (patient-cluster bootstrap, seed=2026, 2000 reps) ===
+                         QuantReg Regression Results                          
+==============================================================================
+Dep. Variable:                      y   Pseudo R-squared:             0.005214
+Model:                       QuantReg   Bandwidth:                       4.975
+Method:                 Least Squares   Sparsity:                        10.65
+Date:                Wed, 07 Oct 2026   No. Observations:                   83
+Time:                        18:19:55   Df Residuals:                       81
+                                        Df Model:                            1
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept      4.1518      0.697      5.955      0.000       2.765       5.539
+absz           0.0282      0.020      1.403      0.164      -0.012       0.068
+==============================================================================
+
+=== superior_vena_cava | all_186_pairs | M4_median_quantreg_absz (patient-cluster bootstrap, seed=2026, 2000 reps) ===
+                         QuantReg Regression Results                          
+==============================================================================
+Dep. Variable:                      y   Pseudo R-squared:              0.01926
+Model:                       QuantReg   Bandwidth:                       2.555
+Method:                 Least Squares   Sparsity:                        6.690
+Date:                Wed, 07 Oct 2026   No. Observations:                  158
+Time:                        18:20:03   Df Residuals:                      156
+                                        Df Model:                            1
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept      2.0067      0.335      5.999      0.000       1.346       2.667
+absz           0.0272      0.008      3.603      0.000       0.012       0.042
+==============================================================================
+
+=== superior_vena_cava | all_186_pairs | M5_median_quantreg_absz_plus_covariates (patient-cluster bootstrap, seed=2026, 2000 reps) ===
+                         QuantReg Regression Results                          
+==============================================================================
+Dep. Variable:                      y   Pseudo R-squared:              0.02561
+Model:                       QuantReg   Bandwidth:                       2.834
+Method:                 Least Squares   Sparsity:                        7.051
+Date:                Wed, 07 Oct 2026   No. Observations:                  158
+Time:                        18:20:15   Df Residuals:                      154
+                                        Df Model:                            3
+=================================================================================
+                    coef    std err          t      P>|t|      [0.025      0.975]
+---------------------------------------------------------------------------------
+Intercept         0.9664      0.848      1.139      0.256      -0.709       2.642
+absz              0.0193      0.008      2.421      0.017       0.004       0.035
+kernel_change     1.0207      0.796      1.282      0.202      -0.552       2.594
+abs_th_diff       0.4006      0.229      1.746      0.083      -0.053       0.854
+=================================================================================
+
+=== superior_vena_cava | kernel_arm_thickness_identical_84 | M4_median_quantreg_absz (patient-cluster bootstrap, seed=2026, 2000 reps) ===
+                         QuantReg Regression Results                          
+==============================================================================
+Dep. Variable:                      y   Pseudo R-squared:              0.02522
+Model:                       QuantReg   Bandwidth:                       2.809
+Method:                 Least Squares   Sparsity:                        6.140
+Date:                Wed, 07 Oct 2026   No. Observations:                   80
+Time:                        18:20:22   Df Residuals:                       78
+                                        Df Model:                            1
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept      1.9871      0.406      4.899      0.000       1.180       2.795
+absz           0.0275      0.012      2.361      0.021       0.004       0.051
+==============================================================================
+
+=== inferior_vena_cava | all_186_pairs | M4_median_quantreg_absz (patient-cluster bootstrap, seed=2026, 2000 reps) ===
+                         QuantReg Regression Results                          
+==============================================================================
+Dep. Variable:                      y   Pseudo R-squared:               0.2905
+Model:                       QuantReg   Bandwidth:                       9.690
+Method:                 Least Squares   Sparsity:                        26.34
+Date:                Wed, 07 Oct 2026   No. Observations:                  181
+Time:                        18:20:31   Df Residuals:                      179
+                                        Df Model:                            1
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept      2.2935      1.276      1.797      0.074      -0.225       4.812
+absz           0.3915      0.026     15.233      0.000       0.341       0.442
+==============================================================================
+
+=== inferior_vena_cava | all_186_pairs | M5_median_quantreg_absz_plus_covariates (patient-cluster bootstrap, seed=2026, 2000 reps) ===
+                         QuantReg Regression Results                          
+==============================================================================
+Dep. Variable:                      y   Pseudo R-squared:               0.3035
+Model:                       QuantReg   Bandwidth:                       10.38
+Method:                 Least Squares   Sparsity:                        27.86
+Date:                Wed, 07 Oct 2026   No. Observations:                  181
+Time:                        18:20:43   Df Residuals:                      177
+                                        Df Model:                            3
+=================================================================================
+                    coef    std err          t      P>|t|      [0.025      0.975]
+---------------------------------------------------------------------------------
+Intercept         0.5192      3.002      0.173      0.863      -5.406       6.444
+absz              0.3928      0.028     14.283      0.000       0.339       0.447
+kernel_change     3.2703      2.697      1.213      0.227      -2.051       8.592
+abs_th_diff      -0.0570      0.895     -0.064      0.949      -1.823       1.709
+=================================================================================
+
+=== inferior_vena_cava | kernel_arm_thickness_identical_84 | M4_median_quantreg_absz (patient-cluster bootstrap, seed=2026, 2000 reps) ===
+                         QuantReg Regression Results                          
+==============================================================================
+Dep. Variable:                      y   Pseudo R-squared:               0.4236
+Model:                       QuantReg   Bandwidth:                       9.544
+Method:                 Least Squares   Sparsity:                        22.01
+Date:                Wed, 07 Oct 2026   No. Observations:                   82
+Time:                        18:20:51   Df Residuals:                       80
+                                        Df Model:                            1
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept      2.2935      1.447      1.585      0.117      -0.586       5.173
+absz           0.6498      0.041     15.733      0.000       0.568       0.732
+==============================================================================
+
+=== heart | all_186_pairs | M6 design-cell ===
+                      Mixed Linear Model Regression Results
+=================================================================================
+Model:                      MixedLM         Dependent Variable:         y        
+No. Observations:           181             Method:                     REML     
+No. Groups:                 58              Scale:                      732.9306 
+Min. group size:            1               Log-Likelihood:             -859.8753
+Max. group size:            14              Converged:                  Yes      
+Mean group size:            3.1                                                  
+---------------------------------------------------------------------------------
+                                        Coef.  Std.Err.   z   P>|z| [0.025 0.975]
+---------------------------------------------------------------------------------
+Intercept                                4.132    3.693 1.119 0.263 -3.105 11.370
+C(design_cell)[T.thickness_only]         7.433    5.732 1.297 0.195 -3.801 18.667
+C(design_cell)[T.kernel_and_thickness]   0.311    5.106 0.061 0.951 -9.697 10.318
+absz                                     0.210    0.065 3.216 0.001  0.082  0.338
+Group Var                              156.027    2.623                          
+=================================================================================
+
+
+=== aorta | all_186_pairs | M6 design-cell ===
+                      Mixed Linear Model Regression Results
+==================================================================================
+Model:                     MixedLM          Dependent Variable:          y        
+No. Observations:          185              Method:                      REML     
+No. Groups:                58               Scale:                       951.1401 
+Min. group size:           1                Log-Likelihood:              -897.2959
+Max. group size:           16               Converged:                   Yes      
+Mean group size:           3.2                                                    
+----------------------------------------------------------------------------------
+                                        Coef.  Std.Err.   z   P>|z|  [0.025 0.975]
+----------------------------------------------------------------------------------
+Intercept                                0.677    3.924 0.172 0.863  -7.014  8.367
+C(design_cell)[T.thickness_only]        12.561    6.379 1.969 0.049   0.058 25.064
+C(design_cell)[T.kernel_and_thickness]   0.850    5.634 0.151 0.880 -10.193 11.893
+absz                                     0.475    0.068 6.946 0.000   0.341  0.609
+Group Var                              103.636    1.892                           
+==================================================================================
+
+
+=== pulmonary_vein | all_186_pairs | M6 design-cell ===
+                       Mixed Linear Model Regression Results
+===================================================================================
+Model:                      MixedLM          Dependent Variable:          y        
+No. Observations:           171              Method:                      REML     
+No. Groups:                 58               Scale:                       1695.8664
+Min. group size:            1                Log-Likelihood:              -877.8810
+Max. group size:            14               Converged:                   Yes      
+Mean group size:            2.9                                                    
+-----------------------------------------------------------------------------------
+                                        Coef.  Std.Err.   z    P>|z|  [0.025 0.975]
+-----------------------------------------------------------------------------------
+Intercept                                7.791    5.355  1.455 0.146  -2.705 18.286
+C(design_cell)[T.thickness_only]        22.689    8.962  2.532 0.011   5.124 40.253
+C(design_cell)[T.kernel_and_thickness]  -2.698    7.872 -0.343 0.732 -18.127 12.732
+absz                                     0.331    0.100  3.302 0.001   0.134  0.527
+Group Var                              211.989    2.995                            
+===================================================================================
+
+
+=== superior_vena_cava | all_186_pairs | M6 design-cell ===
+                     Mixed Linear Model Regression Results
+================================================================================
+Model:                     MixedLM         Dependent Variable:         y        
+No. Observations:          158             Method:                     REML     
+No. Groups:                58              Scale:                      459.6616 
+Min. group size:           1               Log-Likelihood:             -707.2507
+Max. group size:           14              Converged:                  Yes      
+Mean group size:           2.7                                                  
+--------------------------------------------------------------------------------
+                                       Coef.  Std.Err.   z   P>|z| [0.025 0.975]
+--------------------------------------------------------------------------------
+Intercept                               1.991    2.757 0.722 0.470 -3.412  7.394
+C(design_cell)[T.thickness_only]        5.189    4.913 1.056 0.291 -4.441 14.818
+C(design_cell)[T.kernel_and_thickness]  2.845    4.114 0.692 0.489 -5.219 10.910
+absz                                    0.098    0.054 1.828 0.068 -0.007  0.204
+Group Var                              34.288    1.161                          
+================================================================================
+
+
+=== inferior_vena_cava | all_186_pairs | M6 design-cell ===
+                       Mixed Linear Model Regression Results
+===================================================================================
+Model:                      MixedLM          Dependent Variable:          y        
+No. Observations:           181              Method:                      REML     
+No. Groups:                 58               Scale:                       248.2392 
+Min. group size:            1                Log-Likelihood:              -770.8685
+Max. group size:            16               Converged:                   Yes      
+Mean group size:            3.1                                                    
+-----------------------------------------------------------------------------------
+                                        Coef.  Std.Err.   z    P>|z|  [0.025 0.975]
+-----------------------------------------------------------------------------------
+Intercept                               13.579    2.351  5.775 0.000   8.970 18.187
+C(design_cell)[T.thickness_only]       -14.954    3.432 -4.358 0.000 -21.680 -8.228
+C(design_cell)[T.kernel_and_thickness]  -4.758    3.062 -1.554 0.120 -10.760  1.243
+absz                                     0.363    0.039  9.402 0.000   0.287  0.439
+Group Var                               98.200    2.658                            
+===================================================================================
+

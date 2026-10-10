@@ -1,0 +1,67 @@
+target_column,quantity,candidate_formula,formula_expression,n_rows_compared,n_bitwise_identical,n_within_1e_12,n_within_1e_09,max_abs_residual,median_abs_residual,verdict
+heart_pctdiff,mm^3 (volume),abs_over_mean,100*|V_A - V_B| / ((V_A+V_B)/2),181,146,181,181,1.4210854715202004e-14,0.0,EXACT (float round-off only)
+heart_pctdiff,mm^3 (volume),abs_over_a,100*|V_A - V_B| / V_A,181,0,0,0,150.5887508961195,0.010594369450171781,rejected
+heart_pctdiff,mm^3 (volume),abs_over_b,100*|V_A - V_B| / V_B,181,0,0,0,787.8524500693422,0.010477685734131992,rejected
+heart_pctdiff,mm^3 (volume),abs_over_max,"100*|V_A - V_B| / max(V_A,V_B)",181,0,0,0,74.80805132427191,0.010477685734131992,rejected
+heart_pctdiff,mm^3 (volume),abs_over_min,"100*|V_A - V_B| / min(V_A,V_B)",181,0,0,0,787.8524500693422,0.010631024189152294,rejected
+heart_pctdiff,mm^3 (volume),signed_over_mean,100*(V_A - V_B) / ((V_A+V_B)/2),181,49,59,59,227.76025810661218,1.4485698341268805,rejected
+heart_pctdiff,mm^3 (volume),signed_over_a,100*(V_A - V_B) / V_A,181,0,0,0,378.34900900273163,1.6753292668923292,rejected
+heart_pctdiff,mm^3 (volume),signed_over_b,100*(V_A - V_B) / V_B,181,0,0,0,787.8524500693422,1.6683416822577435,rejected
+heart_pctdiff,mm^3 (volume),signed_ba_over_mean,100*(V_B - V_A) / ((V_A+V_B)/2),181,97,122,122,330.6257317186349,0.0,rejected
+heart_pctdiff,mm^3 (volume),signed_ba_over_a,100*(V_B - V_A) / V_A,181,0,0,0,255.81768039436298,0.036888227098807125,rejected
+heart_pctdiff,mm^3 (volume),signed_ba_over_b,100*(V_B - V_A) / V_B,181,0,0,0,1118.478181787977,0.03590630146709772,rejected
+aorta_pctdiff,mm^3 (volume),abs_over_mean,100*|V_A - V_B| / ((V_A+V_B)/2),185,154,185,185,2.842170943040401e-14,0.0,EXACT (float round-off only)
+aorta_pctdiff,mm^3 (volume),abs_over_a,100*|V_A - V_B| / V_A,185,0,0,0,172.17755437671093,0.05655635528687153,rejected
+aorta_pctdiff,mm^3 (volume),abs_over_b,100*|V_A - V_B| / V_B,185,0,0,0,4393.0922067139345,0.05470110158219743,rejected
+aorta_pctdiff,mm^3 (volume),abs_over_max,"100*|V_A - V_B| / max(V_A,V_B)",185,0,0,0,93.77466932888937,0.05470110158219743,rejected
+aorta_pctdiff,mm^3 (volume),abs_over_min,"100*|V_A - V_B| / min(V_A,V_B)",185,0,0,0,4393.0922067139345,0.05655635528687153,rejected
+aorta_pctdiff,mm^3 (volume),signed_over_mean,100*(V_A - V_B) / ((V_A+V_B)/2),185,85,101,101,236.9521973311232,1.1102230246251565e-16,rejected
+aorta_pctdiff,mm^3 (volume),signed_over_a,100*(V_A - V_B) / V_A,185,0,0,0,409.12975170783415,0.8786067391841055,rejected
+aorta_pctdiff,mm^3 (volume),signed_over_b,100*(V_A - V_B) / V_B,185,0,0,0,4393.0922067139345,0.9977718745825612,rejected
+aorta_pctdiff,mm^3 (volume),signed_ba_over_mean,100*(V_B - V_A) / ((V_A+V_B)/2),185,69,84,84,383.28015126464487,1.070352893155776,rejected
+aorta_pctdiff,mm^3 (volume),signed_ba_over_a,100*(V_B - V_A) / V_A,185,0,0,0,289.5054819357555,4.100788642196303,rejected
+aorta_pctdiff,mm^3 (volume),signed_ba_over_b,100*(V_B - V_A) / V_B,185,0,0,0,4776.37235797858,4.14326641948912,rejected
+pulmonary_vein_pctdiff,mm^3 (volume),abs_over_mean,100*|V_A - V_B| / ((V_A+V_B)/2),171,150,171,171,2.842170943040401e-14,0.0,EXACT (float round-off only)
+pulmonary_vein_pctdiff,mm^3 (volume),abs_over_a,100*|V_A - V_B| / V_A,171,0,0,0,22591.082054136023,0.19134838663956,rejected
+pulmonary_vein_pctdiff,mm^3 (volume),abs_over_b,100*|V_A - V_B| / V_B,171,0,0,0,239.8652404890776,0.18876956695490943,rejected
+pulmonary_vein_pctdiff,mm^3 (volume),abs_over_max,"100*|V_A - V_B| / max(V_A,V_B)",171,0,0,0,98.69694785559025,0.18218083897603066,rejected
+pulmonary_vein_pctdiff,mm^3 (volume),abs_over_min,"100*|V_A - V_B| / min(V_A,V_B)",171,0,0,0,22591.082054136023,0.19369778940987725,rejected
+pulmonary_vein_pctdiff,mm^3 (volume),signed_over_mean,100*(V_A - V_B) / ((V_A+V_B)/2),171,51,59,59,396.5201266051317,5.675547848021441,rejected
+pulmonary_vein_pctdiff,mm^3 (volume),signed_over_a,100*(V_A - V_B) / V_A,171,0,0,0,22987.602180741153,7.377719836023573,rejected
+pulmonary_vein_pctdiff,mm^3 (volume),signed_over_b,100*(V_A - V_B) / V_B,171,0,0,0,297.8231787495414,7.306541227842523,rejected
+pulmonary_vein_pctdiff,mm^3 (volume),signed_ba_over_mean,100*(V_B - V_A) / ((V_A+V_B)/2),171,99,112,112,259.5619573948033,0.0,rejected
+pulmonary_vein_pctdiff,mm^3 (volume),signed_ba_over_a,100*(V_B - V_A) / V_A,171,0,0,0,22591.082054136023,0.669109175282987,rejected
+pulmonary_vein_pctdiff,mm^3 (volume),signed_ba_over_b,100*(V_B - V_A) / V_B,171,0,0,0,499.4271978838809,0.5979125576120534,rejected
+superior_vena_cava_pctdiff,mm^3 (volume),abs_over_mean,100*|V_A - V_B| / ((V_A+V_B)/2),158,133,158,158,2.842170943040401e-14,0.0,EXACT (float round-off only)
+superior_vena_cava_pctdiff,mm^3 (volume),abs_over_a,100*|V_A - V_B| / V_A,158,0,0,0,99.56844651092581,0.040277833988152656,rejected
+superior_vena_cava_pctdiff,mm^3 (volume),abs_over_b,100*|V_A - V_B| / V_B,158,0,0,0,69083.47406032472,0.03915851007125726,rejected
+superior_vena_cava_pctdiff,mm^3 (volume),abs_over_max,"100*|V_A - V_B| / max(V_A,V_B)",158,0,0,0,99.56844651092581,0.03915851007125726,rejected
+superior_vena_cava_pctdiff,mm^3 (volume),abs_over_min,"100*|V_A - V_B| / min(V_A,V_B)",158,0,0,0,69083.47406032472,0.040277833988152656,rejected
+superior_vena_cava_pctdiff,mm^3 (volume),signed_over_mean,100*(V_A - V_B) / ((V_A+V_B)/2),158,46,56,56,66.52155985005896,2.829258902626515,rejected
+superior_vena_cava_pctdiff,mm^3 (volume),signed_over_a,100*(V_A - V_B) / V_A,158,0,0,0,99.56844651092581,3.326520586436237,rejected
+superior_vena_cava_pctdiff,mm^3 (volume),signed_over_b,100*(V_A - V_B) / V_B,158,0,0,0,69083.47406032472,3.3964715242774686,rejected
+superior_vena_cava_pctdiff,mm^3 (volume),signed_ba_over_mean,100*(V_B - V_A) / ((V_A+V_B)/2),158,87,102,102,398.8486375515955,0.0,rejected
+superior_vena_cava_pctdiff,mm^3 (volume),signed_ba_over_a,100*(V_B - V_A) / V_A,158,0,0,0,299.2801910406697,0.13241573534415216,rejected
+superior_vena_cava_pctdiff,mm^3 (volume),signed_ba_over_b,100*(V_B - V_A) / V_B,158,0,0,0,69482.32269787631,0.12719289043760496,rejected
+inferior_vena_cava_pctdiff,mm^3 (volume),abs_over_mean,100*|V_A - V_B| / ((V_A+V_B)/2),181,160,181,181,1.4210854715202004e-14,0.0,EXACT (float round-off only)
+inferior_vena_cava_pctdiff,mm^3 (volume),abs_over_a,100*|V_A - V_B| / V_A,181,0,0,0,87.54504989087656,0.3895946389703653,rejected
+inferior_vena_cava_pctdiff,mm^3 (volume),abs_over_b,100*|V_A - V_B| / V_B,181,0,0,0,80.71725375292712,0.362073761928702,rejected
+inferior_vena_cava_pctdiff,mm^3 (volume),abs_over_max,"100*|V_A - V_B| / max(V_A,V_B)",181,0,0,0,30.918664916112732,0.362073761928702,rejected
+inferior_vena_cava_pctdiff,mm^3 (volume),abs_over_min,"100*|V_A - V_B| / min(V_A,V_B)",181,0,0,0,87.54504989087656,0.3949776706805608,rejected
+inferior_vena_cava_pctdiff,mm^3 (volume),signed_over_mean,100*(V_A - V_B) / ((V_A+V_B)/2),181,92,105,105,191.20246251613543,0.0,rejected
+inferior_vena_cava_pctdiff,mm^3 (volume),signed_over_a,100*(V_A - V_B) / V_A,181,0,0,0,278.747512407012,3.666466979978164,rejected
+inferior_vena_cava_pctdiff,mm^3 (volume),signed_over_b,100*(V_A - V_B) / V_B,181,0,0,0,160.2837976000227,4.426576523086789,rejected
+inferior_vena_cava_pctdiff,mm^3 (volume),signed_ba_over_mean,100*(V_B - V_A) / ((V_A+V_B)/2),181,68,76,76,185.9080977344288,2.258726899383984,rejected
+inferior_vena_cava_pctdiff,mm^3 (volume),signed_ba_over_a,100*(V_B - V_A) / V_A,181,0,0,0,156.4138639656206,6.03085820003502,rejected
+inferior_vena_cava_pctdiff,mm^3 (volume),signed_ba_over_b,100*(V_B - V_A) / V_B,181,0,0,0,266.62535148735594,4.956498757937418,rejected
+z_pctdiff,mm (z-extent),abs_over_mean,100*|V_A - V_B| / ((V_A+V_B)/2),186,162,186,186,1.4210854715202004e-14,0.0,EXACT (float round-off only)
+z_pctdiff,mm (z-extent),abs_over_a,100*|V_A - V_B| / V_A,186,46,46,46,106.23102409290834,1.042048979180609,rejected
+z_pctdiff,mm (z-extent),abs_over_b,100*|V_A - V_B| / V_B,186,46,46,46,601.1496003045299,1.1082056692837492,rejected
+z_pctdiff,mm (z-extent),abs_over_max,"100*|V_A - V_B| / max(V_A,V_B)",186,46,46,46,69.94507928071573,1.030976254453189,rejected
+z_pctdiff,mm (z-extent),abs_over_min,"100*|V_A - V_B| / min(V_A,V_B)",186,46,46,46,601.1496003045299,1.1969156517665382,rejected
+z_pctdiff,mm (z-extent),signed_over_mean,100*(V_A - V_B) / ((V_A+V_B)/2),186,123,138,138,204.04280618311537,0.0,rejected
+z_pctdiff,mm (z-extent),signed_over_a,100*(V_A - V_B) / V_A,186,46,46,46,310.2738302760237,2.0789596185819974,rejected
+z_pctdiff,mm (z-extent),signed_over_b,100*(V_A - V_B) / V_B,186,46,46,46,601.1496003045299,2.5788502416240426,rejected
+z_pctdiff,mm (z-extent),signed_ba_over_mean,100*(V_B - V_A) / ((V_A+V_B)/2),186,85,94,94,316.61971830985914,1.4210854715202004e-14,rejected
+z_pctdiff,mm (z-extent),signed_ba_over_a,100*(V_B - V_A) / V_A,186,46,46,46,246.6746390291434,17.866994928398437,rejected
+z_pctdiff,mm (z-extent),signed_ba_over_b,100*(V_B - V_A) / V_B,186,46,46,46,917.769318614389,12.826807916765329,rejected

@@ -1,0 +1,40 @@
+stratum,field,field_class,n_pairs_total,n_pairs_evaluable,n_concordant,n_discordant,n_missing_either,n_missing_both,pct_concordant,example_discordant_values,note
+45_coverage_matched,ConvolutionKernel,categorical,45,45,0,45,0,0,0.0,LUNG vs STANDARD; STANDARD vs LUNG; STANDARD vs LUNG,The exposure of interest; discordant by construction in this stratum.
+45_coverage_matched,SeriesDescription,categorical,45,43,4,39,2,2,9.3,Recon 2: vs REDI CAT & 125CC OPTIRAY; CTAC 3.75 thick vs Recon 2: CTAC 3.75 thick; HEILICAL vs Recon 2: HEILICAL,Free-text series label; expected to differ when kernel differs.
+45_coverage_matched,XRayTubeCurrent,continuous,45,45,38,7,0,0,84.4,143.0 vs 140.0; 150.0 vs 154.0; 163.0 vs 308.0,Tube current (mA); drives image noise.
+45_coverage_matched,Exposure,continuous,45,45,40,5,0,0,88.9,95.0 vs 181.0; 98.0 vs 87.0; 214.0 vs 249.0,mAs; drives image noise.
+45_coverage_matched,FilterType,categorical,45,45,41,4,0,0,91.1,YA vs B; C vs YB; C vs D,Bowtie/beam filter.
+45_coverage_matched,PixelSpacing_col,continuous,45,45,41,4,0,0,91.1,0.630859 vs 0.628906; 0.976562 vs 0.585938; 0.720703 vs 0.734375,"In-plane pixel size, column direction. In-plane analogue of z-coverage confound."
+45_coverage_matched,PixelSpacing_row,continuous,45,45,41,4,0,0,91.1,0.630859 vs 0.628906; 0.976562 vs 0.585938; 0.720703 vs 0.734375,"In-plane pixel size, row direction. In-plane analogue of z-coverage confound."
+45_coverage_matched,ReconstructionDiameter,continuous,45,45,41,4,0,0,91.1,323.0 vs 322.0; 500.0 vs 300.0; 369.0 vs 376.0,"Displayed in-plane FOV (mm). With fixed 512 matrix, sets pixel size."
+45_coverage_matched,AcquisitionDate,categorical,45,45,45,0,0,0,100.0,,Acquisition date; must match for same-irradiation pairs.
+45_coverage_matched,AcquisitionNumber,continuous,45,41,41,0,4,4,100.0,,DICOM acquisition index; a difference would question same-irradiation assumption.
+45_coverage_matched,CTDIvol,continuous,45,5,5,0,40,40,100.0,,Dose index; acquisition-side surrogate for noise.
+45_coverage_matched,Columns,continuous,45,45,45,0,0,0,100.0,,Image matrix columns.
+45_coverage_matched,ContrastBolusAgent,categorical,45,16,16,0,29,29,100.0,,Contrast agent text; iodine load affects vessel conspicuity.
+45_coverage_matched,ContrastBolusRoute,categorical,45,12,12,0,33,33,100.0,,Contrast route.
+45_coverage_matched,DataCollectionDiameter,continuous,45,41,41,0,4,4,100.0,,"Acquired FOV; acquisition-side, not reconstruction-side."
+45_coverage_matched,ExposureModulationType,categorical,45,2,2,0,43,43,100.0,,Tube-current modulation scheme.
+45_coverage_matched,ExposureTime,continuous,45,41,41,0,4,4,100.0,,Rotation/exposure time (ms); partly determines mAs.
+45_coverage_matched,GantryDetectorTilt,continuous,45,45,45,0,0,0,100.0,,Gantry tilt; affects reformatted geometry.
+45_coverage_matched,ImageType_full,categorical,45,45,45,0,0,0,100.0,,"Full DICOM ImageType (0008,0008)."
+45_coverage_matched,ImageType_p0_origin,categorical,45,45,45,0,0,0,100.0,,ImageType value 1: ORIGINAL vs DERIVED.
+45_coverage_matched,ImageType_p1_primacy,categorical,45,45,45,0,0,0,100.0,,ImageType value 2: PRIMARY vs SECONDARY.
+45_coverage_matched,ImageType_p2_plane,categorical,45,45,45,0,0,0,100.0,,ImageType value 3: reconstruction plane.
+45_coverage_matched,ImageType_suffix,categorical,45,15,15,0,30,30,100.0,,"ImageType values 4+: vendor reconstruction-mode suffix (e.g. CT_SOM5 SPI/SPO, HELIX)."
+45_coverage_matched,KVP,continuous,45,45,45,0,0,0,100.0,,Tube potential; affects HU of iodine/soft tissue and thus threshold-based boundaries.
+45_coverage_matched,Manufacturer,categorical,45,45,45,0,0,0,100.0,,Scanner vendor.
+45_coverage_matched,ManufacturerModelName,categorical,45,45,45,0,0,0,100.0,,Scanner model.
+45_coverage_matched,PatientPosition,categorical,45,45,45,0,0,0,100.0,,Patient orientation on table.
+45_coverage_matched,ProtocolName,categorical,45,44,44,0,1,1,100.0,,Scan protocol name.
+45_coverage_matched,RescaleIntercept,continuous,45,45,45,0,0,0,100.0,,HU rescale intercept; a mismatch would shift all HU thresholds.
+45_coverage_matched,RescaleSlope,continuous,45,45,45,0,0,0,100.0,,HU rescale slope; a mismatch would shift all HU thresholds.
+45_coverage_matched,Rows,continuous,45,45,45,0,0,0,100.0,,Image matrix rows.
+45_coverage_matched,SingleCollimationWidth,continuous,45,20,20,0,25,25,100.0,,Detector row width; acquisition geometry.
+45_coverage_matched,SliceThickness,continuous,45,45,45,0,0,0,100.0,,Matched by construction in the 45-pair stratum (inclusion criterion).
+45_coverage_matched,SoftwareVersions,categorical,45,45,45,0,0,0,100.0,,Scanner software build; reconstruction implementation.
+45_coverage_matched,SpacingBetweenSlices,continuous,45,7,7,0,38,38,100.0,,Reconstruction interval; sparsely populated in TCIA headers.
+45_coverage_matched,SpiralPitchFactor,continuous,45,20,20,0,25,25,100.0,,Helical pitch; acquisition geometry.
+45_coverage_matched,StationName,categorical,45,0,0,0,45,45,,,Scanner station identifier.
+45_coverage_matched,TableHeight,continuous,45,45,45,0,0,0,100.0,,"Table height; changes object position in FOV, not reconstruction."
+45_coverage_matched,TotalCollimationWidth,continuous,45,20,20,0,25,25,100.0,,Total beam collimation; acquisition geometry.
