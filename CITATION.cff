@@ -5,7 +5,7 @@ type: software
 license: MIT
 repository-code: "https://github.com/nav92061/hf-crosstalk"
 version: v1.2.0-R1
-doi: 10.5281/zenodo.21968364
+doi: 10.5281/zenodo.23291356
 date-released: 2026-10-11
 authors:
   - family-names: Avelar
