@@ -1,8 +1,17 @@
-# Reproducibility of automated cardiac and vascular volumetry across chest CT reconstruction kernels: a same-acquisition paired study with executable guardrails
+# Reproducibility of automated whole-heart and great-vessel volumetry across chest CT reconstruction kernels: an agent-executed same-acquisition study with executable checks
 
 Reproduction material for the manuscript. Every number in the paper traces to a file here.
 The paper's methodological claim is that a requirement enforced by code cannot be silently
 violated, whereas the same requirement written as prose can.
+
+## Revision R1 (October 2026)
+
+Files added for the revised manuscript are described in `README_R1.md`: the Table 2 script and its inputs (`imaging/endpoint1_tables.py`), slice-position z-extent (`imaging/compute_z_extent.py`), the agent-free reproduction (`plain_script/`), revision analyses (`revision/`), and the agent-layer record (`agent_layer/`). The six analytical modules are in `hf_crosstalk/skills/` (installed package) and, identically, in `modules/`.
+
+Archived version for the revised manuscript: doi:10.5281/zenodo.23283753 (all versions: doi:10.5281/zenodo.21968364).
+
+
+**v1.2.0-R1 additions.** `independent_heart_model/` re-segments the 87 primary-stratum series with an independently trained whole-heart model (`python independent_heart_model/analyze_platipy.py` reproduces the reported results from repository files). `revision_checks/` contains three further analyses, each with the plan written before computation: representativeness of the retained pairs, image-measured kernel sharpness, and an external accuracy check against expert heart contours (TCIA LCTSC). See `revision_checks/README.md`.
 
 ## Layout
 

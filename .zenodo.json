@@ -1,9 +1,9 @@
 {
-  "title": "hf-crosstalk: reusable skills for organ-crosstalk ligand-receptor screens",
+  "title": "hf-crosstalk: analysis code and data for reconstruction-kernel reproducibility of automated thoracic CT volumetry",
   "upload_type": "software",
   "license": "mit",
   "access_right": "open",
-  "description": "Analysis code, result tables and pre-specifications for the heart-failure ligand-receptor screen. Six skills carry their methodological requirements as executable assertions that halt execution on violation. Includes 81 result tables, a log of 264 controls and verdicts, pre-specifications for all three analysis phases, and a figure builder that regenerates all eight figures from the released tables with no network access.",
+  "description": "Analysis code, result tables and specifications for the manuscript \"Reproducibility of automated whole-heart and great-vessel volumetry across chest CT reconstruction kernels: an agent-executed same-acquisition study with executable checks\". Includes the script that produces the primary results table, slice-position z-extent computation, reconstruction-parameter and coverage sensitivity analyses, six analytical modules with executable checks, a standalone agent-free reproduction script, and the agent execution record. See README_R1.md. Version v1.2.0-R1 adds the independent whole-heart model check (independent_heart_model/) and the revision checks with their dated plans (revision_checks/).",
   "creators": [
     {
       "name": "Avelar, Nicolas",
@@ -20,11 +20,12 @@
     }
   ],
   "keywords": [
-    "Cardio-oncology",
-    "heart failure",
-    "ligand-receptor signaling",
-    "multi-agent systems",
-    "computational reproducibility",
-    "pan-cancer transcriptomics"
-  ]
+    "Computed tomography",
+    "Reconstruction kernel",
+    "Automated segmentation",
+    "Measurement reproducibility",
+    "Autonomous agents",
+    "Computational reproducibility"
+  ],
+  "version": "v1.2.0-R1"
 }

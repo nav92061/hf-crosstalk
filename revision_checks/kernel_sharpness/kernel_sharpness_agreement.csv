@@ -1,0 +1,4 @@
+set,n_pairs,n_vendor_defined,n_ties,n_nontied,n_agree,frac_agree,n_agree_incl_ties,noise_agree,n_patients_disagree
+45-pair primary,45,45,0,45,45,1.0,45,45,0
+47-pair slice-position,47,46,0,46,46,1.0,46,46,0
+union 47 pairs/87 series,47,46,0,46,46,1.0,46,46,0

@@ -1,0 +1,6 @@
+structure,weighted_patient_median_pct,ci_lo,ci_hi,ess_pairs,ess_patients,label
+heart,1.3905,0.5029,1.3905,9.39,4.28,EXPLORATORY: thickness category from series B instead of series A
+aorta,1.2573,0.3625,1.5635,9.39,4.28,EXPLORATORY: thickness category from series B instead of series A
+pulmonary_vein,5.0369,2.8147,8.6407,9.39,4.28,EXPLORATORY: thickness category from series B instead of series A
+superior_vena_cava,0.8147,0.6034,3.4604,9.39,4.28,EXPLORATORY: thickness category from series B instead of series A
+inferior_vena_cava,3.4152,1.1002,7.5632,9.39,4.28,EXPLORATORY: thickness category from series B instead of series A

@@ -1,0 +1,30 @@
+{
+ "weights_zip_md5": "feb63660bce90c2b6ecf561c8463b6a9",
+ "weights_zip_md5_expected": "feb63660bce90c2b6ecf561c8463b6a9",
+ "checkpoint_files": {
+  "nnUNet/3d_lowres/Task400_OPEN_HEART_1FOLD/nnUNetTrainerV2__nnUNetPlansv2.1/all/model_final_checkpoint.model": "112db22564fe635d10dda4667094b45e"
+ },
+ "nnunet_settings": {
+  "task": "Task400_OPEN_HEART_1FOLD",
+  "trainer_class_name": "nnUNetTrainerV2",
+  "cascade_trainer_class_name": "nnUNetTrainerV2CascadeFullRes",
+  "folds": "all",
+  "model": "3d_lowres",
+  "lowres_segmentations": null,
+  "num_threads_preprocessing": 6,
+  "num_threads_nifti_save": 2,
+  "disable_tta": false,
+  "all_in_gpu": null,
+  "disable_mixed_precision": false,
+  "chk": "model_final_checkpoint"
+ },
+ "platipy": "0.7.2",
+ "nnunet": "1.7.1",
+ "torch": "2.0.1+cu118",
+ "cuda": "11.8",
+ "gpu": "NVIDIA A10",
+ "python": "3.10.13",
+ "sitk": "2.3.1",
+ "started_utc": "2026-10-10T19:26:39Z",
+ "finished_utc": "2026-10-10T20:27:03Z"
+}

@@ -1,0 +1,15 @@
+variable,level,n_186,target_share,n_retained,retained_share_unweighted,share_after_raking,share_after_trim
+thick_cat,<=1.25,28,0.1505,1,0.0222,0.1505,0.1702
+thick_cat,1.25-3,90,0.4839,11,0.2444,0.4839,0.4124
+thick_cat,>3,68,0.3656,33,0.7333,0.3656,0.4173
+collection,LUAD,37,0.1989,15,0.3333,0.2605,0.3388
+collection,LUSC,76,0.4086,29,0.6444,0.5352,0.491
+collection,ESCA,73,0.3925,1,0.0222,0.2043,0.1702
+collection,other,0,0.0,0,0.0,0.0,0.0
+vendor,GE,142,0.7634,30,0.6667,0.7634,0.7804
+vendor,Siemens,38,0.2043,11,0.2444,0.2043,0.1702
+vendor,Philips,6,0.0323,4,0.0889,0.0323,0.0494
+vendor,other,0,0.0,0,0.0,0.0,0.0
+contrast_status,agent_recorded,37,0.1989,16,0.3556,0.1989,0.2444
+contrast_status,none_recorded,0,0.0,0,0.0,0.0,0.0
+contrast_status,unknown,149,0.8011,29,0.6444,0.8011,0.7556

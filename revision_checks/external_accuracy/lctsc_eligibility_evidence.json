@@ -1,0 +1,27 @@
+{
+ "checked_utc": "2026-10-10T21:04:01",
+ "nbia": {
+  "endpoint": "https://services.cancerimagingarchive.net/nbia-api/services/v1/getSeries?Collection=LCTSC",
+  "n_series": 120,
+  "n_CT": 60,
+  "n_RTSTRUCT": 60,
+  "n_patients": 60,
+  "licence": [
+   "Creative Commons Attribution 3.0 Unported License"
+  ],
+  "licence_uri": [
+   "http://creativecommons.org/licenses/by/3.0/"
+  ],
+  "collection_doi": [
+   "https://doi.org/10.7937/K9/TCIA.2017.3r3fvz08"
+  ],
+  "total_CT_GB": 5.03
+ },
+ "training_data_check": {
+  "paper_10.1148/ryai.230024": "1368 CTs randomly sampled from University Hospital Basel PACS (2012/2016/2020); 1204 retained. Strings 'LCTSC' and 'Lung CT Segmentation' absent. TCIA mentioned only as a download portal in Introduction.",
+  "zenodo_10047292_v2.0.1": "1228 CTs, 'randomly sampled from clinical routine', created by University Hospital Basel; no LCTSC mention.",
+  "zenodo_6802614_v1": "1204 CTs, University Hospital Basel; no LCTSC mention.",
+  "github_README": "no LCTSC/'Lung CT Segmentation' mention; only external public source named for any task is LIDC-IDRI (lung_nodules subtask, not total).",
+  "improvements_in_v2.md": "v2 total training increased 1139->1559 images; added images described as whole-body failures, feet/hands, head, abdominal bleedings, 'more images from GE scanners and other institutions'; these additional subjects are not published and their sources are not itemised."
+ }
+}

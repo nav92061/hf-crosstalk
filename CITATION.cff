@@ -1,10 +1,12 @@
 cff-version: 1.2.0
 message: "If you use this software or its results, please cite the article below."
-title: "hf-crosstalk: reusable skills for organ-crosstalk ligand-receptor screens"
+title: "hf-crosstalk: analysis code and data for reconstruction-kernel reproducibility of automated thoracic CT volumetry"
 type: software
 license: MIT
 repository-code: "https://github.com/nav92061/hf-crosstalk"
-doi: "10.5281/zenodo.21968364"
+version: v1.2.0-R1
+doi: 10.5281/zenodo.21968364
+date-released: 2026-10-11
 authors:
   - family-names: Avelar
     given-names: Nicolas
@@ -18,23 +20,20 @@ authors:
     affiliation: "School of Computing, University of Georgia, Athens, GA, USA"
 keywords:
   - "Computed tomography"
+  - "Reconstruction kernel"
   - "Automated segmentation"
   - "Measurement reproducibility"
-  - "Cardio-oncology"
-  - "heart failure"
-  - "ligand-receptor signaling"
-  - "multi-agent systems"
-  - "computational reproducibility"
-  - "pan-cancer transcriptomics"
+  - "Autonomous agents"
+  - "Computational reproducibility"
 abstract: >-
-  Six deterministic, model-free analysis skills carrying their methodological
-  requirements as executable assertions, with the heart-failure ligand-receptor
-  screen reported in the accompanying article as the case study. Every figure
-  regenerates from the released tables with no network access and no
-  language-model call.
+  Analysis code, result tables and specifications for a same-acquisition study of
+  the reproducibility of automated whole-heart and great-vessel CT volumes
+  (TotalSegmentator) across reconstruction kernels, executed by an agent workflow
+  with executable checks. The six analytical modules run without language-model
+  or platform calls; a standalone script reproduces the scoring results.
 preferred-citation:
   type: article
-  title: "Reproducibility of automated cardiac and vascular volumetry across chest CT reconstruction kernels: a same-acquisition paired study with executable guardrails"
+  title: "Reproducibility of automated whole-heart and great-vessel volumetry across chest CT reconstruction kernels: an agent-executed same-acquisition study with executable checks"
   authors:
     - family-names: Avelar
       given-names: Nicolas
